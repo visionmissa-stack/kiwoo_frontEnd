@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "49564633649",
+    "project_id": "kiwoo-4597a",
+    "storage_bucket": "kiwoo-4597a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49564633649:android:d9af8912fb982851452310",
+        "android_client_info": {
+          "package_name": "com.vision.kiwoo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGwf0s7BCp55KyYEeMd8AqEX7FE_57hVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49564633649:android:283c4110420f5d47452310",
+        "android_client_info": {
+          "package_name": "com.vision.kiwoom"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAGwf0s7BCp55KyYEeMd8AqEX7FE_57hVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

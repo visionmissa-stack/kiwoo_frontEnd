@@ -1,0 +1,59 @@
+{
+  "buttons": {
+    "login": "Login",
+    "sign_in": "Sign-in",
+    "logout": "Logout",
+    "sign_in_fb": "Sign-in with Facebook",
+    "sign_in_google": "Sign-in with Google",
+    "sign_in_apple": "Sign-in with Apple"
+  },
+  "direction": {
+    "inbound": "Received",
+    "outbound": "Send"
+  },
+  "direPreposition": {
+    "inbound": "from",
+    "outbound": "to"
+  },
+  "transactionStatus": {
+    "failed": "Failed",
+    "success": "Success",
+    "adverbe": {
+      "failed": "successfully",
+      "success": "successfully"
+    }
+  },
+  "NOTIFICATION_TITLE_LOAN_REQUEST": "New Loan Request",
+  "NOTIFICATION_TITLE_LOAN_OFFER": "New Loan Offer",
+  "NOTIFICATION_BODY_LOAN_REQUEST": "%s sent you a LOAN request of %s EHTG",
+  "NOTIFICATION_BODY_LOAN_OFFER_RECEIVED": "%s sent you an OFFER for your LOAN of %s EHTG",
+  "NOTIFICATION_TITLE_LOAN_OFFERED": "New Loan Offers",
+  "NOTIFICATION_BODY_LOAN_OFFERED": "%s sent you an OFFER for your LOAN of %s EHTG",
+  "NOTIFICATION_TITLE_LOAN_OFFER_ACCEPTED": "Loan Offer ACCEPTED",
+  "NOTIFICATION_BODY_LOAN_OFFER_ACCEPTED": "%s accepted your OFFER for the LOAN of %s EHTG",
+  "NOTIFICATION_TITLE_LOAN_OFFER_REJECTED": "Loan Offer REJECTED",
+  "NOTIFICATION_BODY_LOAN_OFFER_REJECTED": "%s reject your OFFER for the LOAN of %s EHTG",
+  "NOTIFICATION_TITLE_LOAN_ACCEPTED": "Loan Accepted and fund",
+  "NOTIFICATION_BODY_LOAN_ACCEPTED": "%s accepted and sent you the LOAN of %s EHTG",
+
+  "NOTIFICATION_TITLE_TRANSFER_RECEIVED": "Money Received",
+  "NOTIFICATION_BODY_TRANSFER_RECEIVED": "Received Money from %s",
+  "NOTIFICATION_TITLE_TRANSFER_SENT": "Send Money",
+  "NOTIFICATION_BODY_TRANSFER_SENT": "Send Money to %s",
+  "NOTIFICATION_TITLE_LOAN_RECEIVED": "Loan Received",
+  "NOTIFICATION_BODY_LOAN_RECEIVED": "Received loan from %s",
+  "NOTIFICATION_TITLE_LOAN_SENT": "Send Loan",
+  "NOTIFICATION_BODY_LOAN_SENT": "Send  loan to %s",
+  "NOTIFICATION_TITLE_LOANPAYBACK": "Loan Pay Back",
+  "NOTIFICATION_BODY_LOANPAYBACK": "%s paid you back for a Loan",
+
+  "NOTIFICATION_TITLE_WITHDRAW": "Withdraw Money",
+  "NOTIFICATION_BODY_WITHDRAW": "You Withdraw Money from %s",
+  "NOTIFICATION_TITLE_RECHARGE": "Cash in via %s",
+  "NOTIFICATION_BODY_RECHARGE": "Deposit Money at %s",
+  "NOTIFICATION_TITLE_PAYMENT": "Bill Payment",
+  "NOTIFICATION_BODY_PAYMENT": "You pay a bill to %s",
+
+  "NOTIFICATION_TITLE_CASHIN": "CASH In %s",
+  "NOTIFICATION_BODY_CASHIIN": "%s add reload your account from %s"
+}

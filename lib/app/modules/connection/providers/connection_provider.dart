@@ -1,0 +1,95 @@
+import 'package:KIWOO/app/core/api_helper/core_service.dart';
+import 'package:KIWOO/app/core/api_helper/urls.dart';
+import 'package:KIWOO/app/data/default_provider.dart';
+import 'package:KIWOO/app/data/models/server_response_model.dart';
+
+import '../../../core/utils/actions/try_catch.dart';
+
+class ConnectionProvider extends DefaultProvider {
+  Future<ServerResponseModel?> signIn(
+      String email, String password, String? token) async {
+    var response = await tryCatch(() async {
+      var response = await post(
+        Url.LOGIN,
+        {
+          'email': email,
+          'password': password,
+          "notification_token": token,
+        },
+        contentType: 'application/json',
+      );
+      var data = CoreService.returnResponse(response);
+      return data;
+    });
+    return response;
+  }
+
+  Future<ServerResponseModel?> register(
+    String name,
+    String phone,
+    String email,
+    String password,
+  ) async {
+    var response = await tryCatch(() async {
+      var response = await post(
+        Url.REGISTER,
+        {
+          'name': name,
+          'phone': '509$phone',
+          'email': email,
+          'password': password,
+        },
+        contentType: 'application/json',
+      );
+      return CoreService.returnResponse(response);
+    });
+    return response;
+  }
+
+  Future<ServerResponseModel?> askForOtpApi(String email, String type) async {
+    var response = await tryCatch(() async {
+      var response = await post(
+        Url.REQUEST_AUTH,
+        {
+          'email': email,
+          'type': type,
+        },
+        contentType: 'application/json',
+      );
+      return CoreService.returnResponse(response);
+    });
+    return response;
+  }
+
+  Future<ServerResponseModel?> verifyOTP(
+      String email, String otp, String type) async {
+    var response = await tryCatch(() async {
+      var response = await post(
+        Url.VERIFY_AUTH,
+        {
+          'email': email,
+          'otp': otp,
+          'type': type,
+        },
+        contentType: 'application/json',
+      );
+      return CoreService.returnResponse(response);
+    });
+    return response;
+  }
+
+  Future<ServerResponseModel?> resetPassword(
+      String email, String password) async {
+    print("the response ${httpClient.baseUrl}");
+    var response = await tryCatch(() async {
+      var response = await put(
+        Url.RESET_PASSWORD,
+        {'email': email, "password": password},
+        contentType: 'application/json',
+      );
+      print("the response ");
+      return CoreService.returnResponse(response);
+    });
+    return response;
+  }
+}

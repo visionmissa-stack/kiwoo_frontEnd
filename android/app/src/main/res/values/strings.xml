@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+	<string name="NOTIFICATION_TITLE_LOAN_REQUEST">New Loan Request</string>
+	<string name="NOTIFICATION_TITLE_LOAN_OFFER">New Loan Offer</string>
+	<string name="NOTIFICATION_BODY_LOAN_REQUEST">%s sent you a LOAN request of %s EHTG</string>
+	<string name="NOTIFICATION_BODY_LOAN_OFFER_RECEIVED">%s sent you an OFFER for your LOAN of %s EHTG</string>
+	<string name="NOTIFICATION_TITLE_LOAN_OFFERED">New Loan Offers</string>
+	<string name="NOTIFICATION_BODY_LOAN_OFFERED">%s sent you an OFFER for your LOAN of %s EHTG</string>
+	<string name="NOTIFICATION_TITLE_LOAN_OFFER_ACCEPTED">Loan Offer ACCEPTED</string>
+	<string name="NOTIFICATION_BODY_LOAN_OFFER_ACCEPTED">%s accepted your OFFER for the LOAN of %s EHTG</string>
+	<string name="NOTIFICATION_TITLE_LOAN_OFFER_REJECTED">Loan Offer REJECTED</string>
+	<string name="NOTIFICATION_BODY_LOAN_OFFER_REJECTED">%s reject your OFFER for the LOAN of %s EHTG</string>
+	<string name="NOTIFICATION_TITLE_LOAN_ACCEPTED">Loan Accepted and fund</string>
+	<string name="NOTIFICATION_BODY_LOAN_ACCEPTED">%s accepted and sent you the LOAN of %s EHTG</string>
+	<string name="NOTIFICATION_TITLE_TRANSFER_RECEIVED">Money Received</string>
+	<string name="NOTIFICATION_BODY_TRANSFER_RECEIVED">You received an amount of %s EHTG from %s</string>
+	<string name="NOTIFICATION_TITLE_TRANSFER_SENT">Send Money</string>
+	<string name="NOTIFICATION_BODY_TRANSFER_SENT">You send an amount of %s EHTG to %s</string>
+	<string name="NOTIFICATION_TITLE_LOAN_RECEIVED">Loan Received</string>
+	<string name="NOTIFICATION_BODY_LOAN_RECEIVED">You received a loan of %s EHTG from %s</string>
+	<string name="NOTIFICATION_TITLE_LOAN_SENT">Send Loan</string>
+	<string name="NOTIFICATION_BODY_LOAN_SENT">You sent a loan of %s EHTG to %s</string>
+	<string name="NOTIFICATION_TITLE_WITHDRAW">Withdraw Money</string>
+	<string name="NOTIFICATION_BODY_WITHDRAW">You Withdraw an amount of %s EHTG from %s</string>
+	<string name="NOTIFICATION_TITLE_RECHARGE">Cash in via %s</string>
+	<string name="NOTIFICATION_BODY_RECHARGE">You made deposit of %s EHTG at %s</string>
+	<string name="NOTIFICATION_TITLE_PAYMENT">Bill Payment</string>
+	<string name="NOTIFICATION_BODY_PAYMENT">You pay a bill of %s EHTG to %s</string>
+	<string name="NOTIFICATION_TITLE_LOANPAYBACK">Loan Pay Back</string>
+	<string name="NOTIFICATION_BODY_LOANPAYBACK">%s paid you back for a Loan</string>
+</resources>

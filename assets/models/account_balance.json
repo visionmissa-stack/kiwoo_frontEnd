@@ -1,0 +1,23 @@
+{
+ "accountBalance":  [
+        {
+            "balance": "0.0000000",
+            "limit": "30000.0000000",
+            "buying_liabilities": "0.0000000",
+            "selling_liabilities": "0.0000000",
+            "sponsor": "GC6W4IMP6FT4AFQALWCHVUYA2EOFE64M4Z424OMD4NYMSDWAGU5ZI5JP",
+            "last_modified_ledger": 2456,
+            "is_authorized": true,
+            "is_authorized_to_maintain_liabilities": true,
+            "asset_type": "credit_alphanum4",
+            "asset_code": "EHTG",
+            "asset_issuer": "GC6W4IMP6FT4AFQALWCHVUYA2EOFE64M4Z424OMD4NYMSDWAGU5ZI5JP"
+        },
+        {
+            "balance": "1.6000000",
+            "buying_liabilities": "0.0000000",
+            "selling_liabilities": "0.0000000",
+            "asset_type": "native"
+        }
+    ]
+}
