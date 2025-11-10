@@ -42,12 +42,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBh2liBlSOydjVIpZSvDTcd2Xx3dwDNM64',
-    appId: '1:49564633649:web:aa4b38ccdadc014e452310',
+    appId: '1:49564633649:web:4eda07211581bf44452310',
     messagingSenderId: '49564633649',
     projectId: 'kiwoo-4597a',
     authDomain: 'kiwoo-4597a.firebaseapp.com',
     storageBucket: 'kiwoo-4597a.firebasestorage.app',
-    measurementId: 'G-SPS3HCPH7S',
+    measurementId: 'G-G01KBJRJSS',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -85,4 +85,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'kiwoo-4597a.firebasestorage.app',
     measurementId: 'G-G01KBJRJSS',
   );
+
 }
