@@ -1,6 +1,6 @@
-import 'package:KIWOO/app/controllers/def_controller.dart';
-import 'package:KIWOO/app/data/models/controller_with_future.dart';
-import 'package:KIWOO/app/modules/loans/providers/loan_provider.dart';
+import 'package:kiwoo/app/controllers/def_controller.dart';
+import 'package:kiwoo/app/data/models/controller_with_future.dart';
+import 'package:kiwoo/app/modules/loans/providers/loan_provider.dart';
 import 'package:get/get.dart';
 
 import '../../../../data/models/loan/loan_request_model.dart';
@@ -18,9 +18,7 @@ class MarketController extends GetxController
 
   @override
   Future<List<LoanRequestModel>?> futureRequest() async {
-    var params = {
-      "type": "market",
-    };
+    var params = {"type": "market"};
 
     try {
       var response = await provider.loanRequestListApiCall(query: params);

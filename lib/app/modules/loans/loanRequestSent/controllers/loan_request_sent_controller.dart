@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/controllers/def_controller.dart';
-import 'package:KIWOO/app/core/utils/enums.dart';
-import 'package:KIWOO/app/data/models/loan/loan_offers_model.dart';
-import 'package:KIWOO/app/modules/loans/providers/loan_provider.dart';
+import 'package:kiwoo/app/controllers/def_controller.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
+import 'package:kiwoo/app/data/models/loan/loan_offers_model.dart';
+import 'package:kiwoo/app/modules/loans/providers/loan_provider.dart';
 import 'package:get/get.dart';
 
 import '../../../../data/models/controller_with_future.dart';
@@ -57,7 +57,9 @@ class LoanRequestSentController extends GetxController
   }
 
   List<LoanRequestModel> sortingData(
-      List<LoanRequestModel> loanList, SortDirection direction) {
+    List<LoanRequestModel> loanList,
+    SortDirection direction,
+  ) {
     var newList = [...loanList];
     if (direction == SortDirection.desc) {
       //sorting in ascending order
@@ -75,9 +77,7 @@ class LoanRequestSentController extends GetxController
 
   Future<List<LoanOfferModel>> getOfferApiCall(String loanId) async {
     try {
-      var response = await provider.getOfferApi(
-        loanId,
-      );
+      var response = await provider.getOfferApi(loanId);
       if (response?.isSuccess == true) {
         Get.log("getOfferApiCall>>>>>>>${response!.data}");
         return listOfferFromListMap(response.data);
@@ -91,18 +91,28 @@ class LoanRequestSentController extends GetxController
   }
 
   Future<void> postOfferResponseApiCall(
-      bool accepted, int loanId, int id, String pin) async {
+    bool accepted,
+    int loanId,
+    int id,
+    String pin,
+  ) async {
     try {
       var response = await provider.postOfferResponseAPi(
-          accepted, loanId.toString(), id, pin);
+        accepted,
+        loanId.toString(),
+        id,
+        pin,
+      );
 
       if (response?.isSuccess == true) {
         Get.back(result: true, closeOverlays: true);
         response!.showMessage();
       } else {}
     } catch (e) {
-      Get.log("error postOfferResponseAPiCall ==>${e.toString()}",
-          isError: true);
+      Get.log(
+        "error postOfferResponseAPiCall ==>${e.toString()}",
+        isError: true,
+      );
     }
   }
 }

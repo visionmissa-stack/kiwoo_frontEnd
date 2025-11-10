@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/controllers/app_services_controller.dart';
+import 'package:kiwoo/app/controllers/app_services_controller.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:get/route_manager.dart';
 
@@ -28,14 +28,14 @@ FutureOr<T?> tryCatch<T>(FutureOr<T> Function() doaction) async {
 
     // showMsg(e.getMessage(), color: Colors.red);
 
-    throw e;
+    // throw e;
   } catch (e) {
     Get.log("its an error $e", isError: true);
     appService.errorMsg.value = "Unknow Error : $e";
 
     showMsg("Unknow Error : $e", color: Colors.red);
 
-    throw e;
+    // throw e;
   }
   return null;
 }

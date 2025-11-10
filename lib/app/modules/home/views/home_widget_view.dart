@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/font_family.dart';
-import 'package:KIWOO/app/core/utils/kiwoo_icons.dart';
-import 'package:KIWOO/app/modules/home/controllers/home_controller.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
+import 'package:kiwoo/app/modules/home/controllers/home_controller.dart';
 
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
@@ -37,7 +37,7 @@ class HomeWidgetView extends GetView<HomeController> {
               verticalSpaceRegular,
               serviceListWidget(),
               verticalSpaceRegular,
-              contactCardWidget()
+              contactCardWidget(),
             ],
           ),
         );
@@ -67,14 +67,15 @@ class HomeWidgetView extends GetView<HomeController> {
               ),
               child: Text(
                 controller.categorizeCreditScore(
-                    controller.userDetails.value?.extraInfo?.score ?? 0),
+                  controller.userDetails.value?.extraInfo?.score ?? 0,
+                ),
                 style: TextStyle(
                   fontSize: 11.fss,
                   fontFamily: FontPoppins.SEMIBOLD,
                   color: FontColors.PRIMARY1,
                 ),
               ),
-            )
+            ),
           ],
         ),
         Expanded(
@@ -85,10 +86,7 @@ class HomeWidgetView extends GetView<HomeController> {
               children: [
                 Text(
                   "My Credit Score",
-                  style: TextStyle(
-                    color: FontColors.GREY,
-                    fontSize: 15.fss,
-                  ),
+                  style: TextStyle(color: FontColors.GREY, fontSize: 15.fss),
                 ),
 
                 LayoutBuilder(
@@ -161,14 +159,9 @@ class HomeWidgetView extends GetView<HomeController> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        SizedBox(
-                          height: 5.ss,
-                        ),
+                        SizedBox(height: 5.ss),
                         (currentData["MaterialIcon"] == "")
-                            ? Icon(
-                                currentData["icon"],
-                                size: 40.ss,
-                              )
+                            ? Icon(currentData["icon"], size: 40.ss)
                             : Icon(
                                 currentData["MaterialIcon"],
                                 color: Colors.black,
@@ -178,20 +171,19 @@ class HomeWidgetView extends GetView<HomeController> {
                           currentData["label"],
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: FontColors.BLACK,
-                              fontSize: 14.fss,
-                              fontFamily: FontPoppins.SEMIBOLD),
+                            color: FontColors.BLACK,
+                            fontSize: 14.fss,
+                            fontFamily: FontPoppins.SEMIBOLD,
+                          ),
                         ),
-                        SizedBox(
-                          height: 5.ss,
-                        ),
+                        SizedBox(height: 5.ss),
                       ],
                     ),
                   ),
                 ),
               );
             },
-          )
+          ),
         ],
       ),
     );
@@ -227,29 +219,29 @@ class HomeWidgetView extends GetView<HomeController> {
                   color: FontColors.BLACK,
                 ),
               ),
-              SizedBox(
-                height: 5.ss,
-              ),
+              SizedBox(height: 5.ss),
               Row(
                 children: [
                   Text(
                     AppStrings.CALL,
                     style: TextStyle(
-                        fontSize: 17.fss,
-                        fontFamily: FontPoppins.MEDIUM,
-                        color: FontColors.BLACK),
+                      fontSize: 17.fss,
+                      fontFamily: FontPoppins.MEDIUM,
+                      color: FontColors.BLACK,
+                    ),
                   ),
                   Text(
                     "+1 8328 737 5343",
                     style: TextStyle(
-                        fontSize: 17.fss,
-                        fontFamily: FontPoppins.MEDIUM,
-                        color: const Color.fromARGB(255, 49, 173, 0)),
+                      fontSize: 17.fss,
+                      fontFamily: FontPoppins.MEDIUM,
+                      color: const Color.fromARGB(255, 49, 173, 0),
+                    ),
                   ),
                 ],
               ),
             ],
-          )
+          ),
         ],
       ),
     );

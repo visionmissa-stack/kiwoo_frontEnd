@@ -1,7 +1,7 @@
-import 'package:KIWOO/app/core/utils/app_utility.dart';
-import 'package:KIWOO/app/core/utils/enums.dart';
-import 'package:KIWOO/app/core/utils/font_family.dart';
-import 'package:KIWOO/app/core/utils/formatters/extension.dart';
+import 'package:kiwoo/app/core/utils/app_utility.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/core/utils/formatters/extension.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
 import 'package:sizing/sizing_extension.dart';
@@ -31,14 +31,9 @@ class ReceiptDetail extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
-        side: BorderSide(
-          color: FontColors.BLUE_FADE,
-        ),
+        side: BorderSide(color: FontColors.BLUE_FADE),
       ),
-      margin: const EdgeInsets.only(
-        left: 20,
-        right: 20,
-      ),
+      margin: const EdgeInsets.only(left: 20, right: 20),
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Column(
@@ -92,8 +87,9 @@ class ReceiptDetail extends StatelessWidget {
           ),
           textAlign: TextAlign.end,
           style: transactionTitleDetailStyle.copyWith(
-              fontFamily: FontPoppins.BOLD),
-        )
+            fontFamily: FontPoppins.BOLD,
+          ),
+        ),
       ],
     );
   }

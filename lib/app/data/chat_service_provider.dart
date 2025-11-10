@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:KIWOO/app/data/default_with_auth_provider.dart';
+import 'package:kiwoo/app/data/default_with_auth_provider.dart';
 
 import '../core/api_helper/core_service.dart';
 import '../core/api_helper/urls.dart';
@@ -12,21 +12,19 @@ class ChatServiceProvider extends DefaultWithAuthProvider {
   ChatServiceProvider();
 
   Future<ServerResponseModel?> getAllMessageApiCall(String chatID) async {
-    var params = {
-      "page": '0',
-    };
+    var params = {"page": '0'};
     var response = await tryCatch(() async {
-      var result = await get<ServerResponseModel>("${Url.GET_MESSAGE}$chatID",
-          query: params);
+      var result = await get<ServerResponseModel>(
+        "${Url.GET_MESSAGE}$chatID",
+        query: params,
+      );
       return CoreService.returnResponse(result);
     });
     return response;
   }
 
   Future<ServerResponseModel?> getAllChatListApiCall() async {
-    var params = {
-      "page": '0',
-    };
+    var params = {"page": '0'};
     var response = await tryCatch(() async {
       var result = await get<ServerResponseModel>(Url.CHAT_LIST, query: params);
       return CoreService.returnResponse(result);

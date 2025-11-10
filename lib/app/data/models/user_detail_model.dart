@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:KIWOO/app/data/models/contact_list_model.dart';
+import 'package:kiwoo/app/data/models/contact_list_model.dart';
 
 import '../../core/utils/enums.dart';
 
@@ -214,10 +214,12 @@ class ExtraInfo {
       addressVerified: map['address_verified'] != null
           ? VerificationStatus.fromString(map['address_verified'])
           : null,
-      addressDoc:
-          map['address_doc'] != null ? map['address_doc'] as String : null,
-      address:
-          map['address'] != null ? AddressData.fromMap(map['address']) : null,
+      addressDoc: map['address_doc'] != null
+          ? map['address_doc'] as String
+          : null,
+      address: map['address'] != null
+          ? AddressData.fromMap(map['address'])
+          : null,
       dob: map['dob'] != null ? map['dob'] as String : null,
       income: map['income'] != null ? map['income'] as int : null,
       incomeDoc: map['income_doc'] != null ? map['income_doc'] as String : null,
@@ -227,8 +229,9 @@ class ExtraInfo {
       occupationVerified: map['occupation_verified'] != null
           ? VerificationStatus.fromString(map['occupation_verified'])
           : null,
-      occupation:
-          map['occupation'] != null ? map['occupation'] as String : null,
+      occupation: map['occupation'] != null
+          ? map['occupation'] as String
+          : null,
       occupationDoc: map['occupation_doc'] != null
           ? map['occupation_doc'] as String
           : null,
@@ -291,13 +294,7 @@ class AddressData {
   String? countr;
   int? pincode;
 
-  AddressData({
-    this.address,
-    this.city,
-    this.state,
-    this.countr,
-    this.pincode,
-  });
+  AddressData({this.address, this.city, this.state, this.countr, this.pincode});
 
   AddressData copyWith({
     String? address,
@@ -370,17 +367,9 @@ class IdDoc {
   String? front;
   String? back;
   String? face;
-  IdDoc({
-    this.front,
-    this.back,
-    this.face,
-  });
+  IdDoc({this.front, this.back, this.face});
 
-  IdDoc copyWith({
-    String? front,
-    String? back,
-    String? face,
-  }) {
+  IdDoc copyWith({String? front, String? back, String? face}) {
     return IdDoc(
       front: front ?? this.front,
       back: back ?? this.back,
@@ -389,11 +378,7 @@ class IdDoc {
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'front': front,
-      'back': back,
-      'face': face,
-    };
+    return <String, dynamic>{'front': front, 'back': back, 'face': face};
   }
 
   factory IdDoc.fromMap(Map<String, dynamic> map) {

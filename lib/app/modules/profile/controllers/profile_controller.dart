@@ -1,7 +1,7 @@
-import 'package:KIWOO/app/controllers/app_services_controller.dart';
-import 'package:KIWOO/app/data/app_service_provider.dart';
-import 'package:KIWOO/app/data/models/user_detail_model.dart';
-import 'package:KIWOO/app/data/models/user_profil_update.dart';
+import 'package:kiwoo/app/controllers/app_services_controller.dart';
+import 'package:kiwoo/app/data/app_service_provider.dart';
+import 'package:kiwoo/app/data/models/user_detail_model.dart';
+import 'package:kiwoo/app/data/models/user_profil_update.dart';
 import 'package:get/get.dart';
 
 import '../../../controllers/def_controller.dart';

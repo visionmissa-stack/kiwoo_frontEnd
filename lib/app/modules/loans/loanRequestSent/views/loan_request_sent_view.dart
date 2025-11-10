@@ -1,11 +1,11 @@
-import 'package:KIWOO/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
 
-import 'package:KIWOO/app/core/utils/enums.dart';
-import 'package:KIWOO/app/core/utils/formatters/extension.dart';
-import 'package:KIWOO/app/modules/loans/loanRequestSent/views/loan_request_sent_details_view.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
+import 'package:kiwoo/app/core/utils/formatters/extension.dart';
+import 'package:kiwoo/app/modules/loans/loanRequestSent/views/loan_request_sent_details_view.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_string.dart';
@@ -21,109 +21,107 @@ final TextStyle selectedStyle = TextStyle(
   fontFamily: FontPoppins.MEDIUM,
   color: AppColors.PRIMARY,
 );
-final TextStyle unselectedStyle = selectedStyle.copyWith(
-  color: Colors.black,
-);
+final TextStyle unselectedStyle = selectedStyle.copyWith(color: Colors.black);
 
 class LoanRequestSentView extends GetView<LoanRequestSentController> {
   const LoanRequestSentView({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBarWidgetTitle(
-          title: AppStrings.MY_LOAN_REQUEST,
-          actions: [],
-        ),
-        body: Padding(
-          padding: EdgeInsets.only(left: 15.ss, right: 15.ss, bottom: 15.ss),
-          child: ScrollviewWithScrollingChild(
-            header: Padding(
-              padding: EdgeInsets.only(top: 15.ss),
-              child: accountDetailsCardWidget(
-                future: controller.appServiceController.getUserBalance,
-              ),
+      appBar: AppBarWidgetTitle(title: AppStrings.MY_LOAN_REQUEST, actions: []),
+      body: Padding(
+        padding: EdgeInsets.only(left: 15.ss, right: 15.ss, bottom: 15.ss),
+        child: ScrollviewWithScrollingChild(
+          header: Padding(
+            padding: EdgeInsets.only(top: 15.ss),
+            child: accountDetailsCardWidget(
+              future: controller.appServiceController.getUserBalance,
             ),
-            fixHeader: Container(
-              color: AppColors.APP_BG,
-              padding: EdgeInsets.only(left: 5.ss, bottom: 5.ss, top: 5.ss),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Obx(() {
-                    final current = controller.sortDirection.value;
-
-                    return PopupMenuButton<SortDirection>(
-                      icon: const Icon(Icons.sort),
-                      onSelected: (item) {
-                        PopupMenuItemState();
-                        controller.sortDirection(item);
-                      },
-                      itemBuilder: (context) {
-                        return [
-                          PopupMenuItem<SortDirection>(
-                            value: SortDirection.asc,
-                            child: Text(
-                              'Asc',
-                              style: current == SortDirection.asc
-                                  ? selectedStyle
-                                  : unselectedStyle,
-                            ),
-                          ),
-                          PopupMenuItem<SortDirection>(
-                            value: SortDirection.desc,
-                            child: Text(
-                              'Desc',
-                              style: current == SortDirection.desc
-                                  ? selectedStyle
-                                  : unselectedStyle,
-                            ),
-                          ),
-                        ];
-                      },
-                    );
-                  }),
-                  Obx(() {
-                    final current = controller.sortDirection.value;
-
-                    return PopupMenuButton<LoanStatus>(
-                      icon: const Icon(Icons.start_sharp),
-                      onSelected: (item) {
-                        // controller.sortDirection(item);
-                      },
-                      itemBuilder: (context) {
-                        return [
-                          ...LoanStatus.values.map(
-                            (val) => PopupMenuItem<LoanStatus>(
-                              value: val,
-                              child: Text(
-                                '${val.name.capitalize}',
-                                style: current == val
-                                    ? selectedStyle
-                                    : unselectedStyle,
-                              ),
-                            ),
-                          )
-                        ];
-                      },
-                    );
-                  }),
-                ],
-              ),
-            ),
-            maxExtent: 40,
-            minExtent: 40,
-            body: receivedRequestList(),
           ),
-        ));
+          fixHeader: Container(
+            color: AppColors.APP_BG,
+            padding: EdgeInsets.only(left: 5.ss, bottom: 5.ss, top: 5.ss),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Obx(() {
+                  final current = controller.sortDirection.value;
+
+                  return PopupMenuButton<SortDirection>(
+                    icon: const Icon(Icons.sort),
+                    onSelected: (item) {
+                      PopupMenuItemState();
+                      controller.sortDirection(item);
+                    },
+                    itemBuilder: (context) {
+                      return [
+                        PopupMenuItem<SortDirection>(
+                          value: SortDirection.asc,
+                          child: Text(
+                            'Asc',
+                            style: current == SortDirection.asc
+                                ? selectedStyle
+                                : unselectedStyle,
+                          ),
+                        ),
+                        PopupMenuItem<SortDirection>(
+                          value: SortDirection.desc,
+                          child: Text(
+                            'Desc',
+                            style: current == SortDirection.desc
+                                ? selectedStyle
+                                : unselectedStyle,
+                          ),
+                        ),
+                      ];
+                    },
+                  );
+                }),
+                Obx(() {
+                  final current = controller.sortDirection.value;
+
+                  return PopupMenuButton<LoanStatus>(
+                    icon: const Icon(Icons.start_sharp),
+                    onSelected: (item) {
+                      // controller.sortDirection(item);
+                    },
+                    itemBuilder: (context) {
+                      return [
+                        ...LoanStatus.values.map(
+                          (val) => PopupMenuItem<LoanStatus>(
+                            value: val,
+                            child: Text(
+                              '${val.name.capitalize}',
+                              style: current == val
+                                  ? selectedStyle
+                                  : unselectedStyle,
+                            ),
+                          ),
+                        ),
+                      ];
+                    },
+                  );
+                }),
+              ],
+            ),
+          ),
+          maxExtent: 40,
+          minExtent: 40,
+          body: sentRequestList(),
+        ),
+      ),
+    );
   }
 
-  Widget receivedRequestList() {
+  Widget sentRequestList() {
     return ListBuilderWidget.future(
       future: controller.futureRequest,
       futureBuilder: (p0, item, childFunction) {
         return Obx(() {
-          var data =
-              controller.sortingData(item, controller.sortDirection.value);
+          var data = controller.sortingData(
+            item,
+            controller.sortDirection.value,
+          );
           return childFunction(data);
         });
       },
@@ -132,8 +130,10 @@ class LoanRequestSentView extends GetView<LoanRequestSentController> {
           padding: const EdgeInsets.only(top: 2, bottom: 5),
           child: GestureDetector(
             onTap: () {
-              Get.to(LoanRequestSentDetailsView(loan: item),
-                  arguments: {"id": item.id});
+              Get.to(
+                LoanRequestSentDetailsView(loan: item),
+                arguments: {"id": item.id},
+              );
             },
             child: Card(
               elevation: 3,
@@ -159,9 +159,10 @@ class LoanRequestSentView extends GetView<LoanRequestSentController> {
                             ),
                             const Spacer(),
                             Text(
-                                textAlign: TextAlign.right,
-                                item.amount!.toEGTH,
-                                style: TextThemeHelper.EHTGTextStyle),
+                              textAlign: TextAlign.right,
+                              item.amount!.toEGTH,
+                              style: TextThemeHelper.EHTGTextStyle,
+                            ),
                           ],
                         ),
                         Padding(
@@ -181,7 +182,7 @@ class LoanRequestSentView extends GetView<LoanRequestSentController> {
                                     fontSize: 13.fss,
                                     color: FontColors.RED,
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -189,25 +190,31 @@ class LoanRequestSentView extends GetView<LoanRequestSentController> {
                       ],
                     ),
                     verticalSpaceSmall,
-                    Divider(
-                      color: Colors.grey.shade300,
-                    ),
+                    Divider(color: Colors.grey.shade300),
                     verticalSpaceTiny,
                     Padding(
                       padding: const EdgeInsets.only(right: 5),
                       child: Row(
                         children: [
-                          Text("Interest",
-                              style: TextThemeHelper.subTitleGreyLR),
+                          Text(
+                            "Interest",
+                            style: TextThemeHelper.subTitleGreyLR,
+                          ),
                           horizontalSpaceSmall,
-                          Text("${(item.interest ?? 0)}%",
-                              style: TextThemeHelper.subTitleLR),
+                          Text(
+                            "${(item.interest ?? 0)}%",
+                            style: TextThemeHelper.subTitleLR,
+                          ),
                           const Spacer(),
-                          Text("Duration",
-                              style: TextThemeHelper.subTitleGreyLR),
+                          Text(
+                            "Duration",
+                            style: TextThemeHelper.subTitleGreyLR,
+                          ),
                           horizontalSpaceSmall,
-                          Text("${(item.tenure ?? 0)} month",
-                              style: TextThemeHelper.subTitleLR),
+                          Text(
+                            "${(item.tenure ?? 0)} month",
+                            style: TextThemeHelper.subTitleLR,
+                          ),
                         ],
                       ),
                     ),

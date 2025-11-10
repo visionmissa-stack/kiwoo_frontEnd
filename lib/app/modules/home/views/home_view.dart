@@ -1,6 +1,6 @@
-import 'package:KIWOO/app/global_widgets/notification_icon_count.dart';
+import 'package:kiwoo/app/global_widgets/notification_icon_count.dart';
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/kiwoo_icons.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
 
 import 'package:get/get.dart';
 import 'package:sizing/sizing.dart';
@@ -17,12 +17,12 @@ import '../../loans/views/loans_view.dart';
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
   List<Widget> get screenList => const <Widget>[
-        HomeWidgetView(),
-        MarketView(),
-        LoansView(),
-        ListChatView(),
-        ProfilView()
-      ];
+    HomeWidgetView(),
+    MarketView(),
+    LoansView(),
+    ListChatView(),
+    ProfilView(),
+  ];
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -52,7 +52,9 @@ class HomeView extends GetView<HomeController> {
             height: 70,
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(40), topRight: Radius.circular(40)),
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
+              ),
               child: BottomNavigationBar(
                 backgroundColor: AppColors.WHITE,
                 elevation: 5,
@@ -72,40 +74,32 @@ class HomeView extends GetView<HomeController> {
                 ),
                 items: <BottomNavigationBarItem>[
                   const BottomNavigationBarItem(
-                    icon: Icon(
-                      Kiwoo.home,
-                    ),
+                    icon: Icon(Kiwoo.home),
                     label: 'Home',
                   ),
                   const BottomNavigationBarItem(
-                    icon: Icon(
-                      Kiwoo.loan_market,
-                    ),
+                    icon: Icon(Kiwoo.loan_market),
                     label: 'Loan Market',
                   ),
                   const BottomNavigationBarItem(
-                    icon: Icon(
-                      Kiwoo.loans_bag,
-                    ),
+                    icon: Icon(Kiwoo.loans_bag),
                     label: 'Loans',
                   ),
                   BottomNavigationBarItem(
                     icon: Obx(() {
                       var count = controller
-                          .appServiceController.totalUnReadMessage.value;
+                          .appServiceController
+                          .totalUnReadMessage
+                          .value;
                       return NotificationIconCount(
-                        icon: const Icon(
-                          Kiwoo.chat,
-                        ),
+                        icon: const Icon(Kiwoo.chat),
                         count: count,
                       );
                     }),
                     label: 'Chat',
                   ),
                   const BottomNavigationBarItem(
-                    icon: Icon(
-                      Kiwoo.person,
-                    ),
+                    icon: Icon(Kiwoo.person),
                     label: 'Profile',
                   ),
                 ],

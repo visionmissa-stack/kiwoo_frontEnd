@@ -1,11 +1,14 @@
+// ignore_for_file: constant_identifier_names
+
+import 'dart:ui';
+
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
 
 import 'app_string.dart';
 
-enum OTPType {
-  register,
-  forgotPassword,
-}
+enum OTPType { register, forgotPassword }
 
 enum LoanLenderOptions {
   loanMarket(AppStrings.LOAN_MARKET),
@@ -24,6 +27,10 @@ enum Direction {
 
   static Direction fromMap(int? index) {
     return Direction.values.elementAtOrNull(index ?? -1) ?? outbound;
+  }
+
+  static Direction fromName(String index) {
+    return Direction.values.firstWhere((el) => el.name == index);
   }
 
   int toMap() => index;
@@ -74,13 +81,7 @@ enum LoanStatus {
   }
 }
 
-enum CameraStatus {
-  off,
-  noCamAvailable,
-  initialized,
-  shooting,
-  previewing,
-}
+enum CameraStatus { off, noCamAvailable, initialized, shooting, previewing }
 
 enum IdentityType {
   front,
@@ -99,7 +100,8 @@ enum NotificationType {
   loanOfferAccepted,
   loanOfferRejected,
   loanAcceted,
-  cashIn,
+  cashin,
+  cashout,
   unKnow;
 
   static NotificationType fromMap(String? name) {
@@ -132,10 +134,11 @@ enum TransactionType {
 }
 
 enum TransactionMethod {
-  moncash,
-  natcash,
-  bank,
-  card,
+  Airtel,
+  MTN,
+  Orange,
+  Safari_com,
+  M_Pesa,
   p2p;
 
   static TransactionMethod fromMap(String? name) {
@@ -153,6 +156,28 @@ enum TransactionStatus {
   failed,
   success;
 
+  Color get color {
+    switch (this) {
+      case TransactionStatus.pending:
+        return const Color.fromARGB(255, 255, 153, 0);
+      case TransactionStatus.failed:
+        return const Color.fromARGB(255, 244, 67, 54);
+      case TransactionStatus.success:
+        return const Color.fromARGB(255, 76, 175, 79);
+    }
+  }
+
+  IconData get icon {
+    switch (this) {
+      case TransactionStatus.pending:
+        return Kiwoo.schedule;
+      case TransactionStatus.failed:
+        return Kiwoo.cancel_circled_outline;
+      case TransactionStatus.success:
+        return Kiwoo.success;
+    }
+  }
+
   static TransactionStatus fromMap(String? name) {
     return TransactionStatus.values.firstWhere((el) => el.name == name);
   }
@@ -165,24 +190,21 @@ enum LedgerType {
   cashout;
 
   static LedgerType fromMap(String? name) {
-    return LedgerType.values.firstWhere(
-      (el) => el.name == name,
-    );
+    return LedgerType.values.firstWhere((el) => el.name == name);
   }
 
   String toMap() => name;
 }
 
 enum LedgerMethod {
-  moncash,
-  natcash,
-  bank,
-  card;
+  Airtel,
+  MTN,
+  Orange,
+  Safari_com,
+  M_Pesa;
 
   static LedgerMethod fromMap(String? name) {
-    return LedgerMethod.values.firstWhere(
-      (el) => el.name == name,
-    );
+    return LedgerMethod.values.firstWhere((el) => el.name == name);
   }
 
   String toMap() => name;
@@ -196,8 +218,9 @@ enum VerificationStatus {
   rejected;
 
   static VerificationStatus? fromString(String name) {
-    return VerificationStatus.values
-            .firstWhereOrNull((el) => el.name == name) ??
+    return VerificationStatus.values.firstWhereOrNull(
+          (el) => el.name == name,
+        ) ??
         none;
   }
 

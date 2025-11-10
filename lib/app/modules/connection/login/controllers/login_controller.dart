@@ -1,6 +1,5 @@
-import 'package:KIWOO/app/controllers/firebase_services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:KIWOO/app/controllers/app_services_controller.dart';
+import 'package:kiwoo/app/controllers/app_services_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../../data/models/storage_box_model.dart';

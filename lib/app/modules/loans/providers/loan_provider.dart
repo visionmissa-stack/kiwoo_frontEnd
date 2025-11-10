@@ -1,7 +1,7 @@
-import 'package:KIWOO/app/core/api_helper/urls.dart';
-import 'package:KIWOO/app/core/utils/actions/try_catch.dart';
-import 'package:KIWOO/app/data/default_with_auth_provider.dart';
-import 'package:KIWOO/app/data/models/server_response_model.dart';
+import 'package:kiwoo/app/core/api_helper/urls.dart';
+import 'package:kiwoo/app/core/utils/actions/try_catch.dart';
+import 'package:kiwoo/app/data/default_with_auth_provider.dart';
+import 'package:kiwoo/app/data/models/server_response_model.dart';
 import 'package:get/get.dart';
 
 import '../../../core/api_helper/core_service.dart';
@@ -13,10 +13,10 @@ class LoanProvider extends DefaultWithAuthProvider {
     num offeredInterest,
   ) async {
     var response = await tryCatch(() async {
-      var response = await patch(
-        Url.LOAN_OFFER + loanID,
-        {"offered_tenure": offeredTenure, "offered_interest": offeredInterest},
-      );
+      var response = await patch(Url.LOAN_OFFER + loanID, {
+        "offered_tenure": offeredTenure,
+        "offered_interest": offeredInterest,
+      });
       return CoreService.returnResponse(response);
     });
     return response;
@@ -43,9 +43,9 @@ class LoanProvider extends DefaultWithAuthProvider {
     return response;
   }
 
-  Future<ServerResponseModel?> loanRequestListApiCall(
-      {Map<String, String>? query}) async {
-    await 1.delay();
+  Future<ServerResponseModel?> loanRequestListApiCall({
+    Map<String, String>? query,
+  }) async {
     var response = await tryCatch(() async {
       var response = await get(Url.LOAN_REQUEST, query: query);
       return CoreService.returnResponse(response);
@@ -54,7 +54,6 @@ class LoanProvider extends DefaultWithAuthProvider {
   }
 
   Future<ServerResponseModel?> loanRequestApiCall(String loanId) async {
-    await 1.delay();
     var response = await tryCatch(() async {
       var response = await get('${Url.LOAN_REQUEST}/$loanId');
       return CoreService.returnResponse(response);
@@ -71,7 +70,11 @@ class LoanProvider extends DefaultWithAuthProvider {
   }
 
   Future<ServerResponseModel?> postOfferResponseAPi(
-      bool accepted, String loanId, int offerId, String pin) async {
+    bool accepted,
+    String loanId,
+    int offerId,
+    String pin,
+  ) async {
     var response = await tryCatch(() async {
       var response = await post(
         (accepted ? Url.LOAN_ACCEPT_OFFER : Url.LOAN_REJECT_OFFER) + loanId,
@@ -84,10 +87,7 @@ class LoanProvider extends DefaultWithAuthProvider {
 
   Future<ServerResponseModel?> postAcceptLoanAPi(String loanId, pin) async {
     var response = await tryCatch(() async {
-      var response = await post(
-        Url.LOAN_ACCEPT + loanId,
-        {'pin': pin},
-      );
+      var response = await post(Url.LOAN_ACCEPT + loanId, {'pin': pin});
       return CoreService.returnResponse(response);
     });
     return response;
@@ -95,9 +95,7 @@ class LoanProvider extends DefaultWithAuthProvider {
 
   Future<ServerResponseModel?> contactListApi(List<String> contact) async {
     var response = await tryCatch(() async {
-      var response = await get(Url.USER_LIST, query: {
-        'contacts': contact,
-      });
+      var response = await get(Url.USER_LIST, query: {'contacts': contact});
       return CoreService.returnResponse(response);
     });
     return response;

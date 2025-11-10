@@ -7,9 +7,9 @@ import 'package:get/get.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sizing/sizing_extension.dart';
 
-import 'package:KIWOO/app/core/utils/camera/overlay_painter.dart';
-import 'package:KIWOO/app/core/utils/kiwoo_icons.dart';
-import 'package:KIWOO/app/data/models/document_model.dart';
+import 'package:kiwoo/app/core/utils/camera/overlay_painter.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
+import 'package:kiwoo/app/data/models/document_model.dart';
 
 import '../../core/utils/actions/overlay.dart';
 import '../../core/utils/app_colors.dart';
@@ -40,8 +40,8 @@ class CameraOverlayController extends GetxController {
   @override
   onInit() {
     painter = OverlayPainter.square(
-            "Place your Front ID Card in the square to take a picture")
-        .obs;
+      "Place your Front ID Card in the square to take a picture",
+    ).obs;
     availableCameras().then((value) {
       cameras = value;
       if (cameras.isEmpty) {
@@ -54,8 +54,9 @@ class CameraOverlayController extends GetxController {
   }
 
   getCameraLense(CameraLensDirection lenseDirection) {
-    var camera = cameras
-        .firstWhereOrNull((value) => value.lensDirection == lenseDirection);
+    var camera = cameras.firstWhereOrNull(
+      (value) => value.lensDirection == lenseDirection,
+    );
     return camera ?? cameras.first;
   }
 
@@ -90,17 +91,20 @@ class CameraOverlayController extends GetxController {
     if (picTake != null) {
       cameraStatus.value = CameraStatus.previewing;
       var response = await Get.to<bool>(
-          () => ImagePreviewWidget(bytes: picTake.bytes!),
-          fullscreenDialog: true);
+        () => ImagePreviewWidget(bytes: picTake.bytes!),
+        fullscreenDialog: true,
+      );
 
       if (response == true) {
         if (listFile.isEmpty) {
           painter.value = OverlayPainter.square(
-              "Place your Back ID Card in the square to take a picture");
+            "Place your Back ID Card in the square to take a picture",
+          );
         } else if (listFile.length == 1) {
           lens = CameraLensDirection.front;
-          painter.value =
-              OverlayPainter.oval("Take a picture of yourself inside the hole");
+          painter.value = OverlayPainter.oval(
+            "Take a picture of yourself inside the hole",
+          );
         } else {
           Get.back(result: listFile);
           return;
@@ -145,9 +149,10 @@ class CameraOverlayWidget extends GetWidget<CameraOverlayController> {
       return camStatus == CameraStatus.off
           ? Center(
               child: LoadingAnimationWidget.fourRotatingDots(
-              color: AppColors.PRIMARY,
-              size: 30.ss,
-            ))
+                color: AppColors.PRIMARY,
+                size: 30.ss,
+              ),
+            )
           : Stack(
               alignment: Alignment.center,
               children: [
@@ -168,13 +173,14 @@ class CameraOverlayWidget extends GetWidget<CameraOverlayController> {
                   ),
                 ),
                 Positioned(
-                    bottom: 30,
-                    child: FloatingActionButton(
-                      onPressed: camStatus == CameraStatus.shooting
-                          ? null
-                          : controller.showCaptureOverlay,
-                      child: const Icon(Icons.camera),
-                    )),
+                  bottom: 30,
+                  child: FloatingActionButton(
+                    onPressed: camStatus == CameraStatus.shooting
+                        ? null
+                        : controller.showCaptureOverlay,
+                    child: const Icon(Icons.camera),
+                  ),
+                ),
               ],
             );
     });

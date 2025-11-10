@@ -1,7 +1,7 @@
-import 'package:KIWOO/app/controllers/def_controller.dart';
-import 'package:KIWOO/app/core/utils/enums.dart';
-import 'package:KIWOO/app/modules/loans/loanRequestSent/views/loan_request_sent_details_view.dart';
-import 'package:KIWOO/app/routes/app_pages.dart';
+import 'package:kiwoo/app/controllers/def_controller.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
+import 'package:kiwoo/app/modules/loans/loanRequestSent/views/loan_request_sent_details_view.dart';
+import 'package:kiwoo/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/notifications/notification_model.dart';
@@ -29,15 +29,21 @@ class NotificationsController extends GetxController with DefController {
         break;
       case NotificationType.newLoanOffer:
         if (data == null || data['loan_id'] == null) return;
-        Get.to(() => LoanRequestOffersView(int.parse(data['loan_id'])),
-            binding: LoanRequestSentBinding());
+        Get.to(
+          () => LoanRequestOffersView(int.parse(data['loan_id'])),
+          binding: LoanRequestSentBinding(),
+        );
         break;
       case NotificationType.loanAcceted:
         if (data == null || data['loan_id'] == null) return;
-        Get.to(() => const LoanRequestSentDetailsView(),
-            binding: LoanRequestSentBinding(), arguments: data);
+        Get.to(
+          () => const LoanRequestSentDetailsView(),
+          binding: LoanRequestSentBinding(),
+          arguments: data,
+        );
 
-      case NotificationType.cashIn:
+      case NotificationType.cashin:
+      case NotificationType.cashout:
       case NotificationType.unKnow:
     }
   }

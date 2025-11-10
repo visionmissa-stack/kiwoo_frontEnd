@@ -1,4 +1,4 @@
-import 'package:KIWOO/app/data/models/storage_box_model.dart';
+import 'package:kiwoo/app/data/models/storage_box_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
@@ -9,10 +9,13 @@ import '../core/api_helper/urls.dart';
 import '../core/utils/app_utility.dart';
 
 CachedNetworkImageProvider avatarImageProvider(String id, token) {
-  return CachedNetworkImageProvider("${Url.BASE_URL}files?id=$id",
-      headers: {"Authorization": "Bearer $token"}, errorListener: (error) {
-    Get.log("the list eror $error", isError: true);
-  });
+  return CachedNetworkImageProvider(
+    "${Url.BASE_URL}files?id=$id",
+    headers: {"Authorization": "Bearer $token"},
+    errorListener: (error) {
+      Get.log("the list eror $error", isError: true);
+    },
+  );
 }
 
 CachedNetworkImage avatarImage(

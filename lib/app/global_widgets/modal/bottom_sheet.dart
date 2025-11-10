@@ -2,8 +2,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/app_colors.dart';
-import 'package:KIWOO/app/core/utils/formatters/extension.dart';
+import 'package:kiwoo/app/core/utils/app_colors.dart';
+import 'package:kiwoo/app/core/utils/formatters/extension.dart';
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
 
@@ -15,9 +15,7 @@ final _buttonFilledStyle = FilledButton.styleFrom(
   iconColor: const Color(0xff434343),
   textStyle: _textStyleButton,
   backgroundColor: const Color(0xffEDEDF5),
-  shape: RoundedRectangleBorder(
-    borderRadius: BorderRadius.circular(10),
-  ),
+  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
 );
 
 final _textStyleButton = TextStyle(
@@ -31,6 +29,7 @@ class BottomSheetOption<T> {
   String label;
   String? subLabel;
   IconData? icon;
+  Widget? iconWidget;
   Color iconColor;
   FutureOr<T?> Function()? onPressed;
   bool returnOnpressed;
@@ -42,6 +41,7 @@ class BottomSheetOption<T> {
     this.onPressed,
     this.returnOnpressed = true,
     this.buildWidget,
+    this.iconWidget,
     this.iconColor = const Color(0xff434343),
   });
 }
@@ -53,10 +53,7 @@ Future<T?> boomSheetOptions<T>({
   return Get.bottomSheet<T>(
     Container(
       width: 1.sw,
-      padding: const EdgeInsets.symmetric(
-        vertical: 20,
-        horizontal: 10,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -94,14 +91,18 @@ Future<T?> boomSheetOptions<T>({
                   child: buildWidget != null
                       ? buildWidget(option)
                       : option.buildWidget?.call(option.value, onPressed) ??
-                          FilledButton.icon(
+                            FilledButton.icon(
                               style: _buttonFilledStyle.copyWith(
-                                  iconColor: WidgetStateProperty.all<Color?>(
-                                      option.iconColor)),
+                                iconColor: WidgetStateProperty.all<Color?>(
+                                  option.iconColor,
+                                ),
+                              ),
                               onPressed: onPressed,
-                              icon: option.icon == null
-                                  ? null
-                                  : Icon(option.icon),
+                              icon:
+                                  option.iconWidget ??
+                                  (option.icon == null
+                                      ? null
+                                      : Icon(option.icon)),
                               label: ListTile(
                                 dense: true,
                                 titleAlignment: ListTileTitleAlignment.center,
@@ -110,21 +111,21 @@ Future<T?> boomSheetOptions<T>({
                                   style: _textStyleButton,
                                   textAlign: TextAlign.center,
                                 ),
-                              )),
+                              ),
+                            ),
                 );
               },
             ),
           ),
           TextButton(
-              onPressed: () {
-                Get.back();
-              },
-              child: Text(
-                'Cancel',
-                style: _textStyleButton.copyWith(
-                  color: Colors.red,
-                ),
-              ))
+            onPressed: () {
+              Get.back();
+            },
+            child: Text(
+              'Cancel',
+              style: _textStyleButton.copyWith(color: Colors.red),
+            ),
+          ),
         ],
       ),
     ),
@@ -192,25 +193,13 @@ Future<T?> loanDetailsBottomSHet<T>({
             verticalSpaceMedium,
             lableWidget(lbl: "Name", val: name),
             SizedBox(height: 8.ss),
-            lableWidget(
-              lbl: "Amount",
-              val: "$amount EHTG",
-            ),
+            lableWidget(lbl: "Amount", val: "$amount EFCA"),
             SizedBox(height: 8.ss),
-            lableWidget(
-              lbl: "Tenure",
-              val: "$offeredTenure Months",
-            ),
+            lableWidget(lbl: "Tenure", val: "$offeredTenure Months"),
             SizedBox(height: 8.ss),
-            lableWidget(
-              lbl: "Interest",
-              val: "$offeredInterest %",
-            ),
+            lableWidget(lbl: "Interest", val: "$offeredInterest %"),
             SizedBox(height: 8.ss),
-            lableWidget(
-              lbl: "Loan Given On",
-              val: updatedAt?.since(),
-            ),
+            lableWidget(lbl: "Loan Given On", val: updatedAt?.since()),
             SizedBox(height: 8.ss),
             lableWidget(
               lbl: "Next EMI Receive Date",

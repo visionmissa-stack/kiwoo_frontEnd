@@ -2,8 +2,8 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:KIWOO/app/core/utils/dateTime_Utility.dart';
-import 'package:KIWOO/app/data/models/contact_list_model.dart';
+import 'package:kiwoo/app/core/utils/dateTime_Utility.dart';
+import 'package:kiwoo/app/data/models/contact_list_model.dart';
 import 'package:get/state_manager.dart';
 import 'package:get_storage_pro/get_storage_pro.dart';
 
@@ -57,8 +57,9 @@ class ChatModel extends CommonDataClass<ChatModel> {
       'created_at': createdAt?.toIso8601String(),
       'updated_at': updatedAt?.toIso8601String(),
       'messages': messages.map((x) => x.toMap()).toList(growable: true),
-      'members':
-          members.map((x) => {"member": x.toMap()}).toList(growable: true),
+      'members': members
+          .map((x) => {"member": x.toMap()})
+          .toList(growable: true),
       '_count': {'messages': count},
     };
   }

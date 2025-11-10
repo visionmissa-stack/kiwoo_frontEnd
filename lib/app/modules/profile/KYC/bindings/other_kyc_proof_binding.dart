@@ -1,4 +1,4 @@
-import 'package:KIWOO/app/modules/profile/KYC/controllers/other_kyc_proof_controller.dart';
+import 'package:kiwoo/app/modules/profile/KYC/controllers/other_kyc_proof_controller.dart';
 import 'package:get/get.dart';
 
 class OtherKycProofBinding extends Bindings {

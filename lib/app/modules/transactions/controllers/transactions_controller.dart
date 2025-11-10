@@ -1,7 +1,7 @@
-import 'package:KIWOO/app/controllers/def_controller.dart';
-import 'package:KIWOO/app/data/models/controller_with_future.dart';
-import 'package:KIWOO/app/data/models/payment_receipt_model.dart';
-import 'package:KIWOO/app/modules/transactions/providers/transactions_provider.dart';
+import 'package:kiwoo/app/controllers/def_controller.dart';
+import 'package:kiwoo/app/data/models/controller_with_future.dart';
+import 'package:kiwoo/app/data/models/payment_receipt_model.dart';
+import 'package:kiwoo/app/modules/transactions/providers/transactions_provider.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/transaction_model.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/actions/overlay.dart';
+import 'package:kiwoo/app/core/utils/actions/overlay.dart';
 
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
@@ -23,9 +23,7 @@ class LoginView extends GetView<LoginController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const PresentationPageHeader(
-              pageTitle: AppStrings.LOGIN,
-            ),
+            const PresentationPageHeader(pageTitle: AppStrings.LOGIN),
             verticalSpaceRegular,
             Form(
               key: controller.formKey,
@@ -33,9 +31,7 @@ class LoginView extends GetView<LoginController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.ss,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20.ss),
                     child: CustomInputFormField(
                       hintText: AppStrings.EMAIL,
                       keyboardType: TextInputType.emailAddress,
@@ -56,49 +52,45 @@ class LoginView extends GetView<LoginController> {
                   ),
                   verticalSpaceRegular,
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.ss,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20.ss),
                     child: ObxValue(
-                        (isHidden) => CustomInputFormField(
-                              keyboardType: TextInputType.visiblePassword,
-                              hintText: AppStrings.PASSWORD,
-                              obscureText: isHidden.isTrue,
-                              textInputAction: TextInputAction.done,
-                              onFieldSubmitted: (_) => submitLogin(),
-                              errorMaxLines: 5,
-                              validator: (value) {
-                                if ((value ?? "").isEmpty) {
-                                  return AppStrings.PLS_ENTER_PASSWORD;
-                                }
-                                return null;
-                              },
-                              onSaved: (p0) {
-                                controller.password = p0 ?? "";
-                              },
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  isHidden.isTrue
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                ),
-                                color: AppColors.PRIMARY1,
-                                onPressed: () => isHidden.toggle(),
-                              ),
-                            ),
-                        true.obs),
+                      (isHidden) => CustomInputFormField(
+                        keyboardType: TextInputType.visiblePassword,
+                        hintText: AppStrings.PASSWORD,
+                        obscureText: isHidden.isTrue,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (_) => submitLogin(),
+                        errorMaxLines: 5,
+                        validator: (value) {
+                          if ((value ?? "").isEmpty) {
+                            return AppStrings.PLS_ENTER_PASSWORD;
+                          }
+                          return null;
+                        },
+                        onSaved: (p0) {
+                          controller.password = p0 ?? "";
+                        },
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            isHidden.isTrue
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          color: AppColors.PRIMARY1,
+                          onPressed: () => isHidden.toggle(),
+                        ),
+                      ),
+                      true.obs,
+                    ),
                   ),
                   verticalSpaceSmall,
                   TextButton(
                     statesController: WidgetStatesController(),
-                    iconAlignment: IconAlignment.end,
                     onPressed: () {
                       Get.offNamed(Routes.FORGET_PASSWORD);
                     },
                     child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20.ss,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 20.ss),
                       child: Text(
                         AppStrings.FORGOT_PASSWORD,
                         textAlign: TextAlign.center,
@@ -108,7 +100,9 @@ class LoginView extends GetView<LoginController> {
                   ),
                   verticalSpaceMedium,
                   customeAuthButton(
-                      lableName: AppStrings.LOGIN, onTap: submitLogin),
+                    lableName: AppStrings.LOGIN,
+                    onTap: submitLogin,
+                  ),
                 ],
               ),
             ),
@@ -116,9 +110,11 @@ class LoginView extends GetView<LoginController> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(AppStrings.NEW_USER,
-                    textAlign: TextAlign.center,
-                    style: TextThemeHelper.authTitle),
+                Text(
+                  AppStrings.NEW_USER,
+                  textAlign: TextAlign.center,
+                  style: TextThemeHelper.authTitle,
+                ),
                 horizontalSpaceTiny,
                 GestureDetector(
                   onTap: () {
@@ -142,9 +138,7 @@ class LoginView extends GetView<LoginController> {
   submitLogin() {
     if (controller.formKey.currentState!.validate()) {
       controller.formKey.currentState!.save();
-      showOverlay(
-        asyncFunction: controller.logInApiCall,
-      );
+      showOverlay(asyncFunction: controller.logInApiCall);
     }
   }
 }

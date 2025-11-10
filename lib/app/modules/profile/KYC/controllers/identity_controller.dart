@@ -1,8 +1,8 @@
 import 'dart:ui' as ui;
 
 import 'package:camera/camera.dart';
-import 'package:KIWOO/app/core/api_helper/urls.dart';
-import 'package:KIWOO/app/modules/profile/KYC/providers/kyc_provider.dart';
+import 'package:kiwoo/app/core/api_helper/urls.dart';
+import 'package:kiwoo/app/modules/profile/KYC/providers/kyc_provider.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/app_services_controller.dart';
@@ -29,8 +29,10 @@ class IdentityController extends GetxController {
   late final KycProvider provider;
 
   Future<bool> sendIdentityProofApiCall(FileData file) async {
-    var response =
-        await provider.sendProofApi(file: file, endPoint: Url.UPLOAD_IDENTITY);
+    var response = await provider.sendProofApi(
+      file: file,
+      endPoint: Url.UPLOAD_IDENTITY,
+    );
 
     if (response?.isSuccess == true) {
       _identityData[_identityType] = response!.data["file_id"]['id'];
@@ -43,8 +45,8 @@ class IdentityController extends GetxController {
   onInit() {
     provider = Get.put(KycProvider());
     painter = OverlayPainter.square(
-            "Place your Front ID Card in the square to take a picture")
-        .obs;
+      "Place your Front ID Card in the square to take a picture",
+    ).obs;
     availableCameras().then((value) {
       cameras = value;
       if (cameras.isEmpty) {
@@ -57,8 +59,9 @@ class IdentityController extends GetxController {
   }
 
   getCameraLense(CameraLensDirection lenseDirection) {
-    var camera = cameras
-        .firstWhereOrNull((value) => value.lensDirection == lenseDirection);
+    var camera = cameras.firstWhereOrNull(
+      (value) => value.lensDirection == lenseDirection,
+    );
     return camera ?? cameras.first;
   }
 
@@ -93,18 +96,21 @@ class IdentityController extends GetxController {
       cameraStatus.value = CameraStatus.previewing;
       await _camController?.dispose();
       var response = await Get.to<bool>(
-          () => ImagePreviewWidget(bytes: picTake.bytes!),
-          fullscreenDialog: true);
+        () => ImagePreviewWidget(bytes: picTake.bytes!),
+        fullscreenDialog: true,
+      );
 
       if (response == true && await sendIdentityProofApiCall(picTake)) {
         if (_identityType == IdentityType.front) {
           painter.value = OverlayPainter.square(
-              "Place your Back ID Card in the square to take a picture");
+            "Place your Back ID Card in the square to take a picture",
+          );
           _identityType = IdentityType.back;
         } else if (_identityType == IdentityType.back) {
           lens = CameraLensDirection.front;
-          painter.value =
-              OverlayPainter.oval("Take a picture of yourself inside the hole");
+          painter.value = OverlayPainter.oval(
+            "Take a picture of yourself inside the hole",
+          );
           _identityType = IdentityType.face;
         } else {
           await showOverlay(asyncFunction: updateDocuments);
@@ -134,11 +140,9 @@ class IdentityController extends GetxController {
 
   Future<void> updateDocuments() async {
     var docId = _identityData;
-    var response = await provider.updateUserDocsApi(docId: {
-      'id_doc': docId.map(
-        (key, value) => MapEntry(key.name, value),
-      )
-    });
+    var response = await provider.updateUserDocsApi(
+      docId: {'id_doc': docId.map((key, value) => MapEntry(key.name, value))},
+    );
     if (response?.isSuccess == true) {
       await Get.find<AppServicesController>().getUserDetails();
       response?.showMessage();

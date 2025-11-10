@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:KIWOO/app/core/utils/formatters/extension.dart';
+import 'package:kiwoo/app/core/utils/formatters/extension.dart';
 import 'package:get/get.dart';
 
 import '../../providers/loan_provider.dart';

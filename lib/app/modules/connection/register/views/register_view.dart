@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizing/sizing.dart';
 
-import 'package:KIWOO/app/global_widgets/input_field.dart';
-import 'package:KIWOO/app/modules/connection/bindings/otp_binding.dart';
-import 'package:KIWOO/app/routes/app_pages.dart';
+import 'package:kiwoo/app/global_widgets/input_field.dart';
+import 'package:kiwoo/app/modules/connection/bindings/otp_binding.dart';
+import 'package:kiwoo/app/routes/app_pages.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_string.dart';
@@ -23,11 +23,13 @@ class RegisterView extends GetView<RegisterController> {
     //Get.toNamed(otpScreen, arguments: {"email": ""});
     if (controller.formKey.currentState?.validate() == true) {
       controller.formKey.currentState?.save();
-      Get.to(() {
-        return OTPView(
-          onAuthentificated: controller.registerApiCall,
-        );
-      }, opaque: false, binding: OTPBinding(controller.email));
+      Get.to(
+        () {
+          return OTPView(onAuthentificated: controller.registerApiCall);
+        },
+        opaque: false,
+        binding: OTPBinding(controller.email),
+      );
     }
   }
 
@@ -40,9 +42,7 @@ class RegisterView extends GetView<RegisterController> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              const PresentationPageHeader(
-                pageTitle: AppStrings.SIGN_UP_NOW,
-              ),
+              const PresentationPageHeader(pageTitle: AppStrings.SIGN_UP_NOW),
               verticalSpaceRegular,
               Form(
                 key: controller.formKey,
@@ -50,9 +50,7 @@ class RegisterView extends GetView<RegisterController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20.ss,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 20.ss),
                       child: CustomInputFormField(
                         hintText: AppStrings.NAME,
                         keyboardType: TextInputType.streetAddress,
@@ -70,9 +68,7 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                     verticalSpaceRegular,
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20.ss,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 20.ss),
                       child: CustomInputFormField(
                         hintText: AppStrings.EMAIL,
                         keyboardType: TextInputType.emailAddress,
@@ -85,9 +81,7 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                     verticalSpaceRegular,
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20.ss,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 20.ss),
                       child: CustomInputFormField(
                         hintText: AppStrings.PHONE_NUMBER,
                         keyboardType: TextInputType.number,
@@ -95,8 +89,8 @@ class RegisterView extends GetView<RegisterController> {
                         counterText: "",
                         textInputAction: TextInputAction.next,
                         onSaved: (value) {
-                          controller.phone =
-                              controller.phoneFormatter.unmaskText(value!);
+                          controller.phone = controller.phoneFormatter
+                              .unmaskText(value!);
                         },
                         validator: (p0) {
                           if ((p0 ?? '').isEmpty) {
@@ -110,9 +104,7 @@ class RegisterView extends GetView<RegisterController> {
                     ),
                     verticalSpaceRegular,
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 20.ss,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: 20.ss),
                       child: ObxValue(
                         (isHidden) => CustomInputFormField(
                           keyboardType: TextInputType.visiblePassword,
@@ -152,9 +144,11 @@ class RegisterView extends GetView<RegisterController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(AppStrings.ALREADY_HAVE_AN_ACCOUNT,
-                      textAlign: TextAlign.center,
-                      style: TextThemeHelper.authTitle),
+                  Text(
+                    AppStrings.ALREADY_HAVE_AN_ACCOUNT,
+                    textAlign: TextAlign.center,
+                    style: TextThemeHelper.authTitle,
+                  ),
                   horizontalSpaceTiny,
                   GestureDetector(
                     onTap: () {

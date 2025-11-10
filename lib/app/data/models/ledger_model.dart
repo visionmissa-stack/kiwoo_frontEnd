@@ -4,8 +4,8 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 
-import 'package:KIWOO/app/core/utils/enums.dart';
-import 'package:KIWOO/app/data/models/contact_list_model.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
+import 'package:kiwoo/app/data/models/contact_list_model.dart';
 
 import '../../core/utils/dateTime_Utility.dart';
 
@@ -101,8 +101,10 @@ class LedgerModel {
     final bodyLockKey = 'NOTIFICATION_BODY_$type';
     return {
       'title': titleLockKey.trArgs([method]),
-      'body': bodyLockKey
-          .trArgs(["transactionStatus_.adverbe_${status.name}".tr, method]),
+      'body': bodyLockKey.trArgs([
+        "transactionStatus_.adverbe_${status.name}".tr,
+        method,
+      ]),
     };
   }
 

@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import 'package:KIWOO/app/controllers/def_controller.dart';
-import 'package:KIWOO/app/modules/loans/providers/loan_provider.dart';
+import 'package:kiwoo/app/controllers/def_controller.dart';
+import 'package:kiwoo/app/modules/loans/providers/loan_provider.dart';
 
 import '../../../../data/models/loan/loan_request_model.dart';
 

@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:custom_image_crop/custom_image_crop.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/app_utility.dart';
+import 'package:kiwoo/app/core/utils/app_utility.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -31,18 +31,23 @@ class PickFile {
   }) async {
     XFile? image;
     if (source == ImageSources.camera) {
-      image = await ImagePicker()
-          .pickImage(source: ImageSource.camera, imageQuality: imageQuality);
+      image = await ImagePicker().pickImage(
+        source: ImageSource.camera,
+        imageQuality: imageQuality,
+      );
     } else if (source == ImageSources.gallery) {
-      image = await ImagePicker()
-          .pickImage(source: ImageSource.gallery, imageQuality: imageQuality);
+      image = await ImagePicker().pickImage(
+        source: ImageSource.gallery,
+        imageQuality: imageQuality,
+      );
     } else if (source == ImageSources.file) {
       var result = await FilePicker.platform.pickFiles(
-          allowMultiple: false,
-          type: type ?? FileType.image,
-          withData: true,
-          allowedExtensions: allowedExtensions,
-          compressionQuality: imageQuality ?? 30);
+        allowMultiple: false,
+        type: type ?? FileType.image,
+        withData: true,
+        allowedExtensions: allowedExtensions,
+        compressionQuality: imageQuality ?? 30,
+      );
       if (result != null && result.files.isNotEmpty) {
         var first = result.files.first;
         image = first.xFile;
@@ -89,15 +94,14 @@ class PickFile {
     }
   }
 
-  static Future<FileData?> file({
-    int? maxFileSizeInMb,
-  }) async {
+  static Future<FileData?> file({int? maxFileSizeInMb}) async {
     XFile? image;
     var result = await FilePicker.platform.pickFiles(
-        allowMultiple: false,
-        type: FileType.custom,
-        allowedExtensions: ['pdf'],
-        withData: true);
+      allowMultiple: false,
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+      withData: true,
+    );
     if (result != null && result.files.isNotEmpty) {
       var first = result.files.first;
       image = first.xFile;
@@ -138,77 +142,86 @@ class PickFile {
 
     var croppedImage = await Get.bottomSheet<Uint8List>(
       SizedBox(
-        child: Column(children: [
-          Expanded(
-            child: CustomImageCrop(
-              backgroundColor: Colors.white,
-              cropController: controller,
+        child: Column(
+          children: [
+            Expanded(
+              child: CustomImageCrop(
+                backgroundColor: Colors.white,
+                cropController: controller,
 
-              shape: CustomCropShape.Square,
-              customProgressIndicator: LoadingAnimationWidget.fourRotatingDots(
-                color: AppColors.PRIMARY1,
-                size: 30.ss,
+                shape: CustomCropShape.Square,
+                customProgressIndicator:
+                    LoadingAnimationWidget.fourRotatingDots(
+                      color: AppColors.PRIMARY1,
+                      size: 30.ss,
+                    ),
+                image: MemoryImage(
+                  bytes,
+                ), // Any Imageprovider will work, try with a NetworkImage for example...
               ),
-              image: MemoryImage(
-                bytes,
-              ), // Any Imageprovider will work, try with a NetworkImage for example...
             ),
-          ),
-          SizedBox(
-            height: 0.1.sh,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
+            SizedBox(
+              height: 0.1.sh,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
                     icon: const Icon(Icons.refresh),
-                    onPressed: controller.reset),
-                IconButton(
+                    onPressed: controller.reset,
+                  ),
+                  IconButton(
                     icon: const Icon(Icons.zoom_in),
                     onPressed: () =>
-                        controller.addTransition(CropImageData(scale: 1.1))),
-                IconButton(
+                        controller.addTransition(CropImageData(scale: 1.1)),
+                  ),
+                  IconButton(
                     icon: const Icon(Icons.zoom_out),
                     onPressed: () =>
-                        controller.addTransition(CropImageData(scale: 0.9))),
-                IconButton(
+                        controller.addTransition(CropImageData(scale: 0.9)),
+                  ),
+                  IconButton(
                     icon: const Icon(Icons.rotate_left),
-                    onPressed: () => controller
-                        .addTransition(CropImageData(angle: -pi / 4))),
-                IconButton(
+                    onPressed: () =>
+                        controller.addTransition(CropImageData(angle: -pi / 4)),
+                  ),
+                  IconButton(
                     icon: const Icon(Icons.rotate_right),
                     onPressed: () =>
-                        controller.addTransition(CropImageData(angle: pi / 4))),
-              ],
+                        controller.addTransition(CropImageData(angle: pi / 4)),
+                  ),
+                ],
+              ),
             ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              FilledButton(
-                child: const Text('Save'),
-                onPressed: () async {
-                  var image = await Get.showOverlay<MemoryImage?>(
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FilledButton(
+                  child: const Text('Save'),
+                  onPressed: () async {
+                    var image = await Get.showOverlay<MemoryImage?>(
                       asyncFunction: controller.onCropImage,
                       loadingWidget: Center(
                         child: LoadingAnimationWidget.fourRotatingDots(
                           color: AppColors.PRIMARY1,
                           size: 30.ss,
                         ),
-                      ));
+                      ),
+                    );
 
-                  Get.back(result: image?.bytes);
-                  // Delete file here
-                },
-              ),
-              horizontalSpaceMedium,
-              FilledButton(
-                child: const Text('Cancel'),
-                onPressed: () => Get.back(),
-              ),
-            ],
-          ),
-          verticalSpaceRegular,
-        ]),
+                    Get.back(result: image?.bytes);
+                    // Delete file here
+                  },
+                ),
+                horizontalSpaceMedium,
+                FilledButton(
+                  child: const Text('Cancel'),
+                  onPressed: () => Get.back(),
+                ),
+              ],
+            ),
+            verticalSpaceRegular,
+          ],
+        ),
       ),
       backgroundColor: Colors.white,
       isScrollControlled: true,

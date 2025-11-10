@@ -1,6 +1,6 @@
-import 'package:KIWOO/app/data/default_with_auth_provider.dart';
-import 'package:KIWOO/app/data/models/server_response_model.dart';
-import 'package:KIWOO/app/data/models/user_profil_update.dart';
+import 'package:kiwoo/app/data/default_with_auth_provider.dart';
+import 'package:kiwoo/app/data/models/server_response_model.dart';
+import 'package:kiwoo/app/data/models/user_profil_update.dart';
 import 'package:get/get.dart';
 
 import '../core/api_helper/core_service.dart';
@@ -11,16 +11,15 @@ import 'models/document_model.dart';
 class AppServiceProvider extends DefaultWithAuthProvider {
   Future<ServerResponseModel?> getUserDetails() async {
     var response = await tryCatch(() async {
-      var response = await get<ServerResponseModel>(
-        Url.GET_PROFILE_DETAILS,
-      );
+      var response = await get<ServerResponseModel>(Url.GET_PROFILE_DETAILS);
       return CoreService.returnResponse(response);
     });
     return response;
   }
 
-  Future<ServerResponseModel?> updateUserProfile(
-      {required UserProfilUpdate profil}) async {
+  Future<ServerResponseModel?> updateUserProfile({
+    required UserProfilUpdate profil,
+  }) async {
     var response = await tryCatch(() async {
       var response = await patch<ServerResponseModel>(
         Url.UPDATE_PROFILE,
@@ -33,27 +32,30 @@ class AppServiceProvider extends DefaultWithAuthProvider {
 
   Future<ServerResponseModel?> getUserBalance() async {
     var response = await tryCatch(() async {
-      var response = await get<ServerResponseModel>(
-        Url.BALANCE,
-      );
+      var response = await get<ServerResponseModel>(Url.BALANCE);
       return CoreService.returnResponse(response);
     });
     return response;
   }
 
-  Future<ServerResponseModel?> uploadProfilPicture(FileData document,
-      {dynamic Function(double)? uploadProgress}) async {
+  Future<ServerResponseModel?> uploadProfilPicture(
+    FileData document, {
+    dynamic Function(double)? uploadProgress,
+  }) async {
     var data = FormData({
       "file": MultipartFile(
         document.bytes,
         filename: document.name,
         contentType: document.mimeType,
-      )
+      ),
     });
     var response = await tryCatch(() async {
       var response = await post<ServerResponseModel>(
-          Url.UPLOAD_PROFILE_IMAGE, data,
-          contentType: 'multipart/form-data', uploadProgress: uploadProgress);
+        Url.UPLOAD_PROFILE_IMAGE,
+        data,
+        contentType: 'multipart/form-data',
+        uploadProgress: uploadProgress,
+      );
       return CoreService.returnResponse(response);
     });
     return response;
@@ -61,8 +63,9 @@ class AppServiceProvider extends DefaultWithAuthProvider {
 
   Future<ServerResponseModel?> updateFMCToken({required String token}) async {
     var response = await tryCatch(() async {
-      var response = await patch<ServerResponseModel>(
-          Url.UPDATE_PROFILE, {'token': token});
+      var response = await patch<ServerResponseModel>(Url.UPDATE_PROFILE, {
+        'token': token,
+      });
       return CoreService.returnResponse(response);
     });
     return response;

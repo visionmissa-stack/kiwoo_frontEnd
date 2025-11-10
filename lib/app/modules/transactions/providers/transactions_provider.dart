@@ -1,4 +1,4 @@
-import 'package:KIWOO/app/core/utils/enums.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
 
 import '../../../core/api_helper/core_service.dart';
 import '../../../core/api_helper/urls.dart';
@@ -7,8 +7,10 @@ import '../../../data/default_with_auth_provider.dart';
 import '../../../data/models/server_response_model.dart';
 
 class TransactionsProvider extends DefaultWithAuthProvider {
-  Future<ServerResponseModel?> getvalidationInfo(
-      {required String phone, required double amount}) async {
+  Future<ServerResponseModel?> getvalidationInfo({
+    required String phone,
+    required double amount,
+  }) async {
     var params = {'phone_number': phone, 'amount': '$amount'};
     var response = await tryCatch(() async {
       var response = await get<ServerResponseModel>(
@@ -20,12 +22,11 @@ class TransactionsProvider extends DefaultWithAuthProvider {
     return response;
   }
 
-  Future<ServerResponseModel?> sendMoney(
-      {required int transactionID, required String pin}) async {
-    var body = {
-      "transaction_id": transactionID,
-      'pin': pin,
-    };
+  Future<ServerResponseModel?> sendMoney({
+    required int transactionID,
+    required String pin,
+  }) async {
+    var body = {"transaction_id": transactionID, 'pin': pin};
     var response = await tryCatch(() async {
       var response = await post<ServerResponseModel>(Url.TRANSFER_MONEY, body);
       return CoreService.returnResponse(response);
@@ -33,22 +34,28 @@ class TransactionsProvider extends DefaultWithAuthProvider {
     return response;
   }
 
-  Future<ServerResponseModel?> getTransactions(
-      {required int page, required int perPage}) async {
+  Future<ServerResponseModel?> getTransactions({
+    required int page,
+    required int perPage,
+  }) async {
     var params = {'page': '$page', 'per_page': '$perPage'};
     var response = await tryCatch(() async {
-      var response =
-          await get<ServerResponseModel>(Url.TRANSACTIONS, query: params);
+      var response = await get<ServerResponseModel>(
+        Url.TRANSACTIONS,
+        query: params,
+      );
       return CoreService.returnResponse(response);
     });
     return response;
   }
 
-  Future<ServerResponseModel?> getTransactionDetailAPI(
-      {required int id}) async {
+  Future<ServerResponseModel?> getTransactionDetailAPI({
+    required int id,
+  }) async {
     var response = await tryCatch(() async {
-      var response =
-          await get<ServerResponseModel>(Url.TRANSACTIONS + id.toString());
+      var response = await get<ServerResponseModel>(
+        Url.TRANSACTIONS + id.toString(),
+      );
       return CoreService.returnResponse(response);
     });
     return response;
@@ -62,12 +69,15 @@ class TransactionsProvider extends DefaultWithAuthProvider {
     return response;
   }
 
-  Future<ServerResponseModel?> getLedgerDetailAPI2(
-      {required String id, required TransactionMethod method}) async {
+  Future<ServerResponseModel?> getLedgerDetailAPI2({
+    required String id,
+    required TransactionMethod method,
+  }) async {
     var response = await tryCatch(() async {
       var response = await get<ServerResponseModel>(
-          Url.CASH_DETAIL_METHOD + method.name,
-          query: {"transactionId": id});
+        Url.CASH_DETAIL_METHOD + method.name,
+        query: {"transactionId": id},
+      );
       return CoreService.returnResponse(response);
     });
     return response;

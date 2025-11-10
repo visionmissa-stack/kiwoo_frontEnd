@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/formatters/extension.dart';
-import 'package:KIWOO/app/global_widgets/app_bar.dart';
+import 'package:kiwoo/app/core/utils/formatters/extension.dart';
+import 'package:kiwoo/app/global_widgets/app_bar.dart';
 
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
@@ -27,10 +27,7 @@ class LoangivenDetailView extends GetView {
             children: [
               lableWidget(lbl: "Name", val: loan?.user?.name),
               SizedBox(height: 8.ss),
-              lableWidget(
-                lbl: "Amount",
-                val: "${loan?.amount} EHTG",
-              ),
+              lableWidget(lbl: "Amount", val: "${loan?.amount} EFCA"),
               SizedBox(height: 8.ss),
               lableWidget(
                 lbl: "Tenure",

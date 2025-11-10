@@ -98,7 +98,7 @@ class AppStrings {
   static const String STAR_SIGN = "* ";
   static const String NO_DATA_FOUND = "No data found";
   static const String ENTER_LOAN_AMOUNT = "Enter Loan Amount (\$)";
-  static const String ENTER_AMOUNT = "Enter Amount (EHTG)";
+  static const String ENTER_AMOUNT = "Enter Amount (EFCA)";
   static const String ENTER_LOAN_INTEREST = "Enter Loan Interest (%)";
   static const String ENTER_LOAN_MONTHS = "Enter Tenure (Months)";
   static const String SELECT_LOAN_LENDER = "Select Loan Lender";
@@ -128,7 +128,7 @@ class AppStrings {
       "Please enter confirm new password";
   static const String DOES_NOT_MATCH_CONFIRM_PASSWORD =
       "Does not match new password and confirm password";
-  static const String PLS_MIN_AMOUNT = "Please enter a minimum of 100 EHTG";
+  static const String PLS_MIN_AMOUNT = "Please enter a minimum of 100 EFCA";
   static const String PLS_ENTER_INCOME = "Please enter your Income";
   static const String PLS_ENTER_OCCUPATION = "Please Enter your Occupation";
   static const String PLS_ENTER_ADDRESS = "Please Enter your Address";
@@ -137,7 +137,7 @@ class AppStrings {
   static const String PLS_ENTER_COUNTRY = "Please Enter your Country";
   static const String PLS_ENTER_ZIPCODE = "Please Enter your ZipCode";
 
-// AppBar title
+  // AppBar title
   static const String REQUEST_LOAN = "Request Loan";
   static const String LOAN_REQUEST_DETAIL = "Loan Request Detail";
   static const String GENERAL_CHAT = "General chat";

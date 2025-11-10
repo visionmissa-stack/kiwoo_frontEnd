@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:KIWOO/app/core/utils/formatters/extension.dart';
+import 'package:kiwoo/app/core/utils/formatters/extension.dart';
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/app_utility.dart';
+import 'package:kiwoo/app/core/utils/app_utility.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 
@@ -22,10 +22,10 @@ class ListBuilderWidget<T> extends GetView {
     this.onItems,
     this.physics,
     this.separatorBuilder,
-  })  : future = null,
-        futureSearch = null,
-        futureBuilder = null,
-        onSearch = null;
+  }) : future = null,
+       futureSearch = null,
+       futureBuilder = null,
+       onSearch = null;
 
   ListBuilderWidget.future({
     super.key,
@@ -37,9 +37,9 @@ class ListBuilderWidget<T> extends GetView {
     this.physics,
     this.separatorBuilder,
     required this.future,
-  })  : items = initialData ?? [],
-        futureSearch = null,
-        onSearch = null;
+  }) : items = initialData ?? [],
+       futureSearch = null,
+       onSearch = null;
 
   ListBuilderWidget.futureWithSearch({
     super.key,
@@ -52,25 +52,36 @@ class ListBuilderWidget<T> extends GetView {
     this.physics,
     this.separatorBuilder,
     required this.onSearch,
-  })  : future = null,
-        items = initialData ?? [];
+  }) : future = null,
+       items = initialData ?? [];
 
-  final List<T> Function(String searchValue, List<T>? data,
-      RefreshData refreshData, bool isLoading)? onSearch;
+  final List<T> Function(
+    String searchValue,
+    List<T>? data,
+    RefreshData refreshData,
+    bool isLoading,
+  )?
+  onSearch;
   final Widget Function(BuildContext context, int index, T item)?
-      separatorBuilder;
+  separatorBuilder;
 
   final String onEmptyText;
   final List<T> items;
   final Future<List<T>?> Function()? future;
   final Future<List<T>?> Function([String?])? futureSearch;
-  final Widget? Function(BuildContext, T, RefreshData? refreshFuture,
-      [T? previous]) itemBuilder;
+  final Widget? Function(
+    BuildContext,
+    T,
+    RefreshData? refreshFuture, [
+    T? previous,
+  ])
+  itemBuilder;
   final Widget Function(
     BuildContext,
     List<T>,
     Widget Function(List<T>, [RefreshData refreshFuture]),
-  )? futureBuilder;
+  )?
+  futureBuilder;
   final List<T> Function(List<T>)? onItems;
   final ScrollPhysics? physics;
 
@@ -121,8 +132,12 @@ class ListBuilderWidget<T> extends GetView {
     builder(context, index) {
       T value = items[index];
 
-      return itemBuilder(context, value, refreshFuture,
-          (index == 0 ? null : items[index - 1]));
+      return itemBuilder(
+        context,
+        value,
+        refreshFuture,
+        (index == 0 ? null : items[index - 1]),
+      );
     }
 
     if (separatorBuilder != null) {
@@ -168,7 +183,7 @@ class FutureDataBuilder<T> extends GetView {
   final T? initialData;
   final Future<T?> Function() future;
   final Widget Function(BuildContext, T, RefreshData refreshFuture)
-      futureBuilder;
+  futureBuilder;
   final T Function(T)? onItems;
   final ScrollPhysics? physics;
   final bool Function(T?) isEmpty;
@@ -200,11 +215,15 @@ class FutureDataBuilder<T> extends GetView {
           }
           if (snapshot.hasError) {
             custom = Center(
-              child: onError?.call(snapshot.error!) ??
-                  const Column(mainAxisSize: MainAxisSize.min, children: [
-                    Text("Something went Wrong!!!"),
-                    Text("Swipe Down to retry")
-                  ]),
+              child:
+                  onError?.call(snapshot.error!) ??
+                  const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text("Something went Wrong!!!"),
+                      Text("Swipe Down to retry"),
+                    ],
+                  ),
             );
           }
           var data = snapshot.data;
@@ -224,24 +243,26 @@ class FutureDataBuilder<T> extends GetView {
             refreshIndicator: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black54,
-                            blurRadius: 2,
-                            offset: Offset(0, 2) // Shadow position
-                            ),
-                      ]),
-                  padding: const EdgeInsets.all(8),
-                  child: loadingAnimation()),
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black54,
+                      blurRadius: 2,
+                      offset: Offset(0, 2), // Shadow position
+                    ),
+                  ],
+                ),
+                padding: const EdgeInsets.all(8),
+                child: loadingAnimation(),
+              ),
             ),
             child: layoutBuilderWithAlwaytScoll(
-                scrool: !_eraseAll && custom != null || autoAddScroll,
-                child:
-                    custom ?? futureBuilder(context, data as T, refreshFuture)),
+              scrool: !_eraseAll && custom != null || autoAddScroll,
+              child: custom ?? futureBuilder(context, data as T, refreshFuture),
+            ),
           );
         },
       );
@@ -280,7 +301,8 @@ class ListFutureBuilderWithSearch<T>
 
   @override
   get controller => Get.put<ListFutureBuilderWithSearchController>(
-      ListFutureBuilderWithSearchController());
+    ListFutureBuilderWithSearchController(),
+  );
 
   // final T Function(
   //         String seachText, T? data, RefreshData refreshFuture, bool isLoading)
@@ -291,7 +313,7 @@ class ListFutureBuilderWithSearch<T>
   final T? initialData;
   final Future<T?> Function([String? search]) future;
   final Widget Function(BuildContext, T, RefreshData refreshFuture)
-      futureBuilder;
+  futureBuilder;
   final Widget Function(void Function(String) onChanged)? searchInput;
   final T Function(T)? onItems;
   final ScrollPhysics? physics;
@@ -311,29 +333,31 @@ class ListFutureBuilderWithSearch<T>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        searchInput?.call(
-              (value) {
-                if (controller._debounce?.isActive ?? false) {
-                  controller._debounce?.cancel();
-                }
-                controller._debounce =
-                    Timer(const Duration(milliseconds: 500), () {
+        searchInput?.call((value) {
+              if (controller._debounce?.isActive ?? false) {
+                controller._debounce?.cancel();
+              }
+              controller._debounce = Timer(
+                const Duration(milliseconds: 500),
+                () {
                   controller.searchValue.value = value;
                   refreshFuture();
-                });
-              },
-            ) ??
+                },
+              );
+            }) ??
             SearchCustomInputFormField(
               borderColor: AppColors.BLACK,
               onChanged: (value) {
                 if (controller._debounce?.isActive ?? false) {
                   controller._debounce?.cancel();
                 }
-                controller._debounce =
-                    Timer(const Duration(milliseconds: 500), () {
-                  controller.searchValue.value = value;
-                  refreshFuture();
-                });
+                controller._debounce = Timer(
+                  const Duration(milliseconds: 500),
+                  () {
+                    controller.searchValue.value = value;
+                    refreshFuture();
+                  },
+                );
               },
             ),
         Expanded(
@@ -373,24 +397,28 @@ class ListFutureBuilderWithSearch<T>
                   refreshIndicator: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                        clipBehavior: Clip.antiAlias,
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.black54,
-                                  blurRadius: 2,
-                                  offset: Offset(0, 2) // Shadow position
-                                  ),
-                            ]),
-                        padding: const EdgeInsets.all(8),
-                        child: loadingAnimation()),
+                      clipBehavior: Clip.antiAlias,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black54,
+                            blurRadius: 2,
+                            offset: Offset(0, 2), // Shadow position
+                          ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.all(8),
+                      child: loadingAnimation(),
+                    ),
                   ),
                   child: layoutBuilderWithAlwaytScoll(
-                      scrool: !_eraseAll && custom != null || autoAddScroll,
-                      child: custom ??
-                          futureBuilder(context, data as T, refreshFuture)),
+                    scrool: !_eraseAll && custom != null || autoAddScroll,
+                    child:
+                        custom ??
+                        futureBuilder(context, data as T, refreshFuture),
+                  ),
                 );
               },
             );
@@ -422,7 +450,8 @@ class FutureBuilderWithSearch<T>
 
   @override
   get controller => Get.put<ListFutureBuilderWithSearchController>(
-      ListFutureBuilderWithSearchController());
+    ListFutureBuilderWithSearchController(),
+  );
 
   // final T Function(
   //         String seachText, T? data, RefreshData refreshFuture, bool isLoading)
@@ -433,7 +462,12 @@ class FutureBuilderWithSearch<T>
   final T? initialData;
   final Future<T?> Function([String? search]) future;
   final Widget Function(
-      BuildContext, T, bool isLoading, RefreshData refreshFuture) futureBuilder;
+    BuildContext,
+    T,
+    bool isLoading,
+    RefreshData refreshFuture,
+  )
+  futureBuilder;
   final Widget Function(void Function(String) onChanged)? searchInput;
   final T Function(T)? onItems;
   final ScrollPhysics? physics;
@@ -454,29 +488,31 @@ class FutureBuilderWithSearch<T>
     return ListView(
       physics: pullRefresh ? const NeverScrollableScrollPhysics() : null,
       children: [
-        searchInput?.call(
-              (value) {
-                if (controller._debounce?.isActive ?? false) {
-                  controller._debounce?.cancel();
-                }
-                controller._debounce =
-                    Timer(const Duration(milliseconds: 500), () {
+        searchInput?.call((value) {
+              if (controller._debounce?.isActive ?? false) {
+                controller._debounce?.cancel();
+              }
+              controller._debounce = Timer(
+                const Duration(milliseconds: 500),
+                () {
                   controller.searchValue.value = value;
                   refreshFuture();
-                });
-              },
-            ) ??
+                },
+              );
+            }) ??
             SearchCustomInputFormField(
               borderColor: AppColors.BLACK,
               onChanged: (value) {
                 if (controller._debounce?.isActive ?? false) {
                   controller._debounce?.cancel();
                 }
-                controller._debounce =
-                    Timer(const Duration(milliseconds: 500), () {
-                  controller.searchValue.value = value;
-                  refreshFuture();
-                });
+                controller._debounce = Timer(
+                  const Duration(milliseconds: 500),
+                  () {
+                    controller.searchValue.value = value;
+                    refreshFuture();
+                  },
+                );
               },
             ),
         Obx(() {
@@ -498,10 +534,11 @@ class FutureBuilderWithSearch<T>
 
               if (!pullRefresh) {
                 return futureBuilder(
-                    context,
-                    data as T,
-                    snapshot.connectionState == ConnectionState.waiting,
-                    refreshFuture);
+                  context,
+                  data as T,
+                  snapshot.connectionState == ConnectionState.waiting,
+                  refreshFuture,
+                );
               }
 
               return CustomRefreshIndicator(
@@ -511,28 +548,33 @@ class FutureBuilderWithSearch<T>
                 refreshIndicator: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                      clipBehavior: Clip.antiAlias,
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.black54,
-                                blurRadius: 2,
-                                offset: Offset(0, 2) // Shadow position
-                                ),
-                          ]),
-                      padding: const EdgeInsets.all(8),
-                      child: loadingAnimation()),
+                    clipBehavior: Clip.antiAlias,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black54,
+                          blurRadius: 2,
+                          offset: Offset(0, 2), // Shadow position
+                        ),
+                      ],
+                    ),
+                    padding: const EdgeInsets.all(8),
+                    child: loadingAnimation(),
+                  ),
                 ),
                 child: layoutBuilderWithAlwaytScoll(
-                    scrool: autoAddScroll,
-                    child: custom ??
-                        futureBuilder(
-                            context,
-                            data as T,
-                            snapshot.connectionState == ConnectionState.waiting,
-                            refreshFuture)),
+                  scrool: autoAddScroll,
+                  child:
+                      custom ??
+                      futureBuilder(
+                        context,
+                        data as T,
+                        snapshot.connectionState == ConnectionState.waiting,
+                        refreshFuture,
+                      ),
+                ),
               );
             },
           );

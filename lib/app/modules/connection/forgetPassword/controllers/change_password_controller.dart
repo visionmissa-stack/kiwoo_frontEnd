@@ -1,7 +1,7 @@
 // import 'dart:async';
 
 // import 'package:flutter/material.dart';
-// import 'package:KIWOO/app/modules/connection/providers/connection_provider.dart';
+// import 'package:kiwoo/app/modules/connection/providers/connection_provider.dart';
 // import 'package:get/get.dart';
 
 // import '../../../../core/utils/app_utility.dart';

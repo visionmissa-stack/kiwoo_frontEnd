@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:KIWOO/app/core/utils/actions/overlay.dart';
+import 'package:kiwoo/app/core/utils/actions/overlay.dart';
 import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
@@ -13,7 +13,7 @@ import '../providers/connection_provider.dart';
 class OTPController extends GetxController with StateMixin<bool> {
   OTPController({required this.otpContacted}) : type = OTPType.register;
   OTPController.forgotPassword({required this.otpContacted})
-      : type = OTPType.forgotPassword;
+    : type = OTPType.forgotPassword;
   late final ConnectionProvider provider;
   late final RxString pin;
   late final Rx<int> secondsRemaining;
@@ -42,8 +42,11 @@ class OTPController extends GetxController with StateMixin<bool> {
 
   Future<bool> verifyOtpApi() async {
     try {
-      var response =
-          await provider.verifyOTP(otpContacted, pin.value, type.name);
+      var response = await provider.verifyOTP(
+        otpContacted,
+        pin.value,
+        type.name,
+      );
 
       if (response?.isSuccess == true) {
         await response!.showMessage()?.future;
@@ -59,8 +62,10 @@ class OTPController extends GetxController with StateMixin<bool> {
 
   Future<void> requestOtp() async {
     try {
-      var response =
-          await provider.askForOtpApi(otpContacted.trim(), type.name);
+      var response = await provider.askForOtpApi(
+        otpContacted.trim(),
+        type.name,
+      );
       if (response?.isSuccess == true) {
         var registerData = OTPModel.fromMap(response!.data!);
         updateDuration(registerData.otpValidity!);

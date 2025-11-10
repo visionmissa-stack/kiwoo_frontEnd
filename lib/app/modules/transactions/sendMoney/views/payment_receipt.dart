@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/font_family.dart';
-import 'package:KIWOO/app/core/utils/formatters/extension.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/core/utils/formatters/extension.dart';
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
 
@@ -20,20 +20,20 @@ class PaymentReceipt extends GetView {
   const PaymentReceipt({super.key, required this.receipt});
   final PaymentReceiptData receipt;
   List<Map<String, dynamic>> get listMap => [
-        {'title': "Amount", "value": receipt.amount.toEGTH},
-        {'title': "Fee", "value": receipt.fees.toEGTH},
-        {'title': "tax", "value": receipt.tax.toEGTH},
-        {
-          'title': "from",
-          "value": receipt.senderInfo.name,
-          'subtitle': receipt.senderInfo.phone
-        },
-        {
-          'title': "To",
-          "value": receipt.receiverInfo.name,
-          'subtitle': receipt.receiverInfo.phone
-        },
-      ];
+    {'title': "Amount", "value": receipt.amount.toEGTH},
+    {'title': "Fee", "value": receipt.fees.toEGTH},
+    {'title': "tax", "value": receipt.tax.toEGTH},
+    {
+      'title': "from",
+      "value": receipt.contact.name,
+      'subtitle': receipt.contact.phone,
+    },
+    {
+      'title': "To",
+      "value": receipt.contact.name,
+      'subtitle': receipt.contact.phone,
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,8 +43,8 @@ class PaymentReceipt extends GetView {
           children: [
             //header
             const SafeArea(child: verticalSpaceLarge),
-            //body
 
+            //body
             SizedBox(
               width: 1.sw - .03.sw * 2,
               child: Stack(
@@ -65,11 +65,13 @@ class PaymentReceipt extends GetView {
                             fontSize: 17.fss,
                           ),
                         ),
-                        Text("ID # ${receipt.id.toString().padLeft(6, '0')}",
-                            style: _titleStile.copyWith(
-                              fontFamily: FontPoppins.REGULAR,
-                              fontSize: 16.fss,
-                            )),
+                        Text(
+                          "ID # ${receipt.id.toString().padLeft(6, '0')}",
+                          style: _titleStile.copyWith(
+                            fontFamily: FontPoppins.REGULAR,
+                            fontSize: 16.fss,
+                          ),
+                        ),
                         ListView.separated(
                           shrinkWrap: true,
                           primary: false,
@@ -79,12 +81,13 @@ class PaymentReceipt extends GetView {
 
                             return Padding(
                               padding: EdgeInsets.only(
-                                  left: .06.sw,
-                                  right: .06.sw,
-                                  top: 0.01.sh,
-                                  bottom:
-                                      (index == listMap.length - 1 ? 10 : 0) +
-                                          0.01.sh),
+                                left: .06.sw,
+                                right: .06.sw,
+                                top: 0.01.sh,
+                                bottom:
+                                    (index == listMap.length - 1 ? 10 : 0) +
+                                    0.01.sh,
+                              ),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -100,21 +103,19 @@ class PaymentReceipt extends GetView {
                                       children: [
                                         if (currentVal['subtitle'] != null)
                                           TextSpan(
-                                              text:
-                                                  "\n${currentVal['subtitle']}")
+                                            text: "\n${currentVal['subtitle']}",
+                                          ),
                                       ],
                                     ),
                                     textAlign: TextAlign.end,
                                     style: _titleStile,
-                                  )
+                                  ),
                                 ],
                               ),
                             );
                           },
                           separatorBuilder: (context, index) {
-                            return Divider(
-                              color: AppColors.PRIMARY,
-                            );
+                            return Divider(color: AppColors.PRIMARY);
                           },
                         ),
                       ],
@@ -146,7 +147,7 @@ class PaymentReceipt extends GetView {
                     height: 40,
                     onTap: () => Get.offAllNamed(Routes.HOME),
                   ),
-                )
+                ),
               ],
             ),
           ],

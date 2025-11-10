@@ -1,4 +1,4 @@
-import 'package:KIWOO/app/modules/connection/providers/connection_provider.dart';
+import 'package:kiwoo/app/modules/connection/providers/connection_provider.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/cache_manager.dart';

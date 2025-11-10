@@ -8,7 +8,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:get_storage_pro/get_storage_pro.dart';
 
-import 'package:KIWOO/app/data/models/user_detail_model.dart';
+import 'package:kiwoo/app/data/models/user_detail_model.dart';
 
 @gsp
 class CurrentUser extends CommonDataClass<CurrentUser> {
@@ -18,10 +18,7 @@ class CurrentUser extends CommonDataClass<CurrentUser> {
   UserDetailModel? userDetails;
   int unReadNotification;
 
-  CurrentUser({
-    this.userDetails,
-    this.unReadNotification = 0,
-  });
+  CurrentUser({this.userDetails, this.unReadNotification = 0});
 
   CurrentUser copyWith({
     UserDetailModel? userDetails,
@@ -78,13 +75,7 @@ class UserData {
   String? email;
   List<Balance>? balances;
 
-  UserData({
-    this.id,
-    this.authToken,
-    this.name,
-    this.email,
-    this.balances,
-  });
+  UserData({this.id, this.authToken, this.name, this.email, this.balances});
 
   UserData copyWith({
     int? id,
@@ -118,11 +109,9 @@ class UserData {
       authToken: map['auth_token'] != null ? map['auth_token'] as String : null,
       name: map['name'] != null ? map['name'] as String : null,
       email: map['email'] != null ? map['email'] as String : null,
-      balances: List.from(map['balances'] ?? [])
-          .map(
-            (x) => Balance.fromMap(x as Map<String, dynamic>),
-          )
-          .toList(),
+      balances: List.from(
+        map['balances'] ?? [],
+      ).map((x) => Balance.fromMap(x as Map<String, dynamic>)).toList(),
     );
   }
 

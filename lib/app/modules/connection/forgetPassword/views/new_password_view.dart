@@ -1,5 +1,5 @@
-import 'package:KIWOO/app/core/utils/actions/overlay.dart';
-import 'package:KIWOO/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/core/utils/actions/overlay.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -23,9 +23,7 @@ class NewPasswordView extends GetView<ForgetPasswordController> {
     //Get.toNamed(otpScreen, arguments: {"email": ""});
     if (controller.formKeyNewPass.currentState?.validate() == true) {
       controller.formKeyNewPass.currentState?.save();
-      showOverlay(
-        asyncFunction: controller.resetPassword,
-      );
+      showOverlay(asyncFunction: controller.resetPassword);
     }
   }
 
@@ -35,9 +33,7 @@ class NewPasswordView extends GetView<ForgetPasswordController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const PresentationPageHeader(
-              pageTitle: AppStrings.CHANGE_PASSWORD,
-            ),
+            const PresentationPageHeader(pageTitle: AppStrings.CHANGE_PASSWORD),
             verticalSpaceRegular,
             Form(
               key: controller.formKeyNewPass,
@@ -45,9 +41,7 @@ class NewPasswordView extends GetView<ForgetPasswordController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.ss,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20.ss),
                     child: CustomInputFormField(
                       obscureText: true,
                       label: AppStrings.NEW_PASSWORD,
@@ -67,9 +61,7 @@ class NewPasswordView extends GetView<ForgetPasswordController> {
                   ),
                   verticalSpaceMedium,
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.ss,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20.ss),
                     child: CustomInputFormField(
                       obscureText: true,
                       label: AppStrings.CONFIRM_NEW_PASSWORD,

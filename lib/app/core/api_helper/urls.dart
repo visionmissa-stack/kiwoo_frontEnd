@@ -3,7 +3,7 @@
 import 'package:flutter/foundation.dart';
 
 class Url {
-  static const _url = kDebugMode ? "10.0.2.2" : "app-bck.kiwoo.io";
+  static const _url = kDebugMode ? "localhost" : "app-bck.kiwoo.io";
   static const BASE_URL = kDebugMode ? "http://$_url:3000/" : "https://$_url/";
   static const SOCKET_URL = "${BASE_URL}chat_socket";
   static const LOGIN = "auth/signin";

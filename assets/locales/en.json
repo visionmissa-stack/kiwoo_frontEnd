@@ -1,0 +1,64 @@
+{
+  "buttons": {
+    "login": "Login",
+    "sign_in": "Sign-in",
+    "logout": "Logout",
+    "sign_in_fb": "Sign-in with Facebook",
+    "sign_in_google": "Sign-in with Google",
+    "sign_in_apple": "Sign-in with Apple"
+  },
+  "direction": {
+    "inbound": "Received",
+    "outbound": "Send"
+  },
+  "direPreposition": {
+    "inbound": "from",
+    "outbound": "to"
+  },
+  "transactionStatus": {
+    "failed": "Failed",
+    "success": "Success",
+    "adverbe": {
+      "failed": "successfully",
+      "success": "successfully"
+    }
+  },
+
+  "PASTTENSE": {
+    "ACCEPTED": "accepted",
+    "REJECTED": "rejected",
+    "RECEIVED": "received",
+    "SENT": "sent"
+  },
+  "PREPOSITION": {
+    "inbound": "from",
+    "outbound": "to"
+  },
+  "TRANSACTION": {
+    "TITLE": {
+      "chat": "New Message",
+      "transfer": "Transfer @method",
+      "loan": "Loan @pasttense",
+      "loan_Request": "Loan Request @pasttense",
+      "loanPayBack": "Loan Repayment @pasttense",
+      "loan_offer": "New Loan Offer @pasttense",
+      "loan_offer_validation": "Loan Offer @pasttense",
+      "cashin": "Deposit via @method",
+      "cashout": "Withdrawal via @method"
+    },
+    "BODY": {
+      "chat": "New Message",
+      "transfer": "You have @pasttense an amount of @amount @preposition @userName.",
+      "loan": "You have @pasttense a Loan of @amount @preposition {userName}.",
+      "loan_Request": "You have @pasttense a Loan request of @amount @preposition {userName}.",
+      "loanPayBack": "You have @pasttense a Loan repayment of @amount @preposition @userName.",
+      "loan_offer": "You have @pasttense an offer for the Loan of @amount @preposition @userName.",
+      "loan_offer_validation": {
+        "inbound": "Your loan offer of @amount to @userName has been @pasttense.",
+        "outbound": "You have @pasttense the loan offer of @amount from @userName."
+      },
+      "cashin": "You have made a deposit of @amount via @method.",
+      "cashout": "You have made a withdrawal of @amount via @method."
+    }
+  }
+}

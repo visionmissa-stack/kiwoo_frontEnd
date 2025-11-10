@@ -1,13 +1,13 @@
-import 'package:KIWOO/app/core/utils/actions/overlay.dart';
+import 'package:kiwoo/app/core/utils/actions/overlay.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
 
-import 'package:KIWOO/app/core/utils/font_family.dart';
-import 'package:KIWOO/app/global_widgets/app_bar.dart';
-import 'package:KIWOO/app/global_widgets/avatar_network_image.dart';
-import 'package:KIWOO/app/modules/profile/controllers/profile_controller.dart';
-import 'package:KIWOO/app/routes/app_pages.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/global_widgets/app_bar.dart';
+import 'package:kiwoo/app/global_widgets/avatar_network_image.dart';
+import 'package:kiwoo/app/modules/profile/controllers/profile_controller.dart';
+import 'package:kiwoo/app/routes/app_pages.dart';
 
 import '../../../controllers/app_services_controller.dart';
 import '../../../core/utils/app_colors.dart';
@@ -23,149 +23,143 @@ class ProfilView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidgetTitle(
-        title: AppStrings.PROFILE,
-      ),
+      appBar: const AppBarWidgetTitle(title: AppStrings.PROFILE),
       body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 20.0.ss,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: 20.0.ss),
         child: ListView(
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           children: [
-            Container(
-              height: 23.ss,
-            ),
+            Container(height: 23.ss),
             Container(
               decoration: BoxDecoration(
-                  color: const Color(0xFFE8FFE2),
-                  borderRadius: BorderRadius.circular(5)),
-              child: Obx(
-                () {
-                  var avatar = controller.userDetails.value?.avatar;
-                  var email = controller.userDetails.value?.email ?? '';
-                  var userName = controller.userDetails.value?.name;
-                  var userScore =
-                      controller.userDetails.value?.extraInfo?.score;
-                  return ListTile(
-                    leading: ClipOval(
-                      child: AspectRatio(
-                        aspectRatio: 1,
-                        child: avatarImage(
-                          avatar,
-                          cacheManager: CustomCacheManager.profilCacheManager,
-                          imageBuilder: (p0, p1) => Image(image: p1),
-                          placeHolder: const Icon(
-                            Kiwoo.person,
-                            size: 40,
-                            color: Colors.green,
-                          ),
+                color: const Color(0xFFE8FFE2),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Obx(() {
+                var avatar = controller.userDetails.value?.avatar;
+                var email = controller.userDetails.value?.email ?? '';
+                var userName = controller.userDetails.value?.name;
+                var userScore = controller.userDetails.value?.extraInfo?.score;
+                return ListTile(
+                  leading: ClipOval(
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: avatarImage(
+                        avatar,
+                        cacheManager: CustomCacheManager.profilCacheManager,
+                        imageBuilder: (p0, p1) => Image(image: p1),
+                        placeHolder: const Icon(
+                          Kiwoo.person,
+                          size: 40,
+                          color: Colors.green,
                         ),
                       ),
                     ),
-                    title: Text(
-                      userName ?? "Vishal Chuahan",
-                      style: TextStyle(
-                        color: AppColors.BLACK,
-                        fontSize: 16.fss,
-                        fontFamily: FontPoppins.BOLD,
-                      ),
+                  ),
+                  title: Text(
+                    userName ?? "Vishal Chuahan",
+                    style: TextStyle(
+                      color: AppColors.BLACK,
+                      fontSize: 16.fss,
+                      fontFamily: FontPoppins.BOLD,
                     ),
-                    subtitle: Text(
-                      (email.isNotEmpty)
-                          ? email
-                          : "vishal.chauhan@yopmail.co.in",
-                      style: TextStyle(
-                        color: AppColors.BLACK.withOpacity(.6),
-                        fontSize: 11.22.fss,
-                        fontFamily: FontPoppins.REGULAR,
-                      ),
+                  ),
+                  subtitle: Text(
+                    (email.isNotEmpty) ? email : "vishal.chauhan@yopmail.co.in",
+                    style: TextStyle(
+                      color: AppColors.BLACK.withOpacity(.6),
+                      fontSize: 11.22.fss,
+                      fontFamily: FontPoppins.REGULAR,
                     ),
-                    trailing: SizedBox(
+                  ),
+                  trailing: SizedBox(
+                    height: 85,
+                    width: 45,
+                    child: RadialGaugeProgressBar2(
+                      inContainer: false,
+                      scoreTextSize: 6,
+                      scoreStatusTextSize: 4,
+                      progress:
+                          (userScore ?? 0) /
+                          850, // Progress based on credit score
+                      creditScore: userScore,
                       height: 85,
                       width: 45,
-                      child: RadialGaugeProgressBar2(
-                        inContainer: false,
-                        scoreTextSize: 6,
-                        scoreStatusTextSize: 4,
-                        progress: (userScore ?? 0) /
-                            850, // Progress based on credit score
-                        creditScore: userScore,
-                        height: 85,
-                        width: 45,
-                      ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              }),
             ),
-            Container(
-              height: 20.ss,
-            ),
+            Container(height: 20.ss),
             lableWidgetTitle(
-                title: "Edit Profile",
-                icon: Kiwoo.user_edit,
-                ontap: () {
-                  Get.to(const EditProfileView());
-                }),
+              title: "Edit Profile",
+              icon: Kiwoo.user_edit,
+              ontap: () {
+                Get.to(const EditProfileView());
+              },
+            ),
             Container(height: 15.ss),
             lableWidgetTitle(
-                title: "KYC",
-                icon: Kiwoo.kyc,
-                ontap: () {
-                  Get.toNamed(Routes.KYC);
-                }),
+              title: "KYC",
+              icon: Kiwoo.kyc,
+              ontap: () {
+                Get.toNamed(Routes.KYC);
+              },
+            ),
             Container(height: 15.ss),
             Padding(
               padding: const EdgeInsets.only(left: 2),
               child: lableWidgetTitle(
-                  title: "Change Password",
-                  icon: Kiwoo.lock,
-                  ontap: () {
-                    Get.toNamed(Routes.CHANGE_PASSWORD);
-                  }),
+                title: "Change Password",
+                icon: Kiwoo.lock,
+                ontap: () {
+                  Get.toNamed(Routes.CHANGE_PASSWORD);
+                },
+              ),
             ),
             Container(height: 15.ss),
             lableWidgetTitle(
-                title: AppStrings.ABOUT_US,
-                icon: Kiwoo.info_square_outline,
-                ontap: () {
-                  Get.toNamed(Routes.ABOUT);
-                }),
+              title: AppStrings.ABOUT_US,
+              icon: Kiwoo.info_square_outline,
+              ontap: () {
+                Get.toNamed(Routes.ABOUT);
+              },
+            ),
             Container(height: 15.ss),
             lableWidgetTitle(
-                title: AppStrings.PRIVACY_POLICY,
-                icon: Kiwoo.sheild_done_outline,
-                ontap: () {
-                  Get.toNamed(Routes.PRIVACY_POLICY);
-                }),
+              title: AppStrings.PRIVACY_POLICY,
+              icon: Kiwoo.sheild_done_outline,
+              ontap: () {
+                Get.toNamed(Routes.PRIVACY_POLICY);
+              },
+            ),
             Container(height: 15.ss),
             lableWidgetTitle(
-                title: AppStrings.TERMS_OF_USE,
-                icon: Kiwoo.lock,
-                ontap: () {
-                  Get.toNamed(Routes.TERMS_OF_USE);
-                }),
+              title: AppStrings.TERMS_OF_USE,
+              icon: Kiwoo.lock,
+              ontap: () {
+                Get.toNamed(Routes.TERMS_OF_USE);
+              },
+            ),
             Container(height: 15.ss),
             lableWidgetTitle(
-                title: AppStrings.HELP_CENTER,
-                icon: Kiwoo.help_circled_alt,
-                ontap: () {
-                  Get.toNamed(Routes.HELP_CENTER);
-                }),
+              title: AppStrings.HELP_CENTER,
+              icon: Kiwoo.help_circled_alt,
+              ontap: () {
+                Get.toNamed(Routes.HELP_CENTER);
+              },
+            ),
             Container(height: 15.ss),
             ListTile(
-              leading: const Icon(
-                Kiwoo.user_times,
-                color: Color(0xFFF75555),
-              ),
+              leading: const Icon(Kiwoo.user_times, color: Color(0xFFF75555)),
               title: Text(
                 "Deactivate My Account",
                 style: TextStyle(
-                    fontSize: 16.fss,
-                    fontFamily: FontPoppins.MEDIUM,
-                    color: const Color(0xFFF75555)),
+                  fontSize: 16.fss,
+                  fontFamily: FontPoppins.MEDIUM,
+                  color: const Color(0xFFF75555),
+                ),
               ),
               onTap: () {},
             ),
@@ -185,9 +179,10 @@ class ProfilView extends GetView<ProfileController> {
               title: Text(
                 "Logout",
                 style: TextStyle(
-                    fontSize: 16.fss,
-                    fontFamily: FontPoppins.MEDIUM,
-                    color: const Color(0xFFF75555)),
+                  fontSize: 16.fss,
+                  fontFamily: FontPoppins.MEDIUM,
+                  color: const Color(0xFFF75555),
+                ),
               ),
             ),
             Container(height: 15.ss),

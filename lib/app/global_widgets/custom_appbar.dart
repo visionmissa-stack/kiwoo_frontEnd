@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/font_family.dart';
-import 'package:KIWOO/app/core/utils/kiwoo_icons.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
 import 'package:sizing/sizing.dart';
 
 import '../core/utils/app_colors.dart';
@@ -16,25 +16,25 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool isLeftShow;
   //final bool isRightShow;
   final bool isNavigationBg;
-//   final IconData rightIcon;
+  //   final IconData rightIcon;
   List<Widget> actions;
   final GestureTapCallback onPressedLeft;
   //final GestureTapCallback onPressedRight;
 
   CustomAppBar(
-      this.contextMain,
-      this.title,
-      this.isLeftShow,
-      //this.isRightShow,
-      this.isNavigationBg,
-      //this.rightIcon,
-      this.actions,
-      this.onPressedLeft,
-      // this.onPressedRight,
-      {super.key})
-      : preferredSize = isNavigationBg
-            ? const Size.fromHeight(60.0)
-            : const Size.fromHeight(0.0);
+    this.contextMain,
+    this.title,
+    this.isLeftShow,
+    //this.isRightShow,
+    this.isNavigationBg,
+    //this.rightIcon,
+    this.actions,
+    this.onPressedLeft, {
+    // this.onPressedRight,
+    super.key,
+  }) : preferredSize = isNavigationBg
+           ? const Size.fromHeight(60.0)
+           : const Size.fromHeight(0.0);
 
   @override
   Widget build(BuildContext context) {
@@ -47,16 +47,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           stops: const [0, 1],
         ),
         borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
       ),
       child: AppBar(
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
         titleSpacing: 0,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(15),
-          ),
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
         ),
         leading: isLeftShow
             ? Padding(

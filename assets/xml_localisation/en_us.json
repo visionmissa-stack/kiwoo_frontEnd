@@ -1,6 +1,6 @@
 {
     "NOTIFICATION_TITLE_LOAN_REQUEST":"New Loan Request",
     "NOTIFICATION_TITLE_LOAN_OFFER":"New Loan Offer",
-    "NOTIFICATION_BODY_LOAN_REQUEST":"%@ sent you a loan request of %@ EHTG",
-    "NOTIFICATION_BODY_LOAN_OFFER_RECEIVED":"%@ sent you an offer for your loan of %@ EHTG"
+    "NOTIFICATION_BODY_LOAN_REQUEST":"%@ sent you a loan request of %@ EFCA",
+    "NOTIFICATION_BODY_LOAN_OFFER_RECEIVED":"%@ sent you an offer for your loan of %@ EFCA"
 }

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
 
-import 'package:KIWOO/app/core/utils/font_family.dart';
-import 'package:KIWOO/app/core/utils/formatters/extension.dart';
-import 'package:KIWOO/app/core/utils/image_name.dart';
-import 'package:KIWOO/app/global_widgets/app_bar.dart';
-import 'package:KIWOO/app/modules/chat/bindings/chat_screen_binding.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/core/utils/formatters/extension.dart';
+import 'package:kiwoo/app/core/utils/image_name.dart';
+import 'package:kiwoo/app/global_widgets/app_bar.dart';
+import 'package:kiwoo/app/modules/chat/bindings/chat_screen_binding.dart';
 
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_string.dart';
@@ -22,9 +22,7 @@ class ListChatView extends GetView<ChatController> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.APP_BG,
-      appBar: const AppBarWidgetTitle(
-        title: AppStrings.GENERAL_CHAT,
-      ),
+      appBar: const AppBarWidgetTitle(title: AppStrings.GENERAL_CHAT),
       body: RefreshIndicator(
         onRefresh: controller.getChatList,
         child: Padding(
@@ -75,7 +73,7 @@ class ListChatView extends GetView<ChatController> {
                     binding: ChatScreenBinding(),
                     arguments: {
                       "chat_id": data.id,
-                      ...data.members.first.toMap()
+                      ...data.members.first.toMap(),
                     },
                     routeName: "chatScreen",
                   );
@@ -86,9 +84,7 @@ class ListChatView extends GetView<ChatController> {
                     child: avatarImage(
                       data.members.firstOrNull?.avatar,
                       placeHolder: Center(
-                        child: Image.asset(
-                          ImgName.ELLIPSE_1,
-                        ),
+                        child: Image.asset(ImgName.ELLIPSE_1),
                       ),
                       imageBuilder: (context, imageProvider) {
                         return Container(
@@ -146,7 +142,9 @@ class ListChatView extends GetView<ChatController> {
                           height: 16.ss,
                           width: 16.ss,
                           decoration: BoxDecoration(
-                              color: AppColors.PRIMARY, shape: BoxShape.circle),
+                            color: AppColors.PRIMARY,
+                            shape: BoxShape.circle,
+                          ),
                           child: Center(
                             child: Text(
                               data.count.toString(),
@@ -158,7 +156,7 @@ class ListChatView extends GetView<ChatController> {
                             ),
                           ),
                         ),
-                      )
+                      ),
                   ],
                 ),
                 isThreeLine: true,

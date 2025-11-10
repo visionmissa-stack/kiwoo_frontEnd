@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:sizing/sizing_extension.dart';
 
-import 'package:KIWOO/app/core/utils/app_utility.dart';
-import 'package:KIWOO/app/core/utils/enums.dart';
-import 'package:KIWOO/app/core/utils/formatters/extension.dart';
-import 'package:KIWOO/app/core/utils/kiwoo_icons.dart';
+import 'package:kiwoo/app/core/utils/app_utility.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
+import 'package:kiwoo/app/core/utils/formatters/extension.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
 
 import '../../../../core/utils/text_style.dart';
 
@@ -30,11 +30,7 @@ class _ReceiptStatusData {
 }
 
 class ReceiptStatus extends StatelessWidget {
-  const ReceiptStatus({
-    super.key,
-    required this.amount,
-    required this.status,
-  });
+  const ReceiptStatus({super.key, required this.amount, required this.status});
 
   final double amount;
   final TransactionStatus status;
@@ -57,13 +53,7 @@ class ReceiptStatus extends StatelessWidget {
             color: _data.color.shade50,
             shape: BoxShape.circle,
           ),
-          child: Center(
-            child: Icon(
-              _data.icon,
-              color: _data.color,
-              size: 50,
-            ),
-          ),
+          child: Center(child: Icon(_data.icon, color: _data.color, size: 50)),
         ),
         verticalSpaceSmall,
         Text(
@@ -75,9 +65,7 @@ class ReceiptStatus extends StatelessWidget {
         ),
         Text(
           _data.subtitle.trArgs([amount.toEGTH]),
-          style: transactionTitleDetailStyle.copyWith(
-            fontSize: 18.fss,
-          ),
+          style: transactionTitleDetailStyle.copyWith(fontSize: 18.fss),
         ),
       ],
     );

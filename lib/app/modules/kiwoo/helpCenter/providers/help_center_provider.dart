@@ -1,4 +1,4 @@
-import 'package:KIWOO/app/data/default_with_auth_provider.dart';
+import 'package:kiwoo/app/data/default_with_auth_provider.dart';
 
 import '../../../../core/api_helper/core_service.dart';
 import '../../../../core/api_helper/urls.dart';
@@ -12,14 +12,11 @@ class HelpCenterProvider extends DefaultWithAuthProvider {
     required String email,
   }) async {
     var response = await tryCatch(() async {
-      var response = await post<ServerResponseModel>(
-        Url.HELP_CENTER,
-        {
-          'contact_name': name,
-          'contact_email': email,
-          'message': message,
-        },
-      );
+      var response = await post<ServerResponseModel>(Url.HELP_CENTER, {
+        'contact_name': name,
+        'contact_email': email,
+        'message': message,
+      });
       return CoreService.returnResponse(response);
     });
     return response;

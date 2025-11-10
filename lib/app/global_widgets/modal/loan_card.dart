@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/formatters/extension.dart';
+import 'package:kiwoo/app/core/utils/formatters/extension.dart';
 import 'package:get/get.dart';
 
-import 'package:KIWOO/app/data/models/contact_list_model.dart';
+import 'package:kiwoo/app/data/models/contact_list_model.dart';
 import 'package:sizing/sizing_extension.dart';
 
 import '../../core/utils/app_colors.dart';
@@ -53,9 +53,7 @@ class LoanCard extends GetView {
                           child: avatarImage(
                             user?.avatar,
                             placeHolder: Center(
-                              child: Image.asset(
-                                ImgName.ELLIPSE_1,
-                              ),
+                              child: Image.asset(ImgName.ELLIPSE_1),
                             ),
                             imageBuilder: (context, imageProvider) {
                               return Container(
@@ -75,10 +73,7 @@ class LoanCard extends GetView {
                     : null,
                 trailing: date == null
                     ? null
-                    : Text(
-                        date!.since(),
-                        style: TextThemeHelper.subTitleLR,
-                      ),
+                    : Text(date!.since(), style: TextThemeHelper.subTitleLR),
                 title: Padding(
                   padding: const EdgeInsets.only(bottom: 5.0),
                   child: Text(
@@ -88,7 +83,7 @@ class LoanCard extends GetView {
                 ),
                 subtitle: Text.rich(
                   TextSpan(
-                    text: "💰${amount ?? 0} EHTG",
+                    text: "💰${amount ?? 0} EFCA",
                     style: TextThemeHelper.subTitleGreyLR,
                     children: <InlineSpan>[
                       TextSpan(
@@ -104,16 +99,14 @@ class LoanCard extends GetView {
                           fontSize: 13.fss,
                           color: FontColors.RED,
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
                 isThreeLine: true,
               ),
             ),
-            Divider(
-              color: Colors.grey.shade300,
-            ),
+            Divider(color: Colors.grey.shade300),
             verticalSpaceTiny,
             Padding(
               padding: const EdgeInsets.only(right: 5),
@@ -125,15 +118,17 @@ class LoanCard extends GetView {
                   const Spacer(),
                   Text("Duration", style: TextThemeHelper.subTitleGreyLR),
                   horizontalSpaceSmall,
-                  Text("${(tenure ?? 0)} month",
-                      style: TextThemeHelper.subTitleLR),
+                  Text(
+                    "${(tenure ?? 0)} month",
+                    style: TextThemeHelper.subTitleLR,
+                  ),
                 ],
               ),
             ),
             if (onLoanStatus != null) ...[
               verticalSpaceRegular,
-              onLoanStatus!(approvalStatus)
-            ]
+              onLoanStatus!(approvalStatus),
+            ],
           ],
         ),
       ),

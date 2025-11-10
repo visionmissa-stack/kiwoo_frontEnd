@@ -5,7 +5,7 @@ import 'package:firebase_notifications_handler/firebase_notifications_handler.da
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:KIWOO/app/data/models/notifications/notification_model.dart';
+import 'package:kiwoo/app/data/models/notifications/notification_model.dart';
 
 import '../core/utils/enums.dart';
 import '../core/utils/storage_pro.dart';
@@ -42,81 +42,6 @@ class FirebaseServices extends GetxService with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
   }
 
-  createChanel() {
-    FirebaseNotificationsHandler.createAndroidNotificationChannels(const [
-      AndroidNotificationChannel(
-        'default',
-        'Default',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'chat',
-        'chat',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'transfer',
-        'transfer',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'loan',
-        'loan',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'loanPayBack',
-        'loanPayBack',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'withdraw',
-        'withdraw',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'recharge',
-        'recharge',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'installment',
-        'installment',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'payment',
-        'payment',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'cashIn',
-        'cashIn',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'loanRequest',
-        'loanRequest',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'newLoanOffer',
-        'newLoanOffer',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'loanOfferAccepted',
-        'loanOfferAccepted',
-        importance: Importance.high,
-      ),
-      AndroidNotificationChannel(
-        'loanOfferRejected',
-        'loanOfferRejected',
-        importance: Importance.high,
-      ),
-    ]);
-  }
-
   @override
   void onClose() {
     WidgetsBinding.instance.removeObserver(this);
@@ -129,9 +54,6 @@ class FirebaseServices extends GetxService with WidgetsBindingObserver {
       case AppLifecycleState.resumed:
         FirebaseNotificationsHandler.flutterLocalNotificationsPlugin
             ?.getActiveNotifications();
-        var messages =
-            await FirebaseNotificationsHandler.getAndroidNotificationChannels();
-        print("its a chaned ${messages?.map((el) => el.name)}");
         break;
       default:
         break;
@@ -176,12 +98,12 @@ class FirebaseServices extends GetxService with WidgetsBindingObserver {
           previousChat = ChatModel.fromMap({
             'id': data['chat_id'],
             'members': [
-              {"member": ContactData.fromJson(data['member']).toMap()}
+              {"member": ContactData.fromJson(data['member']).toMap()},
             ],
             'messages': [msg.toMap()],
             'created_at': data['create_at'],
             'updated_at': data['create_at'],
-            '_count': {"messages": 1}
+            '_count': {"messages": 1},
           });
         }
         saveObject<ChatModel>(previousChat);
@@ -191,7 +113,8 @@ class FirebaseServices extends GetxService with WidgetsBindingObserver {
         break;
       default:
         saveObject<NotificationModel>(
-            NotificationModel.fromRemoteMessage(notification));
+          NotificationModel.fromRemoteMessage(notification),
+        );
         break;
     }
   }
@@ -208,7 +131,7 @@ class FirebaseServices extends GetxService with WidgetsBindingObserver {
           arguments: {
             "chat_id": data['chat_id'],
             "id": data['sender_id'],
-            ...jsonDecode(data['member'])
+            ...jsonDecode(data['member']),
           },
           routeName: "chatScreen",
         );
@@ -219,8 +142,11 @@ class FirebaseServices extends GetxService with WidgetsBindingObserver {
         // }
         break;
       case NotificationType.newLoanOffer:
-        Get.to(() => LoanRequestOffersView(int.parse(data['loan_id'])),
-            binding: LoanRequestSentBinding(), routeName: "loan_offers");
+        Get.to(
+          () => LoanRequestOffersView(int.parse(data['loan_id'])),
+          binding: LoanRequestSentBinding(),
+          routeName: "loan_offers",
+        );
 
       case NotificationType.loanRequest:
       case NotificationType.loanOfferAccepted:
@@ -229,14 +155,18 @@ class FirebaseServices extends GetxService with WidgetsBindingObserver {
         break;
       case NotificationType.loanAcceted:
         if (data['loan_id'] == null) return;
-        Get.to(() => const LoanRequestSentDetailsView(),
-            binding: LoanRequestSentBinding(),
-            arguments: data,
-            routeName: "loan_accepted");
+        Get.to(
+          () => const LoanRequestSentDetailsView(),
+          binding: LoanRequestSentBinding(),
+          arguments: data,
+          routeName: "loan_accepted",
+        );
 
-      case NotificationType.cashIn:
+      case NotificationType.cashin:
       // TODO: Handle this case.
       case NotificationType.unKnow:
+      // TODO: Handle this case.
+      case NotificationType.cashout:
       // TODO: Handle this case.
     }
   }

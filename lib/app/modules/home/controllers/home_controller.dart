@@ -1,7 +1,7 @@
-import 'package:KIWOO/app/controllers/app_services_controller.dart';
-import 'package:KIWOO/app/core/utils/enums.dart';
-import 'package:KIWOO/app/core/utils/kiwoo_icons.dart';
-import 'package:KIWOO/app/routes/app_pages.dart';
+import 'package:kiwoo/app/controllers/app_services_controller.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
+import 'package:kiwoo/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -25,28 +25,38 @@ class HomeController extends GetxController {
       "icon": Kiwoo.cash_in,
       "MaterialIcon": "",
       "onTap": () {
-        boomSheetOptions<LedgerMethod>(options: [
-          BottomSheetOption(
-            label: "MonCash",
-            iconColor: Colors.red,
-            value: LedgerMethod.moncash,
-            icon: Kiwoo.moncash,
-          ),
-          BottomSheetOption(
-            label: "Natcash",
-            value: LedgerMethod.natcash,
-            icon: Kiwoo.credit_card,
-          ),
-          BottomSheetOption(
-            label: "Credit/Debit Card",
-            value: LedgerMethod.card,
-            icon: Kiwoo.credit_card,
-          ),
-        ]).then((resp) {
+        boomSheetOptions<LedgerMethod>(
+          options: [
+            BottomSheetOption(
+              label: "MTN MoMo",
+              iconColor: Color(0xff0c507c),
+              value: LedgerMethod.MTN,
+              // icon: Kiwoo.mtn_momo,
+              iconWidget: Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  color: Colors.yellow,
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Icon(Kiwoo.mtn_momo, size: 30),
+              ),
+            ),
+            BottomSheetOption(
+              label: "AIRTEL Money",
+              value: LedgerMethod.Airtel,
+              icon: Kiwoo.credit_card,
+            ),
+            BottomSheetOption(
+              label: "M-Pesa Money",
+              value: LedgerMethod.M_Pesa,
+              icon: Kiwoo.credit_card,
+            ),
+          ],
+        ).then((resp) {
           if (resp == null) return;
           Get.toNamed(Routes.CASH_IN, parameters: {'methods': resp.name});
         });
-      }
+      },
     },
     {
       "id": 2,
@@ -54,20 +64,24 @@ class HomeController extends GetxController {
       "icon": Kiwoo.send_rece_money,
       "MaterialIcon": "",
       "onTap": () {
-        boomSheetOptions<String>(options: [
-          BottomSheetOption(
+        boomSheetOptions<String>(
+          options: [
+            BottomSheetOption(
               label: "Send Money",
               value: Routes.SEND_MONEY,
-              icon: Kiwoo.cash_out),
-          BottomSheetOption(
+              icon: Kiwoo.cash_out,
+            ),
+            BottomSheetOption(
               label: "Receive Money",
               value: Routes.RECEIVE_MONEY,
-              icon: Kiwoo.cash_in),
-        ]).then((resp) {
+              icon: Kiwoo.cash_in,
+            ),
+          ],
+        ).then((resp) {
           if (resp == null) return;
           Get.toNamed(resp);
         });
-      }
+      },
     },
     {
       "id": 3,
@@ -83,12 +97,7 @@ class HomeController extends GetxController {
       "MaterialIcon": "",
       "onTap": () => Get.toNamed(Routes.TRANSACTIONS),
     },
-    {
-      "id": 5,
-      "label": "Payments",
-      "icon": Kiwoo.cash_in,
-      "MaterialIcon": "",
-    },
+    {"id": 5, "label": "Payments", "icon": Kiwoo.cash_in, "MaterialIcon": ""},
     {
       "id": 6,
       "label": "Address Market",
@@ -118,8 +127,9 @@ class HomeController extends GetxController {
     isLoading.value = true;
     var response = await appServiceController.provider.getUserDetails();
     if (response?.isSuccess == true) {
-      appServiceController
-          .saveUserData(UserDetailModel.fromMap(response!.data!));
+      appServiceController.saveUserData(
+        UserDetailModel.fromMap(response!.data!),
+      );
     }
     isLoading.value = false;
   }

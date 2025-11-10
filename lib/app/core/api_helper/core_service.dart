@@ -2,7 +2,7 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/data/models/server_response_model.dart';
+import 'package:kiwoo/app/data/models/server_response_model.dart';
 import 'package:get/get.dart';
 import '../utils/device_manager/screen_constants.dart';
 import 'app_exception.dart';
@@ -58,21 +58,22 @@ class CoreService {
 
   Widget normalLoader() {
     return Center(
-        child: Container(
-            height: ScreenConstant.sizeXXL,
-            width: ScreenConstant.sizeXXL,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(
-                  color: Colors.white,
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(40))),
-            child: const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: CircularProgressIndicator(
-                color: Colors.black,
-                strokeWidth: 1.5,
-              ),
-            )));
+      child: Container(
+        height: ScreenConstant.sizeXXL,
+        width: ScreenConstant.sizeXXL,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(color: Colors.white),
+          borderRadius: const BorderRadius.all(Radius.circular(40)),
+        ),
+        child: const Padding(
+          padding: EdgeInsets.all(10.0),
+          child: CircularProgressIndicator(
+            color: Colors.black,
+            strokeWidth: 1.5,
+          ),
+        ),
+      ),
+    );
   }
 }

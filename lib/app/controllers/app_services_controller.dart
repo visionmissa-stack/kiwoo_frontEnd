@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:KIWOO/app/data/models/storage_box_model.dart';
+import 'package:kiwoo/app/data/models/storage_box_model.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,10 +47,14 @@ class AppServicesController extends GetxService
     }, condition: () => errorMsg.isNotEmpty);
     var currentUser = getObjectById<CurrentUser>('currentUser');
     userDetails = Rx<UserDetailModel?>(currentUser?.userDetails);
-    totalUnReadMessage = RxInt(getAllObjects<ChatModel>()
-        .fold(0, (value, current) => value + current.count));
+    totalUnReadMessage = RxInt(
+      getAllObjects<ChatModel>().fold(
+        0,
+        (value, current) => value + current.count,
+      ),
+    );
     addKeysListenter();
-    _startMonitoring();
+    // _startMonitoring();
     super.onInit();
   }
 
@@ -103,21 +107,24 @@ class AppServicesController extends GetxService
     );
     GetStoragePro.listenAllObjects<ChatModel>(
       onData: (data) {
-        totalUnReadMessage.value =
-            data.fold(0, (value, current) => value + current.count);
+        totalUnReadMessage.value = data.fold(
+          0,
+          (value, current) => value + current.count,
+        );
       },
     );
   }
 
   void saveUserData(UserDetailModel? userDetails) {
-    // if (userDetails != null &&
-    //     userDetails.hasNotificationToken != StorageBox.fmcToken.val) {
-    //   updateTokenProvider();
-    // }
+    if (userDetails != null &&
+        userDetails.hasNotificationToken != StorageBox.fmcToken.val) {
+      updateTokenProvider();
+    }
     var currentUser = CurrentUser(userDetails: this.userDetails.value);
 
     GetStoragePro.saveObject<CurrentUser>(
-        currentUser.copyWith(userDetails: userDetails));
+      currentUser.copyWith(userDetails: userDetails),
+    );
     if (this.userDetails.value == null) {
       addCurrentUserListener();
     }
@@ -142,13 +149,15 @@ class AppServicesController extends GetxService
     }
   }
 
-//connection checker
+  //connection checker
   _startMonitoring() async {
     await _initConnectivity();
-    _subscription = _connectivity.onConnectivityChanged
-        .listen((List<ConnectivityResult> results) async {
-      ConnectivityResult result =
-          results.isNotEmpty ? results.first : ConnectivityResult.none;
+    _subscription = _connectivity.onConnectivityChanged.listen((
+      List<ConnectivityResult> results,
+    ) async {
+      ConnectivityResult result = results.isNotEmpty
+          ? results.first
+          : ConnectivityResult.none;
       if (result == ConnectivityResult.none) {
         connectionStatus.value = false;
       } else {
@@ -175,9 +184,11 @@ class AppServicesController extends GetxService
 
   Future<bool> _updateConnectionStatus() async {
     bool isConnected = false;
+    print("lokopp");
     try {
-      final List<InternetAddress> result =
-          await InternetAddress.lookup('google.com');
+      final List<InternetAddress> result = await InternetAddress.lookup(
+        'google.com',
+      );
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         isConnected = true;
       }
@@ -201,8 +212,9 @@ class AppServicesController extends GetxService
     if (StorageBox.token.val.isNotEmpty) {
       do {
         if (StorageBox.token.val.isNotEmpty) {
-          var response =
-              await provider.updateFMCToken(token: StorageBox.fmcToken.val);
+          var response = await provider.updateFMCToken(
+            token: StorageBox.fmcToken.val,
+          );
           isSuccessFull = response?.isSuccess == true;
         }
         await 10.delay();

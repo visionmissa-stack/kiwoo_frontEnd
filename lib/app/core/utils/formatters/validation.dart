@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-import 'package:KIWOO/app/core/utils/app_string.dart';
+import 'package:kiwoo/app/core/utils/app_string.dart';
 import 'package:get/get_utils/src/extensions/string_extensions.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
@@ -15,10 +15,10 @@ String? isValidEmail(String? string) {
 }
 
 MaskTextInputFormatter phoneFormateur() => MaskTextInputFormatter(
-      mask: r'509 $# ## ## ##',
-      filter: {"#": RegExp(r'[0-9]'), r"$": RegExp(r'3|4')},
-      type: MaskAutoCompletionType.lazy,
-    );
+  mask: r'509 $# ## ## ##',
+  filter: {"#": RegExp(r'[0-9]'), r"$": RegExp(r'3|4')},
+  type: MaskAutoCompletionType.lazy,
+);
 
 // validMobile(String value) {
 //   String patttern = r'(^509 (3|4)[0-9](\s[0-9]{2}){3}$)';
@@ -68,8 +68,9 @@ String? validPassword(String? value) {
   return error;
 }
 
-final decimalNumberFormatter =
-    FilteringTextInputFormatter.allow(RegExp(r'^\d+(\.\d{0,10})?'));
+final decimalNumberFormatter = FilteringTextInputFormatter.allow(
+  RegExp(r'^\d+(\.\d{0,10})?'),
+);
 final numberFormatter = FilteringTextInputFormatter.allow(RegExp(r'[0-9]'));
 
 String? isEmptyValidator(String? value, [String? onEmpty]) {
@@ -79,12 +80,7 @@ String? isEmptyValidator(String? value, [String? onEmpty]) {
   return null;
 }
 
-String? isBetweenValidator(
-  num value, {
-  num? min,
-  num? max,
-  String? label,
-}) {
+String? isBetweenValidator(num value, {num? min, num? max, String? label}) {
   final start = label ?? 'value';
   if (min != null && value < min) {
     return "$start should not me less then $min";

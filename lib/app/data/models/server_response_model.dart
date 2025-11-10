@@ -5,9 +5,9 @@
 
 import 'dart:convert';
 
-import 'package:KIWOO/app/controllers/app_services_controller.dart';
+import 'package:kiwoo/app/controllers/app_services_controller.dart';
 import 'package:flutter/foundation.dart';
-import 'package:KIWOO/app/core/utils/app_utility.dart';
+import 'package:kiwoo/app/core/utils/app_utility.dart';
 import 'package:get/get.dart' show Get, Inst, SnackbarController;
 
 import '../../core/utils/response_server_code.dart';
@@ -33,9 +33,7 @@ class ServerResponseModel {
       if (error != null) {
         Get.find<AppServicesController>().errorMsg.value = msg.join("\n");
       } else {
-        return showMsg(
-          msg.join("\n"),
-        );
+        return showMsg(msg.join("\n"));
       }
     }
     return null;
@@ -72,9 +70,9 @@ class ServerResponseModel {
     return ServerResponseModel(
       statusCode: map['statusCode'] as int,
       error: map['error'] != null ? map['error'] as String : null,
-      message: List<String>.from(((map['message'] is String
-          ? [map['message']]
-          : map['message'] ?? []))),
+      message: List<String>.from(
+        ((map['message'] is String ? [map['message']] : map['message'] ?? [])),
+      ),
       data: map['data'],
     );
   }

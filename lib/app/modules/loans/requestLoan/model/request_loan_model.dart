@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:KIWOO/app/core/utils/formatters/extension.dart';
+import 'package:kiwoo/app/core/utils/formatters/extension.dart';
 
 import '../../../../core/utils/enums.dart';
 

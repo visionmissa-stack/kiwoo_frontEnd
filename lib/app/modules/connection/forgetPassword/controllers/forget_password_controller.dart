@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:KIWOO/app/routes/app_pages.dart';
+import 'package:kiwoo/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/modules/connection/providers/connection_provider.dart';
+import 'package:kiwoo/app/modules/connection/providers/connection_provider.dart';
 import 'package:get/get.dart';
 
 class ForgetPasswordController extends GetxController {

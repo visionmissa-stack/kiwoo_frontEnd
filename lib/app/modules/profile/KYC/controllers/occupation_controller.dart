@@ -1,5 +1,5 @@
-import 'package:KIWOO/app/controllers/app_services_controller.dart';
-import 'package:KIWOO/app/controllers/def_controller.dart';
+import 'package:kiwoo/app/controllers/app_services_controller.dart';
+import 'package:kiwoo/app/controllers/def_controller.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -21,10 +21,12 @@ class OccupationController extends GetxController with DefController {
   Future<void> updateDocuments() async {
     var docId = await _uploadOcupationFile();
     if (docId != null) {
-      var response = await provider.updateUserDocsApi(docId: {
-        "occupation": occupationValue['occupation'],
-        "occupation_doc": docId
-      });
+      var response = await provider.updateUserDocsApi(
+        docId: {
+          "occupation": occupationValue['occupation'],
+          "occupation_doc": docId,
+        },
+      );
       if (response?.isSuccess == true) {
         await Get.find<AppServicesController>().getUserDetails();
         response?.showMessage();
@@ -35,7 +37,9 @@ class OccupationController extends GetxController with DefController {
 
   Future<String?> _uploadOcupationFile() async {
     var result = await provider.sendProofApi(
-        file: occupationValue['proof'], endPoint: Url.UPLOAD_OCCUPATION);
+      file: occupationValue['proof'],
+      endPoint: Url.UPLOAD_OCCUPATION,
+    );
     if (result?.isSuccess == true) {
       return result!.data["file_id"]['id'];
     }

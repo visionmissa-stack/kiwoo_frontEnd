@@ -1,8 +1,8 @@
-import 'package:KIWOO/app/core/utils/actions/overlay.dart';
-import 'package:KIWOO/app/core/utils/app_utility.dart';
-import 'package:KIWOO/app/core/utils/kiwoo_icons.dart';
-import 'package:KIWOO/app/modules/transactions/TransactionReceipt/views/transaction_receipt_view.dart';
-import 'package:KIWOO/app/routes/app_pages.dart';
+import 'package:kiwoo/app/core/utils/actions/overlay.dart';
+import 'package:kiwoo/app/core/utils/app_colors.dart';
+import 'package:kiwoo/app/core/utils/app_utility.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
+import 'package:kiwoo/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -12,10 +12,11 @@ import '../../../../core/utils/app_string.dart';
 import '../../../../core/utils/formatters/validation.dart';
 import '../../../../global_widgets/input_field.dart';
 import '../../../../global_widgets/list_builder_widget.dart';
+import '../../../loans/requestLoan/controllers/submit_box/custom_info_box.dart';
 import '../controllers/cash_in_controller.dart';
 
-class MoncashView extends GetWidget<CashInController> {
-  const MoncashView({super.key});
+class MTNView extends GetWidget<CashInController> {
+  const MTNView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +64,8 @@ class MoncashView extends GetWidget<CashInController> {
                   sufixIcon: isLoading
                       ? const Padding(
                           padding: EdgeInsets.all(13),
-                          child: FittedBox(child: CircularProgressIndicator()))
+                          child: FittedBox(child: CircularProgressIndicator()),
+                        )
                       : null,
                   enabled: false,
                 ),
@@ -78,7 +80,8 @@ class MoncashView extends GetWidget<CashInController> {
                   sufixIcon: isLoading
                       ? const Padding(
                           padding: EdgeInsets.all(13),
-                          child: FittedBox(child: CircularProgressIndicator()))
+                          child: FittedBox(child: CircularProgressIndicator()),
+                        )
                       : null,
                   enabled: false,
                 ),
@@ -100,18 +103,40 @@ class MoncashView extends GetWidget<CashInController> {
                           if (controller.formKey.currentState?.validate() ==
                               true) {
                             controller.formKey.currentState!.save();
-                            print(
-                                "${Routes.TRANSACTION_RECEIPT}/moncash the receipt");
-                            // Get.toNamed("${Routes.TRANSACTION_RECEIPT}/moncash",
-                            //     parameters: {"transactionId": "1102687"});
-                            showOverlay(asyncFunction: controller.cashIn);
+                            var success = await showOverlay(
+                              asyncFunction: controller.cashIn,
+                            );
+                            if (success) {
+                              submitedSuccessDaiLogBox(
+                                Kiwoo.success,
+                                AppStrings.SUBMITTED_SUCCESSFULLY,
+                                "Tansaction Posted",
+                                AppStrings.CONTINUE,
+                              ).whenComplete(() => Get.back());
+                            }
                           }
                         },
                   iconSize: 100.ss,
                   icon: SizedBox(
-                    width: 100.ss * 2,
-                    child: const Icon(
-                      Kiwoo.mc_button_en2,
+                    width: 80.ss * 2,
+                    child: ListTile(
+                      tileColor: AppColors.PRIMARY,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25),
+                      ),
+                      leading: FittedBox(
+                        child: Card(
+                          // color: Colors.yellow,
+                          clipBehavior: Clip.antiAlias,
+                          shadowColor: Colors.black,
+                          elevation: 20,
+                          child: Icon(Kiwoo.mtn_momo, color: AppColors.PRIMARY),
+                        ),
+                      ),
+                      title: Text(
+                        "Pay Now",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
@@ -127,7 +152,8 @@ class MoncashView extends GetWidget<CashInController> {
   }
 
   Future<Map<String, dynamic>> futureSearch([String? search]) async {
-    return Get.find<CashInController>()
-        .getFee(amount: double.tryParse(search ?? '0') ?? 0);
+    return Get.find<CashInController>().getFee(
+      amount: double.tryParse(search ?? '0') ?? 0,
+    );
   }
 }

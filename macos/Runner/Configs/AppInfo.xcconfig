@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = front_end_new
+PRODUCT_NAME = kiwoo
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.visionMIS.kiwoo.frontEndNew
+PRODUCT_BUNDLE_IDENTIFIER = com.example.kiwoo
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2024 com.visionMIS.kiwoo. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2025 com.example. All rights reserved.

@@ -1,6 +1,6 @@
-import 'package:KIWOO/app/controllers/def_controller.dart';
-import 'package:KIWOO/app/core/utils/storage_pro.dart';
-import 'package:KIWOO/app/data/models/notifications/chat_notification_model.dart';
+import 'package:kiwoo/app/controllers/def_controller.dart';
+import 'package:kiwoo/app/core/utils/storage_pro.dart';
+import 'package:kiwoo/app/data/models/notifications/chat_notification_model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage_pro/get_storage_pro.dart';
 
@@ -25,9 +25,11 @@ class ChatController extends GetxController with DefController {
   }
 
   void addCurrentUserListener() {
-    GetStoragePro.listenAllObjects<ChatModel>(onData: (model) {
-      chatList.assignAll(model);
-    });
+    GetStoragePro.listenAllObjects<ChatModel>(
+      onData: (model) {
+        chatList.assignAll(model);
+      },
+    );
   }
 
   Future<void> getChatList() async {
@@ -51,13 +53,17 @@ class ChatController extends GetxController with DefController {
 
   void search(String value) {
     if (value.isEmpty) {
-      filteredChatList
-          .assignAll(chatList); // Show all items if search text is empty
+      filteredChatList.assignAll(
+        chatList,
+      ); // Show all items if search text is empty
     } else {
-      filteredChatList.assignAll(chatList.where((data) {
-        return data.members
-            .any((val) => val.name?.toLowerCase() == value.toLowerCase());
-      }).toList());
+      filteredChatList.assignAll(
+        chatList.where((data) {
+          return data.members.any(
+            (val) => val.name?.toLowerCase() == value.toLowerCase(),
+          );
+        }).toList(),
+      );
     }
   }
 }

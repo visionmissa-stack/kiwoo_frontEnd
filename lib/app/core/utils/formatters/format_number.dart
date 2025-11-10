@@ -5,15 +5,15 @@ NumberFormat toEGTHCurrency([bool compact = false]) {
   if (compact) {
     return NumberFormat.compactCurrency(
       locale: "fr",
-      name: "EHTG",
-      symbol: "EHTG",
+      name: "EFCA",
+      symbol: "EFCA",
       decimalDigits: 2,
     );
   }
   return NumberFormat.currency(
     locale: "fr",
-    symbol: "EHTG",
-    name: "EHTG",
+    symbol: "EFCA",
+    name: "EFCA",
     decimalDigits: 2,
     customPattern: _CURRENCY_PATTERN,
   );
@@ -26,7 +26,5 @@ final toUsCurrency = NumberFormat.currency(
   decimalDigits: 2,
   customPattern: _CURRENCY_PATTERN,
 );
-final numberFormater = NumberFormat(
-  '#,##0.00#',
-);
+final numberFormater = NumberFormat('#,##0.00#');
 final numberFormaterCompact = NumberFormat.compact(locale: 'fr');

@@ -1,5 +1,5 @@
-import 'package:KIWOO/app/controllers/def_controller.dart';
-import 'package:KIWOO/app/data/models/loan/loan_offers_model.dart';
+import 'package:kiwoo/app/controllers/def_controller.dart';
+import 'package:kiwoo/app/data/models/loan/loan_offers_model.dart';
 import 'package:get/get.dart';
 
 import '../../providers/loan_provider.dart';
@@ -14,9 +14,7 @@ class LoanRequestReceivedController extends GetxController with DefController {
   }
 
   Future<List<LoanOfferModel>?> futureRequest() async {
-    var params = {
-      "type": "contacts",
-    };
+    var params = {"type": "contacts"};
     try {
       var response = await provider.loanRequestListApiCall(query: params);
       // Get.log("getRecievedRequestApiCall >>>>>>> $response");
@@ -51,8 +49,10 @@ class LoanRequestReceivedController extends GetxController with DefController {
     return false;
   }
 
-  Future<bool> postAcceptLoanAPiCall(
-      {required int loadId, required String pin}) async {
+  Future<bool> postAcceptLoanAPiCall({
+    required int loadId,
+    required String pin,
+  }) async {
     try {
       var response = await provider.postAcceptLoanAPi(loadId.toString(), pin);
       if (response?.isSuccess == true) {

@@ -13,9 +13,10 @@ class AppColors {
   static Color PRIMARY3 = const Color(0xffe8ffe2);
   static Color adsa = Color.fromARGB(255, 111, 196, 87);
   static Color WHITE = Colors.white;
-  static Color APP_BG = Colors.white;
-  static Color TEXT_FORM_FIELD =
-      Color(0xFFEAF0F5); //const Color.fromARGB(255, 243, 243, 243);
+  static Color APP_BG = Colors.grey.shade100;
+  static Color TEXT_FORM_FIELD = Color(
+    0xFFEAF0F5,
+  ); //const Color.fromARGB(255, 243, 243, 243);
   static Color BLACK = Colors.black;
 
   static Color APPBAR_PRIMARY1 = const Color.fromARGB(255, 57, 146, 32);
@@ -64,16 +65,18 @@ int tintValue(int value, double factor) =>
     max(0, min((value + ((255 - value) * factor)).round(), 255));
 
 Color tintColor(Color color, double factor) => Color.fromRGBO(
-    tintValue(color.red, factor),
-    tintValue(color.green, factor),
-    tintValue(color.blue, factor),
-    1);
+  tintValue(color.red, factor),
+  tintValue(color.green, factor),
+  tintValue(color.blue, factor),
+  1,
+);
 
 int shadeValue(int value, double factor) =>
     max(0, min(value - (value * factor).round(), 255));
 
 Color shadeColor(Color color, double factor) => Color.fromRGBO(
-    shadeValue(color.red, factor),
-    shadeValue(color.green, factor),
-    shadeValue(color.blue, factor),
-    1);
+  shadeValue(color.red, factor),
+  shadeValue(color.green, factor),
+  shadeValue(color.blue, factor),
+  1,
+);

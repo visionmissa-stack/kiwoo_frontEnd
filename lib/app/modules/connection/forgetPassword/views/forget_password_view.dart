@@ -1,4 +1,4 @@
-import 'package:KIWOO/app/modules/connection/forgetPassword/views/new_password_view.dart';
+import 'package:kiwoo/app/modules/connection/forgetPassword/views/new_password_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -43,9 +43,7 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const PresentationPageHeader(
-              pageTitle: AppStrings.RESET_PASSWORD,
-            ),
+            const PresentationPageHeader(pageTitle: AppStrings.RESET_PASSWORD),
             verticalSpaceRegular,
             Form(
               key: controller.formKey,
@@ -53,9 +51,7 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 20.ss,
-                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 20.ss),
                     child: CustomInputFormField(
                       hintText: AppStrings.EMAIL,
                       keyboardType: TextInputType.emailAddress,

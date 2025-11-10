@@ -1,4 +1,4 @@
-import 'package:KIWOO/app/controllers/def_controller.dart';
+import 'package:kiwoo/app/controllers/def_controller.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +21,8 @@ class IncomeController extends GetxController with DefController {
     var docId = await _uploadOcupationFile();
     if (docId != null) {
       var response = await provider.updateUserDocsApi(
-          docId: {"income": incomeValue['income'], "income_doc": docId});
+        docId: {"income": incomeValue['income'], "income_doc": docId},
+      );
       if (response?.isSuccess == true) {
         await Get.find<AppServicesController>().getUserDetails();
         response?.showMessage();
@@ -32,7 +33,9 @@ class IncomeController extends GetxController with DefController {
 
   Future<String?> _uploadOcupationFile() async {
     var result = await provider.sendProofApi(
-        file: incomeValue['proof'], endPoint: Url.UPLOAD_INCOME);
+      file: incomeValue['proof'],
+      endPoint: Url.UPLOAD_INCOME,
+    );
     if (result?.isSuccess == true) {
       return result!.data["file_id"]['id'];
     }

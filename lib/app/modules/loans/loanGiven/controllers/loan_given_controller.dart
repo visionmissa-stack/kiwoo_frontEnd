@@ -1,5 +1,5 @@
-import 'package:KIWOO/app/data/models/controller_with_future.dart';
-import 'package:KIWOO/app/modules/loans/providers/loan_provider.dart';
+import 'package:kiwoo/app/data/models/controller_with_future.dart';
+import 'package:kiwoo/app/modules/loans/providers/loan_provider.dart';
 import 'package:get/get.dart';
 
 import '../../../../controllers/def_controller.dart';

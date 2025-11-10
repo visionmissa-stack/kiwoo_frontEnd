@@ -2,7 +2,7 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
-import 'package:KIWOO/app/core/utils/datetime_utility.dart';
+import 'package:kiwoo/app/core/utils/datetime_utility.dart';
 
 import '../../../core/utils/enums.dart' show LoanStatus;
 import '../contact_list_model.dart';
@@ -80,8 +80,9 @@ class LoanRequestModel {
   factory LoanRequestModel.fromMap(Map<String, dynamic> map) {
     return LoanRequestModel(
       id: map['id'] != null ? map['id'] as int : null,
-      amount:
-          map['amount'] != null ? double.tryParse("${map['amount']}") : null,
+      amount: map['amount'] != null
+          ? double.tryParse("${map['amount']}")
+          : null,
       interest: map['interest'] != null
           ? double.tryParse("${map['interest']}")
           : null,

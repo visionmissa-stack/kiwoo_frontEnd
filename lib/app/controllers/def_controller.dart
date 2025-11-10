@@ -1,4 +1,4 @@
-import 'package:KIWOO/app/controllers/firebase_services.dart';
+import 'package:kiwoo/app/controllers/firebase_services.dart';
 import 'package:get/get.dart';
 
 import '../data/models/storage_box_model.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/kiwoo_icons.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
 import 'package:sizing/sizing.dart';
 
 import '../core/utils/app_colors.dart';
@@ -30,13 +30,17 @@ class AppButton extends StatelessWidget {
       child: FilledButton(
         onPressed: onTap,
         style: FilledButton.styleFrom(
-            backgroundColor: color,
-            disabledBackgroundColor:
-                color != null ? null : Colors.white.withOpacity(0.5)),
+          backgroundColor: color,
+          disabledBackgroundColor: color != null
+              ? null
+              : Colors.white.withOpacity(0.5),
+        ),
         child: Padding(
           padding: const EdgeInsets.only(left: 8, right: 8),
-          child:
-              Text(buttonText ?? "", style: TextThemeHelper.buttonNormalWhite),
+          child: Text(
+            buttonText ?? "",
+            style: TextThemeHelper.buttonNormalWhite,
+          ),
         ),
       ),
     );
@@ -69,8 +73,10 @@ class AppButton2 extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         child: Padding(
           padding: const EdgeInsets.only(left: 8, right: 8),
-          child:
-              Text(buttonText ?? "", style: TextThemeHelper.buttonNormalGreen),
+          child: Text(
+            buttonText ?? "",
+            style: TextThemeHelper.buttonNormalGreen,
+          ),
         ),
       ),
     );
@@ -162,16 +168,22 @@ class DaiLogButtonPrimary extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         child: Padding(
           padding: const EdgeInsets.only(left: 8, right: 8),
-          child: Text(buttonText ?? "",
-              style: TextThemeHelper.dailogButtonPrimary),
+          child: Text(
+            buttonText ?? "",
+            style: TextThemeHelper.dailogButtonPrimary,
+          ),
         ),
       ),
     );
   }
 }
 
-customeAuthButton(
-    {String? lableName, VoidCallback? onTap, double? height, double? width}) {
+customeAuthButton({
+  String? lableName,
+  VoidCallback? onTap,
+  double? height,
+  double? width,
+}) {
   return Center(
     child: Container(
       height: height ?? 55.ss,
@@ -186,7 +198,7 @@ customeAuthButton(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(lableName ?? "", style: TextThemeHelper.buttonNormalWhite),
-              Icon(Kiwoo.arrow_right, color: AppColors.WHITE)
+              Icon(Kiwoo.arrow_right, color: AppColors.WHITE),
             ],
             // retreg t66  erte 65479 tertrf rtrty ert
           ),
@@ -196,8 +208,12 @@ customeAuthButton(
   );
 }
 
-customeAuthButton2(
-    {String? lableName, VoidCallback? onTap, double? height, double? width}) {
+customeAuthButton2({
+  String? lableName,
+  VoidCallback? onTap,
+  double? height,
+  double? width,
+}) {
   return Center(
     child: Container(
       height: height ?? 55.ss,
@@ -212,7 +228,7 @@ customeAuthButton2(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(lableName ?? "", style: TextThemeHelper.buttonNormalGreen),
-              Icon(Kiwoo.arrow_right, color: AppColors.PRIMARY)
+              Icon(Kiwoo.arrow_right, color: AppColors.PRIMARY),
             ],
           ),
         ),
@@ -232,10 +248,9 @@ customeAuthButtonLoading({double? height, double? width}) {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
         child: Center(
           child: Padding(
-              padding: const EdgeInsets.only(left: 8, right: 8),
-              child: CircularProgressIndicator(
-                color: AppColors.WHITE,
-              )),
+            padding: const EdgeInsets.only(left: 8, right: 8),
+            child: CircularProgressIndicator(color: AppColors.WHITE),
+          ),
         ),
       ),
     ),

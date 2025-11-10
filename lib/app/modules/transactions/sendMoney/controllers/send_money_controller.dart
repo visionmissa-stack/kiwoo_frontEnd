@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:KIWOO/app/modules/transactions/providers/transactions_provider.dart';
+import 'package:kiwoo/app/modules/transactions/providers/transactions_provider.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/utils/formatters/validation.dart';
@@ -21,7 +21,9 @@ class SendMoneyController extends GetxController {
   }
 
   Future<ValidationData?> getValidationInfo(
-      String number, double amount) async {
+    String number,
+    double amount,
+  ) async {
     try {
       var response = await provider.getvalidationInfo(
         phone: number,
@@ -39,18 +41,19 @@ class SendMoneyController extends GetxController {
     }
   }
 
-  Future<void> sendMoney(
-      {required int transactionID, required String pin}) async {
+  Future<void> sendMoney({
+    required int transactionID,
+    required String pin,
+  }) async {
     try {
       var response = await provider.sendMoney(
         transactionID: transactionID,
         pin: pin,
       );
       if (response?.isSuccess == true) {
-        Get.log("transferMoneyRequestApiCall>>>>>>>${response?.data}");
-        Get.to(PaymentReceipt(
-          receipt: PaymentReceiptData.fromMap(response!.data!),
-        ));
+        Get.to(
+          PaymentReceipt(receipt: PaymentReceiptData.fromMap(response!.data!)),
+        );
         // loanRequestList.clear();
         // loanRequestList.addAll(response.data as Iterable<Data>);
       } else {

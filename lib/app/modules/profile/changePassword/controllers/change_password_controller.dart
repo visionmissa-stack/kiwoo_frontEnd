@@ -1,4 +1,4 @@
-import 'package:KIWOO/app/controllers/def_controller.dart';
+import 'package:kiwoo/app/controllers/def_controller.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -11,15 +11,15 @@ class ChangePasswordController extends GetxController with DefController {
   String newpassword = "";
 
   Future<void> changePassword() async {
-    var response =
-        await Get.find<AppServicesController>().provider.updateUserProfile(
-              profil: UserProfilUpdate(
-                oldPassword: oldPassword,
-                password: newpassword,
-                name: userDetails.value?.name,
-                phone: userDetails.value?.phone,
-              ),
-            );
+    var response = await Get.find<AppServicesController>().provider
+        .updateUserProfile(
+          profil: UserProfilUpdate(
+            oldPassword: oldPassword,
+            password: newpassword,
+            name: userDetails.value?.name,
+            phone: userDetails.value?.phone,
+          ),
+        );
     if (response?.isSuccess == true) {
       // await 1.delay();
       await Get.find<AppServicesController>().getUserDetails();

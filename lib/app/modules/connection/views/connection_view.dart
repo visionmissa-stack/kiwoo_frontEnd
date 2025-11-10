@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/app_colors.dart';
-import 'package:KIWOO/app/core/utils/kiwoo_icons.dart';
-import 'package:KIWOO/app/routes/app_pages.dart';
+import 'package:kiwoo/app/core/utils/app_colors.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
+import 'package:kiwoo/app/routes/app_pages.dart';
 
 import 'package:get/get.dart';
 import 'package:sizing/sizing.dart';
@@ -23,11 +23,7 @@ class ConnectionView extends GetView<ConnectionController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Kiwoo.logo,
-              size: 150.ss,
-              color: AppColors.PRIMARY2,
-            ),
+            Icon(Kiwoo.logo, size: 150.ss, color: AppColors.PRIMARY2),
             verticalSpaceRegular,
             Text(
               AppStrings.WELCOME_TO_KIWOO_WALLET,

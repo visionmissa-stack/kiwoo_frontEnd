@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:KIWOO/app/controllers/app_services_controller.dart';
-import 'package:KIWOO/app/routes/app_pages.dart';
+import 'package:kiwoo/app/controllers/app_services_controller.dart';
+import 'package:kiwoo/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/app_colors.dart';
@@ -75,9 +75,15 @@ class LoansController extends GetxController {
   }
 
   Future<bool> postOfferApi(
-      String loanId, int offeredTenure, num offeredInterest) async {
-    var result =
-        await provider.postOfferApi(loanId, offeredTenure, offeredInterest);
+    String loanId,
+    int offeredTenure,
+    num offeredInterest,
+  ) async {
+    var result = await provider.postOfferApi(
+      loanId,
+      offeredTenure,
+      offeredInterest,
+    );
     if (result?.isSuccess == true) {
       showMsg("Payment Request Successful", color: AppColors.PRIMARY);
       return true;

@@ -1,4 +1,4 @@
-import 'package:KIWOO/app/modules/connection/controllers/otp_controller.dart';
+import 'package:kiwoo/app/modules/connection/controllers/otp_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/enums.dart';
@@ -6,7 +6,7 @@ import '../../../core/utils/enums.dart';
 class OTPBinding extends Bindings {
   OTPBinding(this.otpContacted) : bidingtype = OTPType.register;
   OTPBinding.forgotPassword(this.otpContacted)
-      : bidingtype = OTPType.forgotPassword;
+    : bidingtype = OTPType.forgotPassword;
   final OTPType bidingtype;
   final otpContacted;
   @override

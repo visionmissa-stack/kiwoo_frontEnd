@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:get_storage_pro/get_storage_pro.dart';
 
-import 'package:KIWOO/app/core/utils/enums.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
 
 @gsp
 class NotificationModel extends CommonDataClass<NotificationModel> {
@@ -122,18 +122,21 @@ class NotificationModel extends CommonDataClass<NotificationModel> {
       title: map['title'] != null ? map['title'] as String : null,
       body: map['body'] != null ? map['body'] as String : null,
       icon: map['icon'] != null ? map['icon'] as String : null,
-      data:
-          map['data'] != null ? Map<String, dynamic>.from((map['data'])) : null,
+      data: map['data'] != null
+          ? Map<String, dynamic>.from((map['data']))
+          : null,
       titleLocArgs: map['titleLocArgs'] != null
           ? List<String>.from((map['titleLocArgs']))
           : null,
-      titleLocKey:
-          map['titleLocKey'] != null ? map['titleLocKey'] as String : null,
+      titleLocKey: map['titleLocKey'] != null
+          ? map['titleLocKey'] as String
+          : null,
       bodyLocArgs: map['bodyLocArgs'] != null
           ? List<String>.from((map['bodyLocArgs']))
           : null,
-      bodyLocKey:
-          map['bodyLocKey'] != null ? map['bodyLocKey'] as String : null,
+      bodyLocKey: map['bodyLocKey'] != null
+          ? map['bodyLocKey'] as String
+          : null,
       read: map['read'] as bool,
     );
   }

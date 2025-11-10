@@ -1,5 +1,5 @@
-import 'package:KIWOO/app/core/utils/enums.dart';
-import 'package:KIWOO/app/data/models/ledger_model.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
+import 'package:kiwoo/app/data/models/ledger_model.dart';
 import 'package:get/get.dart';
 
 import '../../providers/transactions_provider.dart';

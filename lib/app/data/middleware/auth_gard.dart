@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:KIWOO/app/controllers/app_services_controller.dart';
+import 'package:kiwoo/app/controllers/app_services_controller.dart';
 import 'package:get/get.dart';
 
 import '../../routes/app_pages.dart';

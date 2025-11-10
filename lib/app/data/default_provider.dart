@@ -1,4 +1,4 @@
-import 'package:KIWOO/app/data/models/server_response_model.dart';
+import 'package:kiwoo/app/data/models/server_response_model.dart';
 import 'package:get/get.dart';
 
 import '../core/api_helper/urls.dart';

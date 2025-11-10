@@ -5,8 +5,8 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:image/image.dart' as img;
 
-import 'package:KIWOO/app/core/utils/app_colors.dart';
-import 'package:KIWOO/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/core/utils/app_colors.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
 
 import '../../../data/models/document_model.dart';
 
@@ -16,20 +16,21 @@ class OverlayPainter extends CustomPainter {
   final Offset _divider;
   final String title;
   OverlayPainter.oval(this.title)
-      : isSquare = false,
-        _divider = const Offset(0.8, 0.6);
+    : isSquare = false,
+      _divider = const Offset(0.8, 0.6);
   OverlayPainter.square(this.title)
-      : isSquare = true,
-        _divider = const Offset(0.9, 0.6);
+    : isSquare = true,
+      _divider = const Offset(0.9, 0.6);
 
   Future<FileData?> cropImage(String filePath) async {
     final originalImage = img.decodeImage(await File(filePath).readAsBytes());
     var width = originalImage!.width * _divider.dx;
     var height = originalImage.height * _divider.dy;
     final cropRect = Rect.fromCenter(
-        center: Offset(originalImage.width / 2, originalImage.height / 2),
-        width: width.toDouble(),
-        height: height.toDouble());
+      center: Offset(originalImage.width / 2, originalImage.height / 2),
+      width: width.toDouble(),
+      height: height.toDouble(),
+    );
     final croppedImage = img.copyCrop(
       originalImage,
       x: cropRect.left.toInt(),
@@ -53,7 +54,10 @@ class OverlayPainter extends CustomPainter {
       text: TextSpan(
         text: title,
         style: TextStyle(
-            fontFamily: FontPoppins.BOLD, color: AppColors.WHITE, fontSize: 16),
+          fontFamily: FontPoppins.BOLD,
+          color: AppColors.WHITE,
+          fontSize: 16,
+        ),
       ),
       textDirection: TextDirection.ltr,
       maxLines: null,
@@ -83,25 +87,25 @@ class OverlayPainter extends CustomPainter {
     if (isSquare) {
       final circlePath = Path()..addRect(rect);
 
-      final overlayPath =
-          Path.combine(PathOperation.difference, outerPath, circlePath);
+      final overlayPath = Path.combine(
+        PathOperation.difference,
+        outerPath,
+        circlePath,
+      );
 
       canvas.drawPath(overlayPath, paint);
-      canvas.drawRect(
-        rect,
-        borderPaint,
-      );
+      canvas.drawRect(rect, borderPaint);
     } else {
       final circlePath = Path()..addOval(rect);
 
-      final overlayPath =
-          Path.combine(PathOperation.difference, outerPath, circlePath);
+      final overlayPath = Path.combine(
+        PathOperation.difference,
+        outerPath,
+        circlePath,
+      );
 
       canvas.drawPath(overlayPath, paint);
-      canvas.drawOval(
-        rect,
-        borderPaint,
-      );
+      canvas.drawOval(rect, borderPaint);
     }
     textPainter.paint(canvas, const Offset(20, 20));
   }

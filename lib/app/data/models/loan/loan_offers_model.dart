@@ -39,17 +39,18 @@ class LoanOfferModel {
     this.loan,
   });
 
-  LoanOfferModel copyWith(
-      {int? id,
-      double? offeredInterest,
-      int? offeredTenure,
-      LoanApprovalStatus? approvalStatus,
-      int? loanId,
-      int? contactId,
-      DateTime? createdAt,
-      DateTime? updatedAt,
-      ContactData? contact,
-      LoanRequestModel? loan}) {
+  LoanOfferModel copyWith({
+    int? id,
+    double? offeredInterest,
+    int? offeredTenure,
+    LoanApprovalStatus? approvalStatus,
+    int? loanId,
+    int? contactId,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    ContactData? contact,
+    LoanRequestModel? loan,
+  }) {
     return LoanOfferModel(
       id: id ?? this.id,
       offeredInterest: offeredInterest ?? this.offeredInterest,
@@ -80,13 +81,15 @@ class LoanOfferModel {
   }
 
   factory LoanOfferModel.fromMap(Map<String, dynamic> map) {
+    print("the offer status ${map['approval_status']}${map['id']}");
     return LoanOfferModel(
       id: map['id'] != null ? map['id'] as int : null,
       offeredInterest: map['offered_interest'] != null
           ? double.tryParse('${map['offered_interest']}')
           : null,
-      offeredTenure:
-          map['offered_tenure'] != null ? map['offered_tenure'] as int : null,
+      offeredTenure: map['offered_tenure'] != null
+          ? map['offered_tenure'] as int
+          : null,
       approvalStatus: map['approval_status'] != null
           ? LoanApprovalStatus.fromMap(map['approval_status'])
           : null,

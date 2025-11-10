@@ -1,7 +1,7 @@
 // import 'package:camerawesome/camerawesome_plugin.dart';
 // import 'package:camerawesome/pigeon.dart';
 // import 'package:flutter/material.dart';
-// import 'package:KIWOO/app/core/utils/enums.dart';
+// import 'package:kiwoo/app/core/utils/enums.dart';
 
 // import 'package:get/get.dart';
 // import 'package:sizing/sizing_extension.dart';

@@ -1,0 +1,68 @@
+{
+  "name": "Nom",
+  "phone": "Tel.",
+  "buttons": {
+    "login": "Se connecter",
+    "sign_in": "Se connecter",
+    "logout": "Se déconnecter",
+    "sign_in_fb": "Se connecter avec Facebook",
+    "sign_in_google": "Se connecter avec Google",
+    "sign_in_apple": "Se connecter avec Apple"
+  },
+  "direction": {
+    "inbound": "Reçu",
+    "outbound": "Envoyé"
+  },
+  "directionTypeName":{
+    "inbound": "%s de l'Expéditeur",
+    "outbound": "%s du Destinataire"
+  },
+ 
+  "transactionStatus": {
+    "failed": "Echec",
+    "success": "Réussie",
+    "pending": "En cours",
+    "adverbe": {
+      "failed": "avec succès",
+      "success": "avec succès"
+    }
+  },
+
+  "PASTTENSE": {
+    "ACCEPTED": "accepté",
+    "REJECTED": "rejecté",
+    "RECEIVED": "reçu",
+    "SENT": "envoyé"
+  },
+  "PREPOSITION": {
+    "inbound": "de",
+    "outbound": "à"
+  },
+  "TRANSACTION": {
+    "TITLE": {
+      "chat": "Nouveau Message",
+      "transfer": "Transfer @method",
+      "loan": "Prêt @pasttense",
+      "loan_Request": "Demande De Prêt @pasttense",
+      "loanPayBack": "Remboursement De Prêt @pasttense",
+      "loan_offer": "Nouveau offre de Prêt @pasttense",
+      "loan_offer_validation": "Offre De Prêt @pasttense",
+      "cashin": "Dépot via @method",
+      "cashout": "Retrait via @method"
+    },
+    "BODY": {
+      "chat": "Nouveau Message",
+      "transfer": "Vous avez @pasttense une somme de @amount @preposition @userName.",
+      "loan": "Vous avez @pasttense un Prêt de @amount @preposition {userName}.",
+      "loan_Request": "Vous avez @pasttense une demande de Prêt de @amount @preposition {userName}.",
+      "loanPayBack": "vous avez @pasttense un Remboursement de Prêt de @amount @preposition @userName.",
+      "loan_offer": "vous avez @pasttense une offre pour le Prêt de @amount @preposition @userName.",
+      "loan_offer_validation": {
+        "inbound": "Votre offre de Prêt du somme de @amount à @userName ete @pasttense.",
+        "outbound": "Vous avez @pasttense l'offre de Prêt du somme de @amount de @userName."
+      },
+      "cashin": "Vous avez effectué un Dépot de @amount via @method.",
+      "cashout": "Vous avez effectué un Retrait de @amount via @method."
+    }
+  }
+}

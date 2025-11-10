@@ -1,6 +1,6 @@
-import 'package:KIWOO/app/core/utils/app_utility.dart';
-import 'package:KIWOO/app/core/utils/enums.dart';
-import 'package:KIWOO/app/modules/transactions/cashIn/views/moncash_view.dart';
+import 'package:kiwoo/app/core/utils/app_utility.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
+import 'package:kiwoo/app/modules/transactions/cashIn/views/mtn_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -13,22 +13,15 @@ class CashInView extends GetView<CashInController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        context,
-        "Cash In",
-        true,
-        true,
-        const [],
-        () {},
-      ),
+      appBar: CustomAppBar(context, "Cash In", true, true, const [], () {}),
       body: bodyWidet(),
     );
   }
 
   Widget bodyWidet() {
     switch (controller.method) {
-      case LedgerMethod.moncash:
-        return const MoncashView();
+      case LedgerMethod.MTN:
+        return const MTNView();
 
       default:
         return Column(
@@ -39,8 +32,11 @@ class CashInView extends GetView<CashInController> {
             const Text("This Method is unvailable for now"),
             verticalSpaceRegular,
             Center(
-                child: FilledButton(
-                    onPressed: Get.back, child: const Text("Back"))),
+              child: FilledButton(
+                onPressed: Get.back,
+                child: const Text("Back"),
+              ),
+            ),
           ],
         );
     }

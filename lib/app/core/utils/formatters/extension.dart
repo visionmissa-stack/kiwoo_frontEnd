@@ -80,11 +80,7 @@ extension DateTimeExtention on DateTime {
   }
 
   DateTime calculateLoanCompletionDate(int tenure) {
-    DateTime loanCompletionDate = DateTime(
-      year,
-      month + tenure,
-      day,
-    );
+    DateTime loanCompletionDate = DateTime(year, month + tenure, day);
     return loanCompletionDate;
   }
 }

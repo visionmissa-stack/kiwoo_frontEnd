@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/font_family.dart';
-import 'package:KIWOO/app/core/utils/kiwoo_icons.dart';
-import 'package:KIWOO/app/global_widgets/app_bar.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
+import 'package:kiwoo/app/global_widgets/app_bar.dart';
 
 import 'package:get/get.dart';
 import 'package:sizing/sizing.dart';
@@ -49,20 +49,20 @@ class LoansView extends GetView<LoansController> {
         alignment: Alignment.centerLeft,
         padding: const EdgeInsets.only(left: 20, right: 20),
         decoration: BoxDecoration(
-            color: AppColors.WHITE, borderRadius: BorderRadius.circular(25)),
+          color: AppColors.WHITE,
+          borderRadius: BorderRadius.circular(25),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               "Search... ",
               style: TextStyle(
-                  fontSize: 17.fss,
-                  color: const Color.fromARGB(255, 140, 140, 140)),
+                fontSize: 17.fss,
+                color: const Color.fromARGB(255, 140, 140, 140),
+              ),
             ),
-            Icon(
-              Kiwoo.search,
-              color: FontColors.GREY_140,
-            )
+            Icon(Kiwoo.search, color: FontColors.GREY_140),
           ],
         ),
       ),
@@ -116,7 +116,7 @@ class LoansView extends GetView<LoansController> {
                 scoreStatusTextSize: 6,
                 progress:
                     (controller.userDetails.value?.extraInfo?.score ?? 0) /
-                        850, // Progress based on credit score
+                    850, // Progress based on credit score
                 creditScore: controller.userDetails.value?.extraInfo?.score,
                 height: 100,
                 width: 100,
@@ -136,8 +136,10 @@ class LoansView extends GetView<LoansController> {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 5),
-            child: Text("Loan Management",
-                style: TextThemeHelper.headerLineListLable),
+            child: Text(
+              "Loan Management",
+              style: TextThemeHelper.headerLineListLable,
+            ),
           ),
           ListView.builder(
             itemCount: controller.loanManagementListTmp.length,
@@ -170,14 +172,11 @@ class LoansView extends GetView<LoansController> {
                       fontFamily: FontPoppins.MEDIUM,
                     ),
                   ),
-                  trailing: Icon(
-                    Kiwoo.angle_right,
-                    size: 35.vs,
-                  ),
+                  trailing: Icon(Kiwoo.angle_right, size: 35.vs),
                 ),
               );
             },
-          )
+          ),
         ],
       ),
     );

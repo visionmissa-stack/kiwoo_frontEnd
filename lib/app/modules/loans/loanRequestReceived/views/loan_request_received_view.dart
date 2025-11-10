@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
 
-import 'package:KIWOO/app/core/utils/actions/overlay.dart';
-import 'package:KIWOO/app/core/utils/enums.dart';
-import 'package:KIWOO/app/core/utils/font_family.dart';
-import 'package:KIWOO/app/modules/chat/bindings/chat_screen_binding.dart';
-import 'package:KIWOO/app/modules/chat/views/chat_view.dart';
+import 'package:kiwoo/app/core/utils/actions/overlay.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/modules/chat/bindings/chat_screen_binding.dart';
+import 'package:kiwoo/app/modules/chat/views/chat_view.dart';
 
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_string.dart';
@@ -58,20 +58,15 @@ class LoanRequestReceivedView extends GetView<LoanRequestReceivedController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidgetTitle(
-        title: AppStrings.RECEIVED_REQUEST,
-      ),
+      appBar: const AppBarWidgetTitle(title: AppStrings.RECEIVED_REQUEST),
       body: Padding(
-        padding: EdgeInsets.only(
-          left: 18.ss,
-          right: 18.ss,
-          bottom: 18.ss,
-        ),
+        padding: EdgeInsets.only(left: 18.ss, right: 18.ss, bottom: 18.ss),
         child: ScrollviewWithScrollingChild(
           header: Padding(
             padding: const EdgeInsets.only(top: 10.0, bottom: 20),
             child: creditDataWidget(
-                controller.userDetails.value?.extraInfo?.score ?? 0),
+              controller.userDetails.value?.extraInfo?.score ?? 0,
+            ),
           ),
           maxExtent: 40,
           minExtent: 40,
@@ -80,16 +75,10 @@ class LoanRequestReceivedView extends GetView<LoanRequestReceivedController> {
             color: AppColors.APP_BG,
             child: Row(
               children: [
-                Text(
-                  "Today",
-                  style: TextThemeHelper.titleLR,
-                ),
+                Text("Today", style: TextThemeHelper.titleLR),
                 horizontalSpaceTiny,
                 const Spacer(),
-                Text(
-                  "\$40,000",
-                  style: TextThemeHelper.EHTGTextStyle,
-                ),
+                Text("\$40,000", style: TextThemeHelper.EHTGTextStyle),
                 // horizontalSpaceTiny,
               ],
             ),
@@ -110,74 +99,79 @@ class LoanRequestReceivedView extends GetView<LoanRequestReceivedController> {
         return Padding(
           padding: const EdgeInsets.only(top: 8, bottom: 5),
           child: LoanCard(
-              token: StorageBox.token.val,
-              user: rLoan?.user,
-              amount: rLoan?.amount,
-              interest: rLoan?.interest,
-              tenure: rLoan?.tenure,
-              approvalStatus: rApprouval?.name,
-              date: rLoan?.createdAt,
-              onLoanStatus: (status) {
-                if (status == LoanApprovalStatus.pending.name) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      recRoundedButton(
-                        title: "Accept",
-                        color: AppColors.SUCCESS,
-                        onPressed: () async {
-                          var pin = await showPinDialog();
-                          if (pin != null) {
-                            showOverlay(
-                              asyncFunction: () =>
-                                  controller.postAcceptLoanAPiCall(
-                                loadId: item.loanId!,
-                                pin: pin,
-                              ),
-                            ).then((val) {
-                              if (val) onRefresh!();
-                            });
-                          }
-                        },
-                      ),
-                      recRoundedButton(
-                        title: "Chat",
-                        color: Colors.orange,
-                        onPressed: () {
-                          Get.to(
-                            () => const ChatView(),
-                            binding: ChatScreenBinding(),
-                            arguments: {
-                              ...rLoan!.user!.toMap(),
-                              "id": rLoan.userId
-                            },
-                            routeName: "chatScreen",
-                          );
-                        },
-                      ),
-                      recRoundedButton(
-                        title: "Offer",
-                        color: Colors.redAccent,
-                        onPressed: () {
-                          sendLoanDaiLogBox(
-                            loadId: rLoan?.id,
-                            interest: rLoan?.interest,
-                            amount: rLoan?.amount,
-                            duration: rLoan?.tenure,
-                          ).then((value) {
-                            print("the value is here $value");
-                            return value == true ? onRefresh?.call() : null;
+            token: StorageBox.token.val,
+            user: rLoan?.user,
+            amount: rLoan?.amount,
+            interest: rLoan?.interest,
+            tenure: rLoan?.tenure,
+            approvalStatus: rApprouval?.name,
+            date: rLoan?.createdAt,
+            onLoanStatus: (status) {
+              print("the status value $status");
+              if (status == LoanApprovalStatus.pending.name
+              // || status == LoanApprovalStatus.rejected.name
+              ) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    recRoundedButton(
+                      title: "Accept",
+                      color: AppColors.SUCCESS,
+                      onPressed: () async {
+                        var pin = await showPinDialog();
+                        if (pin != null) {
+                          showOverlay(
+                            asyncFunction: () =>
+                                controller.postAcceptLoanAPiCall(
+                                  loadId: item.loanId!,
+                                  pin: pin,
+                                ),
+                          ).then((val) {
+                            if (val) onRefresh!();
                           });
-                        },
-                      )
-                    ],
-                  );
-                }
-                return Text(
-                  "Loan has been $status",
-                  style: TextThemeHelper.titleLR,
+                        }
+                      },
+                    ),
+                    recRoundedButton(
+                      title: "Chat",
+                      color: Colors.orange,
+                      onPressed: () {
+                        Get.to(
+                          () => const ChatView(),
+                          binding: ChatScreenBinding(),
+                          arguments: {
+                            ...rLoan!.user!.toMap(),
+                            "id": rLoan.userId,
+                          },
+                          routeName: "chatScreen",
+                        );
+                      },
+                    ),
+                    recRoundedButton(
+                      title: "Offer",
+                      color: Colors.redAccent,
+                      onPressed: () {
+                        sendLoanDaiLogBox(
+                          loadId: rLoan?.id,
+                          interest: rLoan?.interest,
+                          amount: rLoan?.amount,
+                          duration: rLoan?.tenure,
+                        ).then((value) {
+                          print("the value is here $value");
+                          return value == true ? onRefresh?.call() : null;
+                        });
+                      },
+                    ),
+                  ],
                 );
-              }),
+              }
+
+              return Text(
+                "Loan has been $status",
+                style: TextThemeHelper.titleLR,
+              );
+            },
+          ),
         );
       },
     );
@@ -189,24 +183,29 @@ class LoanRequestReceivedView extends GetView<LoanRequestReceivedController> {
     required void Function() onPressed,
   }) {
     return FilledButton(
-        style: FilledButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(5),
-            ),
-            backgroundColor: color),
-        onPressed: onPressed,
-        child: Text(
-          title,
-          style: TextStyle(
-              fontFamily: FontPoppins.REGULAR,
-              color: AppColors.WHITE,
-              fontSize: 14,
-              fontWeight: FontWeight.bold),
-        ));
+      style: FilledButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+        backgroundColor: color,
+      ),
+      onPressed: onPressed,
+      child: Text(
+        title,
+        style: TextStyle(
+          fontFamily: FontPoppins.REGULAR,
+          color: AppColors.WHITE,
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
   }
 
-  Future<bool?> sendLoanDaiLogBox(
-      {double? interest, double? amount, int? duration, int? loadId}) {
+  Future<bool?> sendLoanDaiLogBox({
+    double? interest,
+    double? amount,
+    int? duration,
+    int? loadId,
+  }) {
     String amountBox = amount?.toString() ?? "";
     String durationBox = duration?.toString() ?? "";
     String interestBox = interest?.toString() ?? "";
@@ -268,8 +267,9 @@ class LoanRequestReceivedView extends GetView<LoanRequestReceivedController> {
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.only(
-                                topRight: Radius.circular(7),
-                                bottomRight: Radius.circular(7)),
+                              topRight: Radius.circular(7),
+                              bottomRight: Radius.circular(7),
+                            ),
                           ),
                           child: Text(
                             "Months",
@@ -296,16 +296,14 @@ class LoanRequestReceivedView extends GetView<LoanRequestReceivedController> {
                               asyncFunction: () => controller.postOfferApiCall(
                                 loadId: loadId.toString(),
                                 duration: int.parse(durationBox.trim()),
-                                interest: double.parse(
-                                  interestBox.trim(),
-                                ),
+                                interest: double.parse(interestBox.trim()),
                               ),
                             ).then((val) {
                               return val;
                             });
                           }
                         },
-                      )
+                      ),
                     ],
                   ),
                 ),

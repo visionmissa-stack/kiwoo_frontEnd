@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/app_colors.dart';
-import 'package:KIWOO/app/core/utils/app_utility.dart';
-import 'package:KIWOO/app/core/utils/kiwoo_icons.dart';
+import 'package:kiwoo/app/core/utils/app_colors.dart';
+import 'package:kiwoo/app/core/utils/app_utility.dart';
+import 'package:kiwoo/app/core/utils/kiwoo_icons.dart';
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
 
@@ -32,17 +32,15 @@ class ImagePreviewWidget extends GetView {
               ),
               horizontalSpaceRegular,
               IconButton(
-                  iconSize: 40.ss,
-                  onPressed: () {
-                    Get.back(result: false);
-                  },
-                  icon: const Icon(
-                    Kiwoo.close,
-                    color: Colors.red,
-                  )),
+                iconSize: 40.ss,
+                onPressed: () {
+                  Get.back(result: false);
+                },
+                icon: const Icon(Kiwoo.close, color: Colors.red),
+              ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

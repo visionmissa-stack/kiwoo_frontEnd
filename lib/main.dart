@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:KIWOO/app/controllers/firebase_services.dart';
+import 'package:kiwoo/app/controllers/firebase_services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -10,7 +10,7 @@ import 'package:get_storage_pro/get_storage_pro.dart';
 import 'package:sizing/sizing.dart';
 import 'package:firebase_notifications_handler/firebase_notifications_handler.dart';
 
-import 'package:KIWOO/app/controllers/app_services_controller.dart';
+import 'package:kiwoo/app/controllers/app_services_controller.dart';
 
 import 'app/core/utils/app_theme.dart';
 import 'app/core/utils/image_name.dart';
@@ -48,9 +48,6 @@ class MyApp extends StatelessWidget {
             mutableContent: p0.mutableContent,
             notification: RemoteNotification.fromMap({
               ...p0.notification?.toMap() ?? {},
-              'title': p0.notification?.titleLocKey?.tr,
-              'body': p0.notification?.bodyLocKey
-                  ?.trArgs(p0.notification?.bodyLocArgs ?? [])
             }),
             sentTime: p0.sentTime,
             threadId: p0.threadId,
@@ -67,7 +64,6 @@ class MyApp extends StatelessWidget {
         StorageBox.fmcToken.val = token;
       },
       onTap: (notif) {
-        print("on notif takk ");
         switch (notif.appState) {
           case AppState.terminated:
           case AppState.background:
@@ -75,13 +71,13 @@ class MyApp extends StatelessWidget {
             continue openNotif;
           openNotif:
           case AppState.open:
-            print("notif is opend");
             Get.find<FirebaseServices>().goToPage(notif.firebaseMessage);
             break;
         }
       },
       onOpenNotificationArrive: (notif) {
-        Get.find<FirebaseServices>().onMessage(notif.firebaseMessage);
+        print("new notif $notif");
+        // Get.find<FirebaseServices>().onMessage(notif.firebaseMessage);
       },
       child: SizingBuilder(
         baseSize: const Size(430, 932),
@@ -90,8 +86,8 @@ class MyApp extends StatelessWidget {
           theme: theme,
           debugShowCheckedModeBanner: false,
           // locale: const Locale('en'),
-          locale: const Locale('ht_HT'),
-          supportedLocales: const <Locale>[Locale('ht_HT')],
+          locale: const Locale('fr'),
+          supportedLocales: const <Locale>[Locale('fr'), Locale('en')],
           // defaultTransition: Transition.fade,
           translationsKeys: AppTranslation.translations,
           localizationsDelegates: GlobalMaterialLocalizations.delegates,
@@ -126,7 +122,5 @@ Future<void> _onInit() async {
   // Initialize GetStoragePro (call this before using any GetStoragePro functionality)
   await GetStoragePro.init();
   await GetStorage.init("appKeys");
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 }

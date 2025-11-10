@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/app_colors.dart';
+import 'package:kiwoo/app/core/utils/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
 
@@ -8,8 +8,12 @@ import '../../../../../core/utils/text_teme_helper.dart';
 import '../../../../../global_widgets/app_button.dart';
 
 Future submitedSuccessDaiLogBox(
-    IconData icon, String title, String subTitle, String btnTitle,
-    [GestureTapCallback? onTap]) {
+  IconData icon,
+  String title,
+  String subTitle,
+  String btnTitle, [
+  GestureTapCallback? onTap,
+]) {
   return Get.dialog(
     barrierDismissible: false,
     Column(
@@ -19,9 +23,7 @@ Future submitedSuccessDaiLogBox(
           padding: const EdgeInsets.all(15.0),
           decoration: BoxDecoration(
             color: AppColors.WHITE,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(20),
-            ),
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
           ),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -30,10 +32,7 @@ Future submitedSuccessDaiLogBox(
                 children: [
                   Icon(icon, size: 65.s),
                   const SizedBox(height: 14),
-                  Text(
-                    title,
-                    style: TextThemeHelper.dailogTitle,
-                  ),
+                  Text(title, style: TextThemeHelper.dailogTitle),
                   const SizedBox(height: 14),
                   Text(
                     subTitle,
@@ -49,7 +48,7 @@ Future submitedSuccessDaiLogBox(
                       onTap?.call();
                       Get.back();
                     },
-                  )
+                  ),
                 ],
               ),
             ),

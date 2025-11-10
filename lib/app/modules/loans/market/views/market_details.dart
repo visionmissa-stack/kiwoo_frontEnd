@@ -1,8 +1,8 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/core/utils/font_family.dart';
-import 'package:KIWOO/app/global_widgets/input_field.dart';
+import 'package:kiwoo/app/core/utils/font_family.dart';
+import 'package:kiwoo/app/global_widgets/input_field.dart';
 import 'package:get/get.dart';
 import 'package:sizing/sizing.dart';
 
@@ -35,9 +35,7 @@ class MarketDetails extends GetWidget<LoansController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarWidgetTitle(
-        title: AppStrings.LOAN_MARKET_DETAILS,
-      ),
+      appBar: const AppBarWidgetTitle(title: AppStrings.LOAN_MARKET_DETAILS),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.ss, vertical: 30.ss),
         child: AppButton(
@@ -49,9 +47,7 @@ class MarketDetails extends GetWidget<LoansController> {
       ),
       body: ListView(
         children: [
-          SizedBox(
-            height: 10.ss,
-          ),
+          SizedBox(height: 10.ss),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.ss),
             child: Container(
@@ -62,8 +58,10 @@ class MarketDetails extends GetWidget<LoansController> {
                 ),
               ),
               child: Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: 30.ss, vertical: 15.ss),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 30.ss,
+                  vertical: 15.ss,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -124,7 +122,7 @@ class MarketDetails extends GetWidget<LoansController> {
                               ),
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ],
@@ -132,9 +130,7 @@ class MarketDetails extends GetWidget<LoansController> {
               ),
             ),
           ),
-          SizedBox(
-            height: 10.ss,
-          ),
+          SizedBox(height: 10.ss),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20.ss),
             child: Text(
@@ -147,7 +143,7 @@ class MarketDetails extends GetWidget<LoansController> {
             ),
           ),
           SizedBox(height: 15.ss),
-          requestLoanDetailWidget(lbl: "Amount", val: "$amount EHTG "),
+          requestLoanDetailWidget(lbl: "Amount", val: "$amount EFCA "),
           SizedBox(height: 10.ss),
           requestLoanDetailWidget(lbl: "Interest", val: "$interest%"),
           SizedBox(height: 10.ss),
@@ -198,9 +194,7 @@ class MarketDetails extends GetWidget<LoansController> {
             padding: const EdgeInsets.all(15.0),
             decoration: const BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-              ),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
@@ -224,7 +218,9 @@ class MarketDetails extends GetWidget<LoansController> {
                         enable: false,
                         validator: (value) {
                           return isEmptyValidator(
-                              value, AppStrings.PLS_ENTER_LOAN_AMOUNT);
+                            value,
+                            AppStrings.PLS_ENTER_LOAN_AMOUNT,
+                          );
                         },
                       ),
                       verticalSpaceSmall,
@@ -234,7 +230,9 @@ class MarketDetails extends GetWidget<LoansController> {
                         hintText: AppStrings.LOAN_INTEREST,
                         validator: (value) {
                           return isEmptyValidator(
-                              value, AppStrings.PLS_ENTER_LOAN_INTEREST);
+                            value,
+                            AppStrings.PLS_ENTER_LOAN_INTEREST,
+                          );
                         },
                         onSaved: (p0) {
                           interest = p0!;
@@ -247,7 +245,9 @@ class MarketDetails extends GetWidget<LoansController> {
                         hintText: AppStrings.LOAN_DURATION,
                         validator: (value) {
                           return isEmptyValidator(
-                              value, AppStrings.PLS_ENTER_LOAN_MONTHS);
+                            value,
+                            AppStrings.PLS_ENTER_LOAN_MONTHS,
+                          );
                         },
                         onSaved: (p0) {
                           duration = p0!;
@@ -263,8 +263,11 @@ class MarketDetails extends GetWidget<LoansController> {
                               true) {
                             controller.formKey.currentState!.save();
                             controller
-                                .postOfferApi(loanId.toString(),
-                                    int.parse(duration), double.parse(interest))
+                                .postOfferApi(
+                                  loanId.toString(),
+                                  int.parse(duration),
+                                  double.parse(interest),
+                                )
                                 .then((val) => Get.back(result: val));
                             // //if (validation()) {
                             // Get.back();
@@ -272,7 +275,7 @@ class MarketDetails extends GetWidget<LoansController> {
 
                           //}
                         },
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -299,10 +302,7 @@ class MarketDetails extends GetWidget<LoansController> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: TextThemeHelper.sendTextFieldTitle,
-          ),
+          Text(title, style: TextThemeHelper.sendTextFieldTitle),
           verticalSpaceSmall,
           CustomInputFormField(
             validator: validator,
@@ -319,7 +319,7 @@ class MarketDetails extends GetWidget<LoansController> {
             contentPadding: EdgeInsets.fromLTRB(10.ss, 5.ss, 10.ss, 5.ss),
             fillColor: const Color.fromARGB(255, 243, 243, 243),
             suffixIcon: suffixIcon,
-          )
+          ),
         ],
       ),
     );

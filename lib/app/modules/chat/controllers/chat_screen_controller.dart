@@ -2,13 +2,13 @@
 
 import 'dart:async';
 
-import 'package:KIWOO/app/core/utils/actions/try_catch.dart';
-import 'package:KIWOO/app/core/utils/app_string.dart';
-import 'package:KIWOO/app/core/utils/enums.dart';
-import 'package:KIWOO/app/core/utils/storage_pro.dart';
-import 'package:KIWOO/app/data/models/contact_list_model.dart';
+import 'package:kiwoo/app/core/utils/actions/try_catch.dart';
+import 'package:kiwoo/app/core/utils/app_string.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
+import 'package:kiwoo/app/core/utils/storage_pro.dart';
+import 'package:kiwoo/app/data/models/contact_list_model.dart';
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/controllers/def_controller.dart';
+import 'package:kiwoo/app/controllers/def_controller.dart';
 import 'package:get/get.dart';
 import 'package:socket_io_client/socket_io_client.dart';
 
@@ -38,10 +38,7 @@ class ChatScreenController extends GetxController with DefController {
   void onInit() {
     messageInputController = TextEditingController();
     scrollController = ScrollController();
-    socketService = Get.put(
-      ChatSocketService(),
-      permanent: false,
-    );
+    socketService = Get.put(ChatSocketService(), permanent: false);
     chatRoom = Rx<ChatModel>(
       (Get.arguments['chat_id'] != null
               ? getObjectById<ChatModel>(Get.arguments['chat_id'])
@@ -54,7 +51,7 @@ class ChatScreenController extends GetxController with DefController {
                 name: Get.arguments['name'],
                 id: Get.arguments['id'],
                 avatar: Get.arguments['avatar'],
-              )
+              ),
             ],
           ),
     );
@@ -150,8 +147,9 @@ class ChatScreenController extends GetxController with DefController {
 
     var msgStatus = MessageStatus.fromMap(statusInfo?['status']);
     if (msgStatus != MessageStatus.sending && data['by'] != userID) {
-      var msg = chatRoom.value.messages
-          .firstWhereOrNull((el) => el.id == statusInfo['message_id']);
+      var msg = chatRoom.value.messages.firstWhereOrNull(
+        (el) => el.id == statusInfo['message_id'],
+      );
       if (msg != null && msg.status.index < msgStatus.index) {
         updateMessage(msg.copyWith(status: msgStatus));
       }
@@ -176,8 +174,9 @@ class ChatScreenController extends GetxController with DefController {
 
   Future<void> getALLMessage(String chatID) async {
     try {
-      var response =
-          await socketService.chatProvider.getAllMessageApiCall(chatID);
+      var response = await socketService.chatProvider.getAllMessageApiCall(
+        chatID,
+      );
       if (response?.isSuccess == true) {
         var listMessage = listMessageFromMap(response?.data);
         chatRoom.update((data) {
@@ -200,14 +199,15 @@ class ChatScreenController extends GetxController with DefController {
 
   sendMessageToUser() async {
     if (messageInputController.text.trim() != "") {
-      socketService.emitWithSocket("newMessage", {
-        "content": messageInputController.text,
-        "chat_id": chatId,
-      }, ack: (data) {
-        if (data != null) {
-          addNewMessages(Message.fromMap(data));
-        }
-      });
+      socketService.emitWithSocket(
+        "newMessage",
+        {"content": messageInputController.text, "chat_id": chatId},
+        ack: (data) {
+          if (data != null) {
+            addNewMessages(Message.fromMap(data));
+          }
+        },
+      );
       sendTypingStatus(false);
       messageInputController.clear();
     }
@@ -215,27 +215,31 @@ class ChatScreenController extends GetxController with DefController {
 
   void sendTypingStatus(bool isTyping) {
     isTypingDelayed?.cancel();
-    socketService.emitWithSocket(
-        "typingStatus", {"chat_id": chatId, 'isTyping': isTyping});
+    socketService.emitWithSocket("typingStatus", {
+      "chat_id": chatId,
+      'isTyping': isTyping,
+    });
 
     if (isTyping) {
-      isTypingDelayed =
-          Timer(const Duration(seconds: 5), () => sendTypingStatus(false));
+      isTypingDelayed = Timer(
+        const Duration(seconds: 5),
+        () => sendTypingStatus(false),
+      );
     }
   }
 
   void setReadMessage(Message msg, index) {
-    socketService.emitWithSocket("updateMessageStatus", {
-      "chat_id": msg.chatId,
-      "message_id": msg.id,
-      'status': "read"
-    }, ack: (data) {
-      if (data != null) {
-        msg.status = MessageStatus.read;
-        chatRoom.update((val) {
-          val?.count = 0;
-        });
-      }
-    });
+    socketService.emitWithSocket(
+      "updateMessageStatus",
+      {"chat_id": msg.chatId, "message_id": msg.id, 'status': "read"},
+      ack: (data) {
+        if (data != null) {
+          msg.status = MessageStatus.read;
+          chatRoom.update((val) {
+            val?.count = 0;
+          });
+        }
+      },
+    );
   }
 }

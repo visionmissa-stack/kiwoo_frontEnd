@@ -1,7 +1,7 @@
-import 'package:KIWOO/app/global_widgets/notification_icon_count.dart';
-import 'package:KIWOO/app/routes/app_pages.dart';
+import 'package:kiwoo/app/global_widgets/notification_icon_count.dart';
+import 'package:kiwoo/app/routes/app_pages.dart';
 import 'package:flutter/material.dart';
-import 'package:KIWOO/app/controllers/app_services_controller.dart';
+import 'package:kiwoo/app/controllers/app_services_controller.dart';
 import 'package:get/get.dart';
 import 'package:sizing/sizing_extension.dart';
 
@@ -28,43 +28,37 @@ class AppBarWidget extends GetWidget<AppServicesController>
         padding: const EdgeInsets.fromLTRB(20, 0, 2, 15),
         child: Row(
           children: [
-            Obx(
-              () {
-                var avatar = controller.userDetails.value?.avatar;
-                // avatar = "18tCBcK1_BjZpu_vXdhoRJXzr3KwNvy_C";
-                return Container(
-                  height: 55.0,
-                  width: 50.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Colors.white,
+            Obx(() {
+              var avatar = controller.userDetails.value?.avatar;
+              // avatar = "18tCBcK1_BjZpu_vXdhoRJXzr3KwNvy_C";
+              return Container(
+                height: 55.0,
+                width: 50.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                ),
+                child: avatarImage(
+                  avatar,
+                  cacheManager: CustomCacheManager.profilCacheManager,
+                  placeHolder: const Center(
+                    child: Icon(Kiwoo.person, size: 40, color: Colors.green),
                   ),
-                  child: avatarImage(
-                    avatar,
-                    cacheManager: CustomCacheManager.profilCacheManager,
-                    placeHolder: const Center(
-                      child: Icon(
-                        Kiwoo.person,
-                        size: 40,
-                        color: Colors.green,
-                      ),
-                    ),
-                    imageBuilder: (context, imageProvider) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.cover,
-                          ),
-                          shape: BoxShape.rectangle,
+                  imageBuilder: (context, imageProvider) {
+                    return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        image: DecorationImage(
+                          image: imageProvider,
+                          fit: BoxFit.cover,
                         ),
-                      );
-                    },
-                  ),
-                );
-              },
-            ),
+                        shape: BoxShape.rectangle,
+                      ),
+                    );
+                  },
+                ),
+              );
+            }),
             horizontalSpaceSmall,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +95,7 @@ class AppBarWidget extends GetWidget<AppServicesController>
                   }),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -111,15 +105,17 @@ class AppBarWidget extends GetWidget<AppServicesController>
           child: InkWell(
             onTap: () => Get.toNamed(Routes.NOTIFICATIONS),
             child: Obx(() {
-              var newNotifCount = controller.notifications
-                  .fold(0, (value, element) => value + (!element.read ? 1 : 0));
+              var newNotifCount = controller.notifications.fold(
+                0,
+                (value, element) => value + (!element.read ? 1 : 0),
+              );
               return NotificationIconCount(
                 icon: Icon(Kiwoo.bell, size: 30.ss, color: Colors.white),
                 count: newNotifCount,
               );
             }),
           ),
-        )
+        ),
       ],
     );
   }
