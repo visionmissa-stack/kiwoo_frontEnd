@@ -1,11 +1,15 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 
 class Url {
-  static const _url = kDebugMode ? "localhost" : "app-bck.kiwoo.io";
-  static const BASE_URL = kDebugMode ? "http://$_url:3000/" : "https://$_url/";
-  static const SOCKET_URL = "${BASE_URL}chat_socket";
+  static final _url = kDebugMode
+      ? (Platform.isIOS ? "192.168.7.168" : "localhost")
+      : "app-bck.kiwoo.io";
+  static final BASE_URL = kDebugMode ? "http://$_url:3000/" : "https://$_url/";
+  static final SOCKET_URL = "${BASE_URL}chat_socket";
   static const LOGIN = "auth/signin";
   static const REQUEST_AUTH = "auth/request_auth";
   static const VERIFY_AUTH = "auth/verify_auth";
