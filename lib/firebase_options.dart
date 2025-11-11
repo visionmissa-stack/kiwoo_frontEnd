@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,9 +28,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
-        return windows;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -40,19 +49,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBh2liBlSOydjVIpZSvDTcd2Xx3dwDNM64',
-    appId: '1:49564633649:web:4eda07211581bf44452310',
-    messagingSenderId: '49564633649',
-    projectId: 'kiwoo-4597a',
-    authDomain: 'kiwoo-4597a.firebaseapp.com',
-    storageBucket: 'kiwoo-4597a.firebasestorage.app',
-    measurementId: 'G-G01KBJRJSS',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAGwf0s7BCp55KyYEeMd8AqEX7FE_57hVo',
-    appId: '1:49564633649:android:d9af8912fb982851452310',
+    appId: '1:49564633649:android:9fbdf43834fbe127452310',
     messagingSenderId: '49564633649',
     projectId: 'kiwoo-4597a',
     storageBucket: 'kiwoo-4597a.firebasestorage.app',
@@ -60,30 +59,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBRB3-3ST3twQs3Xf0Ynl6fteniivMOFI8',
-    appId: '1:49564633649:ios:294b875f9e384870452310',
+    appId: '1:49564633649:ios:d32fe1cdebc9fadd452310',
     messagingSenderId: '49564633649',
     projectId: 'kiwoo-4597a',
     storageBucket: 'kiwoo-4597a.firebasestorage.app',
-    iosBundleId: 'com.vision.kiwoo',
+    iosBundleId: 'com.visionmis.kiwoo',
   );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBRB3-3ST3twQs3Xf0Ynl6fteniivMOFI8',
-    appId: '1:49564633649:ios:60cf552d3e639e4a452310',
-    messagingSenderId: '49564633649',
-    projectId: 'kiwoo-4597a',
-    storageBucket: 'kiwoo-4597a.firebasestorage.app',
-    iosBundleId: 'com.visionMIS.kiwoo.frontEndNew',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBh2liBlSOydjVIpZSvDTcd2Xx3dwDNM64',
-    appId: '1:49564633649:web:4eda07211581bf44452310',
-    messagingSenderId: '49564633649',
-    projectId: 'kiwoo-4597a',
-    authDomain: 'kiwoo-4597a.firebaseapp.com',
-    storageBucket: 'kiwoo-4597a.firebasestorage.app',
-    measurementId: 'G-G01KBJRJSS',
-  );
-
 }
