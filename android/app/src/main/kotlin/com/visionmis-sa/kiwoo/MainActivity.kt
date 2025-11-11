@@ -1,5 +1,0 @@
-package com.visionmis.kiwoo
-
-import io.flutter.embedding.android.FlutterActivity
-
-class MainActivity : FlutterActivity()

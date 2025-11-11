@@ -65,4 +65,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'kiwoo-4597a.firebasestorage.app',
     iosBundleId: 'com.visionmis.kiwoo',
   );
+
 }
