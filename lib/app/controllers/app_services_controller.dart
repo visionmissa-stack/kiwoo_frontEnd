@@ -143,7 +143,6 @@ class AppServicesController extends GetxService
       GetStoragePro.saveObject<CurrentUser>(CurrentUser());
       GetStoragePro.deleteAllObjects<ChatModel>();
       await StorageBox.removeToken();
-      Get.find<FirebaseServices>().deleteToken();
     } catch (e) {
       Get.log("the error >>> $e", isError: true);
     }

@@ -1,0 +1,4 @@
+// Privacy - contacts usage Description 
+"NSContactsUsageDescription" = "Nous utilisons vos contacts pour trouver vos amis déjà sur l'application.";
+"NSCameraUsageDescription" = "Nous avons besoin d'acceder à votre caméra pour prendre des photos de profil et numerisation des documents directement dans l'applicaiton.";
+"NSPhotoLibraryUsageDescription" = "Nous avons besoin d'acceder à votre bibliothèque de photos pour vous permettre de choisir des images esistantes pour votre profil ou de télécharger des documents enregistréa.";
