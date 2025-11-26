@@ -1,13 +1,18 @@
+import 'package:kiwoo/app/core/utils/actions/overlay.dart';
+import 'package:kiwoo/app/core/utils/enums.dart';
 import 'package:kiwoo/app/modules/connection/forgetPassword/views/new_password_view.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 import 'package:sizing/sizing_extension.dart';
 
+import '../../../../core/utils/app_colors.dart' show AppColors;
 import '../../../../core/utils/app_string.dart';
 import '../../../../core/utils/app_utility.dart';
 import '../../../../core/utils/presentation_page_header.dart';
 import '../../../../core/utils/text_teme_helper.dart';
+import '../../../../data/models/register_model.dart' show OTPModel;
 import '../../../../global_widgets/app_button.dart';
 import '../../../../global_widgets/input_field.dart';
 import '../../../../routes/app_pages.dart';
@@ -20,20 +25,49 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
 
   void submitRegistration([_]) async {
     //Get.toNamed(otpScreen, arguments: {"email": ""});
-    if (controller.formKey.currentState?.validate() == true) {
-      controller.formKey.currentState?.save();
-      Get.to(
-        () {
-          return OTPView(
-            onAuthentificated: () {
-              Get.off(() => NewPasswordView());
-              return;
-            },
-          );
+    if (controller.formGroup.valid) {
+      var response = await showOverlay<OTPModel?>(
+        asyncFunction: () async {
+          try {
+            var response = await controller.provider.askForOtpApi(
+              controller.formGroup.control("email").value.trim(),
+              OTPType.forgotPassword.name,
+            );
+            if (response?.isSuccess == true) {
+              var registerData = OTPModel.fromMap(response!.data!);
+              showMsg(
+                registerData.message ?? "Otp sent to successfully",
+                color: AppColors.SUCCESS,
+              );
+              return registerData;
+            } else {
+              response?.showMessage();
+            }
+          } catch (e) {
+            Get.log("$e", isError: true);
+          }
+          return null;
         },
-        opaque: false,
-        binding: OTPBinding.forgotPassword(controller.email),
       );
+      if (response != null) {
+        Get.to(
+          () {
+            return OTPView(
+              onAuthentificated: () {
+                Get.off(() => NewPasswordView());
+                return;
+              },
+            );
+          },
+          opaque: false,
+          binding: OTPBinding.forgotPassword(
+            controller.formGroup.control("email").value.trim(),
+            validity: response.otpValidity,
+          ),
+        );
+      }
+    } else {
+      controller.formGroup.markAllAsTouched();
     }
   }
 
@@ -41,68 +75,59 @@ class ForgetPasswordView extends GetView<ForgetPasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const PresentationPageHeader(pageTitle: AppStrings.RESET_PASSWORD),
-            verticalSpaceRegular,
-            Form(
-              key: controller.formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.ss),
+          child: Column(
+            children: [
+              const PresentationPageHeader(
+                pageTitle: AppStrings.RESET_PASSWORD,
+              ),
+              verticalSpaceRegular,
+              ReactiveForm(
+                formGroup: controller.formGroup,
+                child: ReactiveTextField(
+                  formControlName: 'email',
+                  decoration: textInputDecoration(hintText: AppStrings.EMAIL),
+                  onTapOutside: (event) => hideKeyboard(),
+                  validationMessages: {
+                    ValidationMessage.required: (error) =>
+                        AppStrings.PLS_ENTER_EMAILID,
+                    ValidationMessage.email: (error) =>
+                        AppStrings.PLS_ENTER_VALID_EMAILID,
+                  },
+                ),
+              ),
+              verticalSpaceLarge,
+              customeAuthButton(
+                lableName: AppStrings.RESET,
+                onTap: submitRegistration,
+              ),
+
+              verticalSpaceRegular,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.ss),
-                    child: CustomInputFormField(
-                      hintText: AppStrings.EMAIL,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      onFieldSubmitted: submitRegistration,
-                      validator: (value) {
-                        if ((value ?? "").isEmpty) {
-                          return AppStrings.PLS_ENTER_EMAILID;
-                        } else if (!value!.isEmail) {
-                          return AppStrings.PLS_ENTER_VALID_EMAILID;
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (p0) {
-                        controller.email = p0 ?? "";
-                      },
-                    ),
+                  Text(
+                    AppStrings.BACK_TO,
+                    textAlign: TextAlign.center,
+                    style: TextThemeHelper.authTitle,
                   ),
-                  verticalSpaceLarge,
-                  customeAuthButton(
-                    lableName: AppStrings.RESET,
-                    onTap: submitRegistration,
+                  horizontalSpaceTiny,
+                  GestureDetector(
+                    onTap: () {
+                      Get.offNamed(Routes.LOGIN);
+                    },
+                    child: Text(
+                      AppStrings.LOGIN,
+                      textAlign: TextAlign.left,
+                      style: TextThemeHelper.registerHere,
+                    ),
                   ),
                 ],
               ),
-            ),
-            verticalSpaceRegular,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  AppStrings.BACK_TO,
-                  textAlign: TextAlign.center,
-                  style: TextThemeHelper.authTitle,
-                ),
-                horizontalSpaceTiny,
-                GestureDetector(
-                  onTap: () {
-                    Get.offNamed(Routes.LOGIN);
-                  },
-                  child: Text(
-                    AppStrings.LOGIN,
-                    textAlign: TextAlign.left,
-                    style: TextThemeHelper.registerHere,
-                  ),
-                ),
-              ],
-            ),
-            verticalSpaceRegular,
-          ],
+              verticalSpaceRegular,
+            ],
+          ),
         ),
       ),
     );

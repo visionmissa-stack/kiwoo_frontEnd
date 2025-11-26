@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:kiwoo/app/data/models/storage_box_model.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage_pro/get_storage_pro.dart';
 
@@ -29,7 +27,6 @@ class AppServicesController extends GetxService
   late Rx<UserDetailModel?> userDetails;
   late Rx<UserDetailModel?> acountBalance;
 
-  final Connectivity _connectivity = Connectivity();
   late StreamSubscription<List<ConnectivityResult>> _subscription;
 
   Worker? errorWorker;
@@ -149,54 +146,6 @@ class AppServicesController extends GetxService
   }
 
   //connection checker
-  _startMonitoring() async {
-    await _initConnectivity();
-    _subscription = _connectivity.onConnectivityChanged.listen((
-      List<ConnectivityResult> results,
-    ) async {
-      ConnectivityResult result = results.isNotEmpty
-          ? results.first
-          : ConnectivityResult.none;
-      if (result == ConnectivityResult.none) {
-        connectionStatus.value = false;
-      } else {
-        await _updateConnectionStatus().then((bool isConnected) {
-          connectionStatus.value = isConnected;
-        });
-      }
-    });
-  }
-
-  Future<void> _initConnectivity() async {
-    try {
-      var status = await _connectivity.checkConnectivity();
-
-      if (status.first == ConnectivityResult.none) {
-        connectionStatus.value = false;
-      } else {
-        connectionStatus.value = true;
-      }
-    } on PlatformException catch (e) {
-      Get.log("PlatformException: $e", isError: true);
-    }
-  }
-
-  Future<bool> _updateConnectionStatus() async {
-    bool isConnected = false;
-    print("lokopp");
-    try {
-      final List<InternetAddress> result = await InternetAddress.lookup(
-        'google.com',
-      );
-      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        isConnected = true;
-      }
-    } on SocketException catch (_) {
-      isConnected = false;
-      //return false;
-    }
-    return isConnected;
-  }
 
   Future<List<AccountBalanceModel>?> getUserBalance() async {
     var response = await provider.getUserBalance();

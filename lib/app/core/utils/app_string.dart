@@ -67,11 +67,11 @@ class AppStrings {
   static const String ENTER_CONFIRM_NEW_PASSWORD = "Enter Confirm New Password";
   static const String OLD_PASSWORD = "Old Password";
   static const String NEW_PASSWORD = "New Password";
-  static const String CONFIRM_NEW_PASSWORD = "Confirm New Password";
+  static const String CONFIRM_NEW_PASSWORD = "Confirm Password";
 
   // Validation msg
-  static const String PLS_ENTER_EMAILID = "Please enter email Id";
-  static const String PLS_ENTER_VALID_EMAILID = "Please enter valid email Id";
+  static const String PLS_ENTER_EMAILID = "Please enter email";
+  static const String PLS_ENTER_VALID_EMAILID = "Please enter valid email";
   static const String PLS_ENTER_VALID_EMAIL = "Please enter a valid email";
   static const String PLS_ENTER_EMAIL = "Please enter an email";
   static const String PLS_ENTER_MESSAGE =

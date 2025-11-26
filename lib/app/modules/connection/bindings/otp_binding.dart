@@ -4,21 +4,26 @@ import 'package:get/get.dart';
 import '../../../core/utils/enums.dart';
 
 class OTPBinding extends Bindings {
-  OTPBinding(this.otpContacted) : bidingtype = OTPType.register;
-  OTPBinding.forgotPassword(this.otpContacted)
+  OTPBinding(this.otpContacted, {this.validity})
+    : bidingtype = OTPType.register;
+  OTPBinding.forgotPassword(this.otpContacted, {this.validity})
     : bidingtype = OTPType.forgotPassword;
   final OTPType bidingtype;
-  final otpContacted;
+  final dynamic otpContacted;
+  final double? validity;
   @override
   void dependencies() {
     switch (bidingtype) {
       case OTPType.register:
         Get.lazyPut<OTPController>(
-          () => OTPController(otpContacted: otpContacted),
+          () => OTPController(otpContacted: otpContacted, validity: validity),
         );
       case OTPType.forgotPassword:
         Get.lazyPut<OTPController>(
-          () => OTPController.forgotPassword(otpContacted: otpContacted),
+          () => OTPController.forgotPassword(
+            otpContacted: otpContacted,
+            validity: validity,
+          ),
         );
     }
   }

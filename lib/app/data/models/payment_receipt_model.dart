@@ -2,8 +2,6 @@
 
 import 'dart:convert';
 
-import 'package:get/get.dart';
-
 import 'package:kiwoo/app/core/utils/enums.dart';
 
 import '../../core/utils/datetime_utility.dart';

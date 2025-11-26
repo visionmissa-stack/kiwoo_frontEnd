@@ -5,7 +5,6 @@ import 'package:kiwoo/app/core/utils/formatters/extension.dart';
 import 'package:kiwoo/app/core/utils/formatters/format_number.dart';
 import 'package:kiwoo/app/global_widgets/app_bar.dart';
 import 'package:kiwoo/app/global_widgets/list_builder_widget.dart';
-import 'package:kiwoo/app/global_widgets/list_tile_card.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';

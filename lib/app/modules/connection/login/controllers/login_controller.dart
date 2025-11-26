@@ -1,6 +1,8 @@
 import 'package:flutter/widgets.dart';
-import 'package:kiwoo/app/controllers/app_services_controller.dart';
 import 'package:get/get.dart';
+import 'package:reactive_forms/reactive_forms.dart';
+
+import 'package:kiwoo/app/controllers/app_services_controller.dart';
 
 import '../../../../data/models/storage_box_model.dart';
 import '../../../../data/models/user_model.dart';
@@ -12,6 +14,12 @@ class LoginController extends GetxController {
   String password = "";
   var isLoading = false.obs;
   final formKey = GlobalKey<FormState>();
+  final formGroup = FormGroup({
+    "email": FormControl<String>(
+      validators: [Validators.required, Validators.email],
+    ),
+    "password": FormControl<String>(validators: [Validators.required]),
+  });
   @override
   onInit() {
     provider = Get.find<ConnectionProvider>();
@@ -21,9 +29,10 @@ class LoginController extends GetxController {
   Future<void> logInApiCall() async {
     isLoading.value = true;
     try {
+      var formResult = formGroup.value;
       var response = await provider.signIn(
-        email.trim(),
-        password.trim(),
+        formResult['email'] as String,
+        formResult['password'] as String,
         StorageBox.fmcToken.val,
       );
       if (response?.isSuccess == true) {

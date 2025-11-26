@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kiwoo/app/core/utils/actions/overlay.dart';
 
 import 'package:get/get.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 import 'package:sizing/sizing_extension.dart';
 
 import '../../../../core/utils/app_colors.dart';
@@ -25,85 +26,86 @@ class LoginView extends GetView<LoginController> {
           children: [
             const PresentationPageHeader(pageTitle: AppStrings.LOGIN),
             verticalSpaceRegular,
-            Form(
-              key: controller.formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.ss),
-                    child: CustomInputFormField(
-                      hintText: AppStrings.EMAIL,
+            ReactiveForm(
+              formGroup: controller.formGroup,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.ss),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ReactiveTextField(
+                      formControlName: 'email',
+                      autofocus: true,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
-                      validator: (value) {
-                        if ((value ?? "").isEmpty) {
-                          return AppStrings.PLS_ENTER_EMAILID;
-                        } else if (!value!.isEmail) {
-                          return AppStrings.PLS_ENTER_VALID_EMAILID;
-                        } else {
-                          return null;
-                        }
+                      decoration: textInputDecoration(
+                        hintText: AppStrings.EMAIL,
+                      ),
+                      onTapOutside: (event) {
+                        hideKeyboard();
                       },
-                      onSaved: (p0) {
-                        controller.email = p0 ?? "";
+                      validationMessages: {
+                        ValidationMessage.required: (error) =>
+                            AppStrings.PLS_ENTER_EMAILID,
+                        ValidationMessage.email: (error) =>
+                            AppStrings.PLS_ENTER_VALID_EMAILID,
                       },
                     ),
-                  ),
-                  verticalSpaceRegular,
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.ss),
-                    child: ObxValue(
-                      (isHidden) => CustomInputFormField(
-                        keyboardType: TextInputType.visiblePassword,
-                        hintText: AppStrings.PASSWORD,
+                    verticalSpaceRegular,
+                    ObxValue(
+                      (isHidden) => ReactiveTextField(
+                        formControlName: 'password',
+                        autofocus: true,
                         obscureText: isHidden.isTrue,
+                        onTapOutside: (event) {
+                          hideKeyboard();
+                        },
                         textInputAction: TextInputAction.done,
-                        onFieldSubmitted: (_) => submitLogin(),
-                        errorMaxLines: 5,
-                        validator: (value) {
-                          if ((value ?? "").isEmpty) {
-                            return AppStrings.PLS_ENTER_PASSWORD;
-                          }
-                          return null;
-                        },
-                        onSaved: (p0) {
-                          controller.password = p0 ?? "";
-                        },
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            isHidden.isTrue
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                        onSubmitted: (_) => submitLogin(),
+                        decoration: textInputDecoration(
+                          hintText: AppStrings.PASSWORD,
+                          suffixIconColor: AppColors.PRIMARY1,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              isHidden.isTrue
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+
+                            onPressed: () => isHidden.toggle(),
                           ),
-                          color: AppColors.PRIMARY1,
-                          onPressed: () => isHidden.toggle(),
                         ),
+                        validationMessages: {
+                          ValidationMessage.required: (error) =>
+                              AppStrings.PLS_ENTER_EMAILID,
+                          ValidationMessage.email: (error) =>
+                              AppStrings.PLS_ENTER_VALID_EMAILID,
+                        },
                       ),
                       true.obs,
                     ),
-                  ),
-                  verticalSpaceSmall,
-                  TextButton(
-                    statesController: WidgetStatesController(),
-                    onPressed: () {
-                      Get.offNamed(Routes.FORGET_PASSWORD);
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.ss),
-                      child: Text(
-                        AppStrings.FORGOT_PASSWORD,
-                        textAlign: TextAlign.center,
-                        style: TextThemeHelper.forgotPassword,
+                    // verticalSpaceTiny,
+                    TextButton(
+                      statesController: WidgetStatesController(),
+                      onPressed: () {
+                        Get.offNamed(Routes.FORGET_PASSWORD);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 5.ss),
+                        child: Text(
+                          AppStrings.FORGOT_PASSWORD,
+                          textAlign: TextAlign.center,
+                          style: TextThemeHelper.forgotPassword,
+                        ),
                       ),
                     ),
-                  ),
-                  verticalSpaceMedium,
-                  customeAuthButton(
-                    lableName: AppStrings.LOGIN,
-                    onTap: submitLogin,
-                  ),
-                ],
+                    verticalSpaceMedium,
+                    customeAuthButton(
+                      lableName: AppStrings.LOGIN,
+                      onTap: submitLogin,
+                    ),
+                  ],
+                ),
               ),
             ),
             verticalSpaceRegular,
@@ -136,8 +138,7 @@ class LoginView extends GetView<LoginController> {
   }
 
   submitLogin() {
-    if (controller.formKey.currentState!.validate()) {
-      controller.formKey.currentState!.save();
+    if (controller.formGroup.valid) {
       showOverlay(asyncFunction: controller.logInApiCall);
     }
   }

@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:kiwoo/app/core/utils/actions/overlay.dart';
 import 'package:get/get.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+// import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../../core/utils/app_colors.dart';
 import '../../../core/utils/app_utility.dart';
@@ -10,33 +11,60 @@ import '../../../core/utils/enums.dart';
 import '../../../data/models/register_model.dart';
 import '../providers/connection_provider.dart';
 
-class OTPController extends GetxController with StateMixin<bool> {
-  OTPController({required this.otpContacted}) : type = OTPType.register;
-  OTPController.forgotPassword({required this.otpContacted})
-    : type = OTPType.forgotPassword;
+class OTPController extends GetxController {
+  OTPController({
+    required this.otpContacted,
+    this.type = OTPType.register,
+    double? validity,
+  }) : duration = Duration(
+         milliseconds: ((validity ?? 1) * Duration.millisecondsPerMinute)
+             .toInt(),
+       ).obs;
+
+  late final FormGroup formGroup;
+
+  factory OTPController.forgotPassword({
+    required String otpContacted,
+    double? validity,
+  }) {
+    return OTPController(
+      otpContacted: otpContacted,
+      type: OTPType.forgotPassword,
+      validity: validity,
+    );
+  }
   late final ConnectionProvider provider;
   late final RxString pin;
   late final Rx<int> secondsRemaining;
   bool get enableResend => duration.value == Duration.zero;
   Timer? timer;
-  late final StreamController<ErrorAnimationType> pinErrorController;
+  // late final StreamController<ErrorAnimationType> pinErrorController;
   final OTPType type;
   final String otpContacted;
-  final duration = const Duration(minutes: 3).obs;
+  final Rx<Duration> duration;
 
   @override
   onInit() {
+    formGroup = FormGroup({
+      "pin": FormControl<String>(
+        validators: [
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(4),
+        ],
+      ),
+    });
     provider = Get.find<ConnectionProvider>();
-    pinErrorController = StreamController<ErrorAnimationType>();
-    pin = RxString("");
+    // pinErrorController = StreamController<ErrorAnimationType>();
+
     secondsRemaining = 0.obs;
-    requestOtp();
+    // requestOtp();
     super.onInit();
   }
 
   @override
   onClose() {
-    pinErrorController.close();
+    // pinErrorController.close();
     super.onClose();
   }
 
@@ -44,10 +72,9 @@ class OTPController extends GetxController with StateMixin<bool> {
     try {
       var response = await provider.verifyOTP(
         otpContacted,
-        pin.value,
+        formGroup.control("pin").value,
         type.name,
       );
-
       if (response?.isSuccess == true) {
         await response!.showMessage()?.future;
         return true;
@@ -73,12 +100,9 @@ class OTPController extends GetxController with StateMixin<bool> {
           registerData.message ?? "Otp sent to successfully",
           color: AppColors.SUCCESS,
         );
-        change(true, status: RxStatus.success());
       } else {
         if ((response?.error ?? '').isNotEmpty) {
           updateDuration(double.parse(response!.error!));
-
-          change(true, status: RxStatus.success());
         }
       }
     } catch (e) {
@@ -95,6 +119,7 @@ class OTPController extends GetxController with StateMixin<bool> {
 
   resendOtpApiCall() async {
     //isLoading.value = true;
+    formGroup.reset();
     showOverlay(asyncFunction: requestOtp);
   }
 }

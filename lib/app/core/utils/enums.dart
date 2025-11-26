@@ -23,6 +23,7 @@ enum SortDirection { asc, desc }
 
 enum Direction {
   inbound,
+  cashin,
   outbound;
 
   static Direction fromMap(int? index) {

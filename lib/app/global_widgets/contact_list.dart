@@ -4,7 +4,6 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:get/get.dart';
 
 import 'package:kiwoo/app/data/models/contact_list_model.dart';
-import 'package:kiwoo/app/global_widgets/input_field.dart';
 import 'package:kiwoo/app/modules/loans/providers/loan_provider.dart';
 
 import '../core/utils/app_colors.dart';
@@ -87,7 +86,6 @@ class ContactListController extends GetxController with DefController {
         }
         return result;
       });
-      print("the vvvvvvv ${response}");
     } else {
       response = await provider.loantactListApi(id.toString());
     }

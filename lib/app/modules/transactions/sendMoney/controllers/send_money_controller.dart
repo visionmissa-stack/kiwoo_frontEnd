@@ -1,21 +1,30 @@
-import 'package:flutter/widgets.dart';
+import 'package:kiwoo/app/modules/transactions/bindings/transactions_binding.dart';
 import 'package:kiwoo/app/modules/transactions/providers/transactions_provider.dart';
 import 'package:get/get.dart';
+import 'package:kiwoo/app/routes/app_pages.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
-import '../../../../core/utils/formatters/validation.dart';
+import '../../../../core/reactive_forms/phone_number/validators.dart'
+    show PhoneValidators;
 import '../../../../data/models/payment_receipt_model.dart';
 import '../../../../data/models/validation_info_model.dart';
+import '../../views/transaction_detail_view.dart';
 import '../views/payment_receipt.dart';
 
 class SendMoneyController extends GetxController {
   late final TransactionsProvider provider;
-
+  late final FormGroup formGroup;
   final canNext = false.obs;
-  final formKey = GlobalKey<FormState>();
-  final phoneNumberformatter = phoneFormateur();
-  double amount = 0;
   @override
   void onInit() {
+    formGroup = FormGroup({
+      "phone": FormControl<String>(
+        validators: [PhoneValidators.required, PhoneValidators.valid],
+      ),
+      'amount': FormControl<double>(
+        validators: [Validators.required, Validators.min(100)],
+      ),
+    });
     provider = Get.put<TransactionsProvider>(TransactionsProvider());
     super.onInit();
   }
@@ -51,11 +60,15 @@ class SendMoneyController extends GetxController {
         pin: pin,
       );
       if (response?.isSuccess == true) {
-        Get.to(
-          PaymentReceipt(receipt: PaymentReceiptData.fromMap(response!.data!)),
+        Get.offUntil(
+          GetPageRoute(
+            page: () => TransactionDetailView(id: response!.data['id']),
+            binding: TransactionsBinding(),
+          ),
+          (route) {
+            return route.settings.name == Routes.HOME;
+          },
         );
-        // loanRequestList.clear();
-        // loanRequestList.addAll(response.data as Iterable<Data>);
       } else {
         response?.showMessage();
       }

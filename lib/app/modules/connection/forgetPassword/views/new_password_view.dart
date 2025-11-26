@@ -3,8 +3,10 @@ import 'package:kiwoo/app/core/utils/font_family.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 import 'package:sizing/sizing_extension.dart';
 
+import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_string.dart';
 import '../../../../core/utils/app_utility.dart';
 import '../../../../core/utils/formatters/validation.dart';
@@ -21,8 +23,7 @@ class NewPasswordView extends GetView<ForgetPasswordController> {
   }
   void submitRegistration([_]) async {
     //Get.toNamed(otpScreen, arguments: {"email": ""});
-    if (controller.formKeyNewPass.currentState?.validate() == true) {
-      controller.formKeyNewPass.currentState?.save();
+    if (controller.formGroupPassword.valid) {
       showOverlay(asyncFunction: controller.resetPassword);
     }
   }
@@ -35,65 +36,84 @@ class NewPasswordView extends GetView<ForgetPasswordController> {
           children: [
             const PresentationPageHeader(pageTitle: AppStrings.CHANGE_PASSWORD),
             verticalSpaceRegular,
-            Form(
-              key: controller.formKeyNewPass,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.ss),
-                    child: CustomInputFormField(
-                      obscureText: true,
-                      label: AppStrings.NEW_PASSWORD,
-                      hintText: AppStrings.ENTER_NEW_PASSWORD,
-                      style: TextStyle(
-                        color: const Color(0xFF111A24),
-                        fontSize: 14.fss,
-                        fontFamily: FontPoppins.SEMIBOLD,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.ss),
+              child: ReactiveForm(
+                formGroup: controller.formGroupPassword,
+                child: Column(
+                  children: [
+                    ObxValue(
+                      (isHidden) => ReactiveTextField(
+                        formControlName: 'password',
+                        autofocus: true,
+                        obscureText: isHidden.isTrue,
+                        onTapOutside: (event) {
+                          hideKeyboard();
+                        },
+                        textInputAction: TextInputAction.next,
+                        decoration: textInputDecoration(
+                          hintText: AppStrings.PASSWORD,
+                          suffixIconColor: AppColors.PRIMARY1,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              isHidden.isTrue
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+
+                            onPressed: () => isHidden.toggle(),
+                          ),
+                        ),
+                        validationMessages: {
+                          ValidationMessage.required: (error) =>
+                              AppStrings.PLS_ENTER_PASSWORD,
+                          ValidationMessage.pattern: (error) =>
+                              AppStrings.PASSWORD_INVALID,
+                        },
                       ),
-                      textInputAction: TextInputAction.next,
-                      onChanged: (value) => controller.newPassword = value,
-                      onSaved: (value) {
-                        controller.newPassword = value!;
-                      },
-                      validator: (value) => validPassword(value),
+                      true.obs,
                     ),
-                  ),
-                  verticalSpaceMedium,
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.ss),
-                    child: CustomInputFormField(
-                      obscureText: true,
-                      label: AppStrings.CONFIRM_NEW_PASSWORD,
-                      hintText: AppStrings.ENTER_CONFIRM_NEW_PASSWORD,
-                      style: TextStyle(
-                        color: const Color(0xFF111A24),
-                        fontSize: 14.fss,
-                        fontFamily: FontPoppins.SEMIBOLD,
+
+                    verticalSpaceRegular,
+                    ObxValue(
+                      (isHidden) => ReactiveTextField(
+                        formControlName: "confirmPassword",
+                        autofocus: true,
+                        obscureText: isHidden.isTrue,
+                        onTapOutside: (event) {
+                          hideKeyboard();
+                        },
+                        textInputAction: TextInputAction.done,
+                        decoration: textInputDecoration(
+                          hintText: AppStrings.CONFIRM_NEW_PASSWORD,
+                          suffixIconColor: AppColors.PRIMARY1,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              isHidden.isTrue
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+
+                            onPressed: () => isHidden.toggle(),
+                          ),
+                        ),
+                        onSubmitted: submitRegistration,
+                        validationMessages: {
+                          ValidationMessage.required: (error) =>
+                              AppStrings.PLS_ENTER_CONFIRM_PASSWORD,
+                          ValidationMessage.mustMatch: (error) =>
+                              AppStrings.PASSWORD_NOT_MATCH,
+                        },
                       ),
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: submitRegistration,
-                      validator: (value) {
-                        var isEmpty = controller.newPassword.isNotEmpty
-                            ? isEmptyValidator(
-                                value,
-                                AppStrings.PLEASE_ENTER_CONFIRM_NEW_PASSWORD,
-                              )
-                            : null;
-                        if (isEmpty == null &&
-                            value != controller.newPassword) {
-                          return AppStrings.PASSWORD_NOT_MATCH;
-                        }
-                        return isEmpty;
-                      },
+                      true.obs,
                     ),
-                  ),
-                  verticalSpaceLarge,
-                  customeAuthButton(
-                    lableName: AppStrings.RESET,
-                    onTap: submitRegistration,
-                  ),
-                ],
+                    verticalSpaceLarge,
+                    customeAuthButton(
+                      lableName: AppStrings.RESET,
+                      onTap: submitRegistration,
+                    ),
+                  ],
+                ),
               ),
             ),
             verticalSpaceRegular,

@@ -15,6 +15,65 @@ import '../core/utils/text_teme_helper.dart';
 import '../data/models/document_model.dart';
 import 'modal/bottom_sheet.dart';
 
+InputDecoration textInputDecoration({
+  int? errorMaxLines,
+  Widget? suffixIcon,
+  Color? iconColor,
+  Color? suffixIconColor,
+  String? hintText,
+  Widget? counter,
+  String? counterText,
+  String? errorText,
+  bool isDense = false,
+  bool isCollapsed = false,
+  String? labelText,
+  EdgeInsetsGeometry? contentPadding,
+  FloatingLabelBehavior? floatingLabelBehavior,
+  bool enabled = true,
+  TextStyle? hintStyle,
+  Color? fillColor,
+  Widget? prefixIcon,
+  BoxConstraints? suffixIconConstraints,
+  InputBorder? border,
+}) {
+  final tempBorder =
+      border ??
+      OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10),
+        borderSide: BorderSide(color: AppColors.TEXT_FORM_FIELD),
+      );
+  return InputDecoration(
+    errorMaxLines: errorMaxLines,
+    counter: counter,
+    counterText: counterText,
+    errorText: errorText,
+    hintText: hintText,
+    labelText: labelText,
+    isDense: isDense,
+    suffixIconColor: suffixIconColor,
+    contentPadding: contentPadding ?? EdgeInsets.all(ScreenConstant.sizeMedium),
+    floatingLabelBehavior:
+        floatingLabelBehavior ?? FloatingLabelBehavior.always,
+    hintStyle: hintStyle ?? TextThemeHelper.textFormFieldHintStyle,
+    isCollapsed: isCollapsed,
+    labelStyle: TextThemeHelper.lableTextFormField,
+    filled: true,
+    iconColor: iconColor,
+    fillColor: fillColor ?? const Color.fromARGB(255, 243, 243, 243),
+    prefixIcon: prefixIcon,
+    suffixIconConstraints: suffixIconConstraints,
+    suffixIcon: suffixIcon,
+    border: tempBorder,
+    errorBorder: tempBorder.copyWith(
+      borderSide: const BorderSide(color: Colors.red),
+    ),
+    focusedBorder: tempBorder.copyWith(
+      borderSide: BorderSide(color: AppColors.PRIMARY1),
+    ),
+    enabledBorder: tempBorder,
+  );
+}
+
 class CustomInputFormField extends StatelessWidget {
   double? height;
   double? width;
@@ -42,8 +101,9 @@ class CustomInputFormField extends StatelessWidget {
   final int? maxLength;
   final Color? fillColor;
   final TextInputType keyboardType;
-  final circularBorder =
-      OutlineInputBorder(borderRadius: BorderRadius.circular(10));
+  final circularBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+  );
   List<TextInputFormatter>? inputFormatters;
   final TextStyle? style;
   final EdgeInsetsGeometry? contentPadding;
@@ -97,65 +157,66 @@ class CustomInputFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     print("the data is s initial $initialValue");
     return TextFormField(
-        cursorColor: AppColors.PRIMARY1,
-        controller: controller,
-        initialValue: initialValue,
-        style: style ?? TextThemeHelper.textFormField,
-        obscureText: obscureText,
-        onChanged: onChanged,
-        onSaved: onSaved,
-        validator: validator,
-        onFieldSubmitted: onFieldSubmitted,
-        onTap: onTap,
-        maxLines: maxLines > minLines ? maxLines : minLines,
-        minLines: minLines,
-        maxLength: maxLength,
-        onTapOutside: (event) {
-          hideKeyboard();
-        },
-        keyboardType: keyboardType,
-        readOnly: readOnly,
-        enabled: enabled,
-        textAlignVertical: TextAlignVertical.center,
-        textInputAction: textInputAction,
-        inputFormatters: inputFormatters,
-        decoration: InputDecoration(
-          errorMaxLines: errorMaxLines,
-          counter: counter,
-          counterText: counterText,
-          errorText: errorText,
-          hintText: hintText,
-          labelText: label,
-          isDense: isDense,
-          contentPadding:
-              contentPadding ?? EdgeInsets.all(ScreenConstant.sizeMedium),
-          floatingLabelBehavior:
-              floatingLabelBehavior ?? FloatingLabelBehavior.always,
-          hintStyle: hintStyle ?? TextThemeHelper.textFormFieldHintStyle,
-          isCollapsed: isCollapsed,
-          labelStyle: TextThemeHelper.lableTextFormField,
-          filled: true,
-          fillColor: fillColor ?? const Color.fromARGB(255, 243, 243, 243),
-          prefixIcon: prefixIcon,
-          suffixIconConstraints: suffixIconConstraints,
-          suffixIcon: suffixIcon,
-          border: circularBorder.copyWith(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: AppColors.TEXT_FORM_FIELD),
-          ),
-          errorBorder: circularBorder.copyWith(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.red),
-          ),
-          focusedBorder: circularBorder.copyWith(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: AppColors.PRIMARY1),
-          ),
-          enabledBorder: circularBorder.copyWith(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: AppColors.TEXT_FORM_FIELD),
-          ),
-        ));
+      cursorColor: AppColors.PRIMARY1,
+      controller: controller,
+      initialValue: initialValue,
+      style: style ?? TextThemeHelper.textFormField,
+      obscureText: obscureText,
+      onChanged: onChanged,
+      onSaved: onSaved,
+      validator: validator,
+      onFieldSubmitted: onFieldSubmitted,
+      onTap: onTap,
+      maxLines: maxLines > minLines ? maxLines : minLines,
+      minLines: minLines,
+      maxLength: maxLength,
+      onTapOutside: (event) {
+        hideKeyboard();
+      },
+      keyboardType: keyboardType,
+      readOnly: readOnly,
+      enabled: enabled,
+      textAlignVertical: TextAlignVertical.center,
+      textInputAction: textInputAction,
+      inputFormatters: inputFormatters,
+      decoration: InputDecoration(
+        errorMaxLines: errorMaxLines,
+        counter: counter,
+        counterText: counterText,
+        errorText: errorText,
+        hintText: hintText,
+        labelText: label,
+        isDense: isDense,
+        contentPadding:
+            contentPadding ?? EdgeInsets.all(ScreenConstant.sizeMedium),
+        floatingLabelBehavior:
+            floatingLabelBehavior ?? FloatingLabelBehavior.always,
+        hintStyle: hintStyle ?? TextThemeHelper.textFormFieldHintStyle,
+        isCollapsed: isCollapsed,
+        labelStyle: TextThemeHelper.lableTextFormField,
+        filled: true,
+        fillColor: fillColor ?? const Color.fromARGB(255, 243, 243, 243),
+        prefixIcon: prefixIcon,
+        suffixIconConstraints: suffixIconConstraints,
+        suffixIcon: suffixIcon,
+        border: circularBorder.copyWith(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: AppColors.TEXT_FORM_FIELD),
+        ),
+        errorBorder: circularBorder.copyWith(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.red),
+        ),
+        focusedBorder: circularBorder.copyWith(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: AppColors.PRIMARY1),
+        ),
+        enabledBorder: circularBorder.copyWith(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: AppColors.TEXT_FORM_FIELD),
+        ),
+      ),
+    );
   }
 }
 
@@ -187,8 +248,9 @@ class CustomInputFormField2 extends StatelessWidget {
   final String? Function(String?)? validator;
   final AutovalidateMode? autovalidateMode;
   final void Function(String?)? onSaved;
-  final circularBorder =
-      OutlineInputBorder(borderRadius: BorderRadius.circular(10));
+  final circularBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+  );
   List<TextInputFormatter>? inputFormatters;
   final TextStyle? style;
   final EdgeInsetsGeometry? contentPadding;
@@ -236,68 +298,66 @@ class CustomInputFormField2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-        initialValue: initialValue,
-        cursorColor: AppColors.PRIMARY1,
-        controller: controller,
-        style: style ?? TextThemeHelper.textFormField,
-        obscureText: obscureText,
-        onChanged: onChanged,
-        onTap: onTap,
-        autovalidateMode: autovalidateMode,
-        maxLines: maxLines > minLines ? maxLines : minLines,
-        minLines: minLines,
-        maxLength: maxLength,
-        keyboardType: keyboardType,
-        readOnly: readOnly,
-        enabled: enabled,
-        textAlignVertical: TextAlignVertical.center,
-        textInputAction: textInputAction,
-        inputFormatters: inputFormatters,
-        onSaved: onSaved,
-        validator: validator,
-        decoration: InputDecoration(
-          counter: counter,
-          counterText: counterText,
-          errorText: errorText,
-          hintText: hintText,
-          labelText: label,
-          isDense: isDense,
-          contentPadding:
-              contentPadding ?? EdgeInsets.all(ScreenConstant.sizeMedium),
-          floatingLabelBehavior:
-              floatingLabelBehavior ?? FloatingLabelBehavior.never,
-          hintStyle: hintStyle ?? TextThemeHelper.textFormFieldHintStyle,
-          alignLabelWithHint: false,
-          isCollapsed: isCollapsed,
-          labelStyle: TextThemeHelper.lableTextFormField,
-          filled: true,
-          fillColor: fillColor ?? const Color.fromARGB(255, 243, 243, 243),
-          prefixIcon: prefixIcon,
-          suffixIcon: suffixIcon != null
-              ? suffixIconTapped != null
-                  ? GestureDetector(
-                      onTap: suffixIconTapped,
-                      child: suffixIcon,
-                    )
+      initialValue: initialValue,
+      cursorColor: AppColors.PRIMARY1,
+      controller: controller,
+      style: style ?? TextThemeHelper.textFormField,
+      obscureText: obscureText,
+      onChanged: onChanged,
+      onTap: onTap,
+      autovalidateMode: autovalidateMode,
+      maxLines: maxLines > minLines ? maxLines : minLines,
+      minLines: minLines,
+      maxLength: maxLength,
+      keyboardType: keyboardType,
+      readOnly: readOnly,
+      enabled: enabled,
+      textAlignVertical: TextAlignVertical.center,
+      textInputAction: textInputAction,
+      inputFormatters: inputFormatters,
+      onSaved: onSaved,
+      validator: validator,
+      decoration: InputDecoration(
+        counter: counter,
+        counterText: counterText,
+        errorText: errorText,
+        hintText: hintText,
+        labelText: label,
+        isDense: isDense,
+        contentPadding:
+            contentPadding ?? EdgeInsets.all(ScreenConstant.sizeMedium),
+        floatingLabelBehavior:
+            floatingLabelBehavior ?? FloatingLabelBehavior.never,
+        hintStyle: hintStyle ?? TextThemeHelper.textFormFieldHintStyle,
+        alignLabelWithHint: false,
+        isCollapsed: isCollapsed,
+        labelStyle: TextThemeHelper.lableTextFormField,
+        filled: true,
+        fillColor: fillColor ?? const Color.fromARGB(255, 243, 243, 243),
+        prefixIcon: prefixIcon,
+        suffixIcon: suffixIcon != null
+            ? suffixIconTapped != null
+                  ? GestureDetector(onTap: suffixIconTapped, child: suffixIcon)
                   : suffixIcon
-              : null,
-          border: circularBorder.copyWith(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: AppColors.TEXT_FORM_FIELD),
-          ),
-          errorBorder: circularBorder.copyWith(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: const BorderSide(color: Colors.red),
-          ),
-          focusedBorder: circularBorder.copyWith(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: AppColors.PRIMARY1),
-          ),
-          enabledBorder: circularBorder.copyWith(
-            borderRadius: BorderRadius.circular(10),
-            borderSide: BorderSide(color: AppColors.TEXT_FORM_FIELD),
-          ),
-        ));
+            : null,
+        border: circularBorder.copyWith(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: AppColors.TEXT_FORM_FIELD),
+        ),
+        errorBorder: circularBorder.copyWith(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: const BorderSide(color: Colors.red),
+        ),
+        focusedBorder: circularBorder.copyWith(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: AppColors.PRIMARY1),
+        ),
+        enabledBorder: circularBorder.copyWith(
+          borderRadius: BorderRadius.circular(10),
+          borderSide: BorderSide(color: AppColors.TEXT_FORM_FIELD),
+        ),
+      ),
+    );
   }
 }
 
@@ -326,38 +386,40 @@ class SearchCustomInputFormField extends StatelessWidget {
   final int? maxLength;
   final Color? fillColor;
   final TextInputType keyboardType;
-  final circularBorder =
-      OutlineInputBorder(borderRadius: BorderRadius.circular(10));
+  final circularBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+  );
   List<TextInputFormatter>? inputFormatters;
   final Color? borderColor;
 
-  SearchCustomInputFormField(
-      {super.key,
-      this.height,
-      this.width,
-      this.controller,
-      this.hintText = '',
-      this.label = '',
-      this.errorText,
-      this.prefixIcon,
-      this.counter,
-      this.counterText,
-      this.suffixIconTapped,
-      this.obscureText = false,
-      this.readOnly = false,
-      this.enabled = true,
-      this.isDense = false,
-      this.isCollapsed = false,
-      this.textInputAction = TextInputAction.done,
-      this.minLines = 1,
-      this.maxLines = 1,
-      this.maxLength,
-      this.fillColor,
-      this.keyboardType = TextInputType.text,
-      this.onChanged,
-      this.onTap,
-      this.inputFormatters,
-      this.borderColor});
+  SearchCustomInputFormField({
+    super.key,
+    this.height,
+    this.width,
+    this.controller,
+    this.hintText = '',
+    this.label = '',
+    this.errorText,
+    this.prefixIcon,
+    this.counter,
+    this.counterText,
+    this.suffixIconTapped,
+    this.obscureText = false,
+    this.readOnly = false,
+    this.enabled = true,
+    this.isDense = false,
+    this.isCollapsed = false,
+    this.textInputAction = TextInputAction.done,
+    this.minLines = 1,
+    this.maxLines = 1,
+    this.maxLength,
+    this.fillColor,
+    this.keyboardType = TextInputType.text,
+    this.onChanged,
+    this.onTap,
+    this.inputFormatters,
+    this.borderColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -366,58 +428,57 @@ class SearchCustomInputFormField extends StatelessWidget {
       width: width ?? 335.ss,
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-          color: AppColors.WHITE,
-          borderRadius: BorderRadius.circular(25),
-          border: Border.all(color: borderColor ?? Colors.white)),
+        color: AppColors.WHITE,
+        borderRadius: BorderRadius.circular(25),
+        border: Border.all(color: borderColor ?? Colors.white),
+      ),
       child: TextFormField(
-          cursorColor: AppColors.PRIMARY1,
-          controller: controller,
-          style: TextThemeHelper.textFormField,
-          obscureText: obscureText,
-          onChanged: onChanged,
-          onEditingComplete: onTap,
-          onTap: null,
-          cursorHeight: 23.ss,
-          maxLines: maxLines > minLines ? maxLines : minLines,
-          minLines: minLines,
-          maxLength: maxLength,
-          keyboardType: keyboardType,
-          readOnly: readOnly,
-          enabled: enabled,
-          textAlignVertical: TextAlignVertical.center,
-          textInputAction: textInputAction,
-          inputFormatters: inputFormatters,
-          decoration: InputDecoration(
-            counter: counter,
-            counterText: counterText,
-            errorText: errorText,
-            hintText: hintText,
-            labelText: label,
-            isDense: isDense,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintStyle: TextThemeHelper.textFormFieldHintStyle,
-            isCollapsed: isCollapsed,
-            labelStyle: TextThemeHelper.lableTextFormField,
-            contentPadding: const EdgeInsets.fromLTRB(20, 0, 5, 15),
-            filled: false,
-            fillColor: fillColor ?? const Color.fromARGB(255, 243, 243, 243),
-            prefixIcon: prefixIcon,
-            suffixIconConstraints: const BoxConstraints(),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(left: 8, right: 18),
-              child: GestureDetector(
-                onTap: suffixIconTapped,
-                child: const Icon(
-                  Icons.search,
-                  color: Colors.green,
-                ),
-              ),
+        cursorColor: AppColors.PRIMARY1,
+        controller: controller,
+        style: TextThemeHelper.textFormField,
+        obscureText: obscureText,
+        onChanged: onChanged,
+        onEditingComplete: onTap,
+        onTap: null,
+        cursorHeight: 23.ss,
+        maxLines: maxLines > minLines ? maxLines : minLines,
+        minLines: minLines,
+        maxLength: maxLength,
+        keyboardType: keyboardType,
+        readOnly: readOnly,
+        enabled: enabled,
+        textAlignVertical: TextAlignVertical.center,
+        textInputAction: textInputAction,
+        inputFormatters: inputFormatters,
+        decoration: InputDecoration(
+          counter: counter,
+          counterText: counterText,
+          errorText: errorText,
+          hintText: hintText,
+          labelText: label,
+          isDense: isDense,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          hintStyle: TextThemeHelper.textFormFieldHintStyle,
+          isCollapsed: isCollapsed,
+          labelStyle: TextThemeHelper.lableTextFormField,
+          contentPadding: const EdgeInsets.fromLTRB(20, 0, 5, 15),
+          filled: false,
+          fillColor: fillColor ?? const Color.fromARGB(255, 243, 243, 243),
+          prefixIcon: prefixIcon,
+          suffixIconConstraints: const BoxConstraints(),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(left: 8, right: 18),
+            child: GestureDetector(
+              onTap: suffixIconTapped,
+              child: const Icon(Icons.search, color: Colors.green),
             ),
-            border: InputBorder.none,
-            errorBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-          )),
+          ),
+          border: InputBorder.none,
+          errorBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+        ),
+      ),
     );
   }
 }
@@ -448,8 +509,9 @@ class SearchCustomInputField extends StatelessWidget {
   final int? maxLength;
   final Color? fillColor;
   final TextInputType keyboardType;
-  final circularBorder =
-      OutlineInputBorder(borderRadius: BorderRadius.circular(10));
+  final circularBorder = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+  );
   List<TextInputFormatter>? inputFormatters;
 
   SearchCustomInputField({
@@ -488,57 +550,57 @@ class SearchCustomInputField extends StatelessWidget {
       width: width ?? 335.ss,
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
-          color: AppColors.WHITE, borderRadius: BorderRadius.circular(25)),
+        color: AppColors.WHITE,
+        borderRadius: BorderRadius.circular(25),
+      ),
       child: TextField(
-          cursorColor: AppColors.PRIMARY1,
-          controller: controller,
-          style: TextThemeHelper.textFormField,
-          obscureText: obscureText,
-          onChanged: onChanged,
-          onEditingComplete: onTap,
-          onSubmitted: onSubmitted,
-          onTap: null,
-          cursorHeight: 23.ss,
-          maxLines: maxLines > minLines ? maxLines : minLines,
-          minLines: minLines,
-          maxLength: maxLength,
-          keyboardType: keyboardType,
-          readOnly: readOnly,
-          enabled: enabled,
-          textAlignVertical: TextAlignVertical.center,
-          textInputAction: textInputAction,
-          inputFormatters: inputFormatters,
-          decoration: InputDecoration(
-            counter: counter,
-            counterText: counterText,
-            errorText: errorText,
-            hintText: hintText,
-            labelText: label,
-            isDense: isDense,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-            hintStyle: TextThemeHelper.textFormFieldHintStyle,
-            isCollapsed: isCollapsed,
-            labelStyle: TextThemeHelper.lableTextFormField,
-            contentPadding: const EdgeInsets.fromLTRB(20, 0, 5, 15),
-            filled: false,
-            fillColor: fillColor ?? const Color.fromARGB(255, 243, 243, 243),
-            prefixIcon: prefixIcon,
-            suffixIconConstraints: const BoxConstraints(),
-            suffixIcon: Padding(
-              padding: const EdgeInsets.only(left: 8, right: 18),
-              child: GestureDetector(
-                onTap: suffixIconTapped,
-                child: const Icon(
-                  Icons.search,
-                  size: 1.4,
-                ),
-              ),
+        cursorColor: AppColors.PRIMARY1,
+        controller: controller,
+        style: TextThemeHelper.textFormField,
+        obscureText: obscureText,
+        onChanged: onChanged,
+        onEditingComplete: onTap,
+        onSubmitted: onSubmitted,
+        onTap: null,
+        cursorHeight: 23.ss,
+        maxLines: maxLines > minLines ? maxLines : minLines,
+        minLines: minLines,
+        maxLength: maxLength,
+        keyboardType: keyboardType,
+        readOnly: readOnly,
+        enabled: enabled,
+        textAlignVertical: TextAlignVertical.center,
+        textInputAction: textInputAction,
+        inputFormatters: inputFormatters,
+        decoration: InputDecoration(
+          counter: counter,
+          counterText: counterText,
+          errorText: errorText,
+          hintText: hintText,
+          labelText: label,
+          isDense: isDense,
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          hintStyle: TextThemeHelper.textFormFieldHintStyle,
+          isCollapsed: isCollapsed,
+          labelStyle: TextThemeHelper.lableTextFormField,
+          contentPadding: const EdgeInsets.fromLTRB(20, 0, 5, 15),
+          filled: false,
+          fillColor: fillColor ?? const Color.fromARGB(255, 243, 243, 243),
+          prefixIcon: prefixIcon,
+          suffixIconConstraints: const BoxConstraints(),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(left: 8, right: 18),
+            child: GestureDetector(
+              onTap: suffixIconTapped,
+              child: const Icon(Icons.search, size: 1.4),
             ),
-            border: InputBorder.none,
-            errorBorder: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-          )),
+          ),
+          border: InputBorder.none,
+          errorBorder: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+        ),
+      ),
     );
   }
 }
@@ -556,46 +618,41 @@ Widget labelWidget({
       Row(
         children: [
           if (required)
-            Text(
-              AppStrings.STAR_SIGN,
-              style: TextThemeHelper.textFieldStar,
-            ),
-          Text(
-            label,
-            style: style ?? TextThemeHelper.textFieldTitle,
-          ),
+            Text(AppStrings.STAR_SIGN, style: TextThemeHelper.textFieldStar),
+          Text(label, style: style ?? TextThemeHelper.textFieldTitle),
         ],
       ),
       verticalSpaceSmall,
-      child
+      child,
     ],
   );
 }
 
-Widget inputWithLabel(
-    {bool required = false,
-    required String label,
-    String hintText = '',
-    TextStyle? hintStyle,
-    List<TextInputFormatter>? inputFormatters,
-    TextInputType keyboardType = TextInputType.text,
-    void Function(String?)? onSaved,
-    String? Function(String?)? validator,
-    void Function(String?)? onChanged,
-    TextInputAction textInputAction = TextInputAction.done,
-    TextStyle? style,
-    EdgeInsets? contentPadding,
-    FloatingLabelBehavior? floatingLabelBehavior,
-    bool enabled = true,
-    String? initialValue,
-    Widget? sufixIcon,
-    int maxLines = 1,
-    int minLines = 1,
-    bool? obscureText,
-    bool initValueWithController = false,
-    void Function(String)? onFieldSubmitted,
-    TextEditingController? controller,
-    BoxConstraints? suffixIconConstraints}) {
+Widget inputWithLabel({
+  bool required = false,
+  required String label,
+  String hintText = '',
+  TextStyle? hintStyle,
+  List<TextInputFormatter>? inputFormatters,
+  TextInputType keyboardType = TextInputType.text,
+  void Function(String?)? onSaved,
+  String? Function(String?)? validator,
+  void Function(String?)? onChanged,
+  TextInputAction textInputAction = TextInputAction.done,
+  TextStyle? style,
+  EdgeInsets? contentPadding,
+  FloatingLabelBehavior? floatingLabelBehavior,
+  bool enabled = true,
+  String? initialValue,
+  Widget? sufixIcon,
+  int maxLines = 1,
+  int minLines = 1,
+  bool? obscureText,
+  bool initValueWithController = false,
+  void Function(String)? onFieldSubmitted,
+  TextEditingController? controller,
+  BoxConstraints? suffixIconConstraints,
+}) {
   if (initValueWithController) {
     controller = TextEditingController(text: initialValue);
   }
@@ -607,14 +664,8 @@ Widget inputWithLabel(
       Row(
         children: [
           if (required)
-            Text(
-              AppStrings.STAR_SIGN,
-              style: TextThemeHelper.textFieldStar,
-            ),
-          Text(
-            label,
-            style: style ?? TextThemeHelper.textFieldTitle,
-          ),
+            Text(AppStrings.STAR_SIGN, style: TextThemeHelper.textFieldStar),
+          Text(label, style: style ?? TextThemeHelper.textFieldTitle),
         ],
       ),
       verticalSpaceSmall,
@@ -658,14 +709,8 @@ Widget inputWithLabelForm<T>({
       Row(
         children: [
           if (required)
-            Text(
-              AppStrings.STAR_SIGN,
-              style: TextThemeHelper.textFieldStar,
-            ),
-          Text(
-            label,
-            style: TextThemeHelper.textFieldTitle,
-          ),
+            Text(AppStrings.STAR_SIGN, style: TextThemeHelper.textFieldStar),
+          Text(label, style: TextThemeHelper.textFieldTitle),
         ],
       ),
       verticalSpaceSmall,
@@ -704,120 +749,123 @@ class FileInputFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FormField<FileData>(
-        initialValue: initialValue,
-        onSaved: onSaved,
-        forceErrorText: forceErrorText,
-        validator: validator,
-        enabled: enabled,
-        autovalidateMode: autovalidateMode,
-        restorationId: restorationId,
-        builder: (state) {
-          var fileData = state.value;
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              InkWell(
-                onTap: () async {
-                  var imagesource =
-                      await boomSheetOptions<ImageSources>(options: [
+      initialValue: initialValue,
+      onSaved: onSaved,
+      forceErrorText: forceErrorText,
+      validator: validator,
+      enabled: enabled,
+      autovalidateMode: autovalidateMode,
+      restorationId: restorationId,
+      builder: (state) {
+        var fileData = state.value;
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            InkWell(
+              onTap: () async {
+                var imagesource = await boomSheetOptions<ImageSources>(
+                  options: [
                     BottomSheetOption(
-                        label: 'Upload from Gallery',
-                        icon: Kiwoo.image,
-                        onPressed: () {
-                          return ImageSources.gallery;
-                        }),
+                      label: 'Upload from Gallery',
+                      icon: Kiwoo.image,
+                      onPressed: () {
+                        return ImageSources.gallery;
+                      },
+                    ),
                     BottomSheetOption(
-                        label: 'Upload from File',
-                        icon: Kiwoo.image,
-                        onPressed: () {
-                          return ImageSources.file;
-                        }),
+                      label: 'Upload from File',
+                      icon: Kiwoo.image,
+                      onPressed: () {
+                        return ImageSources.file;
+                      },
+                    ),
                     BottomSheetOption(
-                        label: 'Take a Photo',
-                        icon: Kiwoo.image,
-                        onPressed: () {
-                          return ImageSources.camera;
-                        })
-                  ]);
-                  if (imagesource != null) {
-                    var data = await PickFile.imageFile(
-                      imageQuality: 20,
-                      maxFileSizeInMb: 2,
-                      source: imagesource,
-                      type: FileType.custom,
-                      allowedExtensions: [
-                        'pdf',
-                        'jpg',
-                        'jpeg',
-                        'png',
-                        'docx',
-                      ],
-                      crop: true,
-                      cropperToolbarTitle: "Crop Profil Picture",
-                    ).onError((error, s) {
-                      showMsg(error as String, type: TypeMessage.error);
-                      return null;
-                    });
+                      label: 'Take a Photo',
+                      icon: Kiwoo.image,
+                      onPressed: () {
+                        return ImageSources.camera;
+                      },
+                    ),
+                  ],
+                );
+                if (imagesource != null) {
+                  var data =
+                      await PickFile.imageFile(
+                        imageQuality: 20,
+                        maxFileSizeInMb: 2,
+                        source: imagesource,
+                        type: FileType.custom,
+                        allowedExtensions: [
+                          'pdf',
+                          'jpg',
+                          'jpeg',
+                          'png',
+                          'docx',
+                        ],
+                        crop: true,
+                        cropperToolbarTitle: "Crop Profil Picture",
+                      ).onError((error, s) {
+                        showMsg(error as String, type: TypeMessage.error);
+                        return null;
+                      });
 
-                    if (data == null) return;
-                    state.didChange(data);
-                    // showOverlay(
-                    //   asyncFunction: () => controller.uploadFile(data),
-                    // );
-                  }
-                },
-                child: Container(
-                  height: 170.ss,
-                  width: 1.sw,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.APPBAR_PRIMARY1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: fileData == null
-                      ? Icon(
-                          Icons.camera_alt_outlined,
-                          color: AppColors.APPBAR_PRIMARY1,
-                        )
-                      : isDocument(fileData)
-                          ? Center(
-                              child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(
-                                  Icons.file_copy_sharp,
-                                  size: 60,
-                                  color: AppColors.APPBAR_PRIMARY1,
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  fileData.baseName,
-                                  style: TextStyle(
-                                      color: AppColors.APPBAR_PRIMARY1,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w500),
-                                )
-                              ],
-                            ))
-                          : Image.memory(fileData.bytes!),
+                  if (data == null) return;
+                  state.didChange(data);
+                  // showOverlay(
+                  //   asyncFunction: () => controller.uploadFile(data),
+                  // );
+                }
+              },
+              child: Container(
+                height: 170.ss,
+                width: 1.sw,
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.APPBAR_PRIMARY1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: fileData == null
+                    ? Icon(
+                        Icons.camera_alt_outlined,
+                        color: AppColors.APPBAR_PRIMARY1,
+                      )
+                    : isDocument(fileData)
+                    ? Center(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.file_copy_sharp,
+                              size: 60,
+                              color: AppColors.APPBAR_PRIMARY1,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              fileData.baseName,
+                              style: TextStyle(
+                                color: AppColors.APPBAR_PRIMARY1,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Image.memory(fileData.bytes!),
+              ),
+            ),
+            if (state.hasError)
+              Padding(
+                padding: const EdgeInsets.all(6.0),
+                child: Text(
+                  "${state.errorText}",
+                  style: const TextStyle(fontSize: 13, color: Colors.red),
                 ),
               ),
-              if (state.hasError)
-                Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child: Text(
-                    "${state.errorText}",
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Colors.red,
-                    ),
-                  ),
-                )
-            ],
-          );
-        });
+          ],
+        );
+      },
+    );
   }
 
   bool isDocument(FileData data) {

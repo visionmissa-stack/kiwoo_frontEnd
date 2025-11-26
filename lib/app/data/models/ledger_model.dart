@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 
 import 'package:kiwoo/app/core/utils/enums.dart';
-import 'package:kiwoo/app/data/models/contact_list_model.dart';
 
 import '../../core/utils/dateTime_Utility.dart';
 

@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:reactive_forms/reactive_forms.dart';
+import 'package:reactive_phone_form_field/reactive_phone_form_field.dart';
 import 'package:sizing/sizing.dart';
 
+import 'package:kiwoo/app/core/utils/actions/overlay.dart';
+import 'package:kiwoo/app/core/utils/formatters/global_phone_formator.dart';
+import 'package:kiwoo/app/data/models/register_model.dart';
 import 'package:kiwoo/app/global_widgets/input_field.dart';
 import 'package:kiwoo/app/modules/connection/bindings/otp_binding.dart';
 import 'package:kiwoo/app/routes/app_pages.dart';
 
+import '../../../../core/reactive_forms/phone_number/value_accesors.dart';
 import '../../../../core/utils/app_colors.dart';
 import '../../../../core/utils/app_string.dart';
 import '../../../../core/utils/app_utility.dart';
-import '../../../../core/utils/formatters/validation.dart';
 import '../../../../core/utils/presentation_page_header.dart';
 import '../../../../core/utils/text_teme_helper.dart';
 import '../../../../global_widgets/app_button.dart';
@@ -21,15 +27,22 @@ class RegisterView extends GetView<RegisterController> {
 
   void submitRegistration([_]) async {
     //Get.toNamed(otpScreen, arguments: {"email": ""});
-    if (controller.formKey.currentState?.validate() == true) {
-      controller.formKey.currentState?.save();
-      Get.to(
-        () {
-          return OTPView(onAuthentificated: controller.registerApiCall);
-        },
-        opaque: false,
-        binding: OTPBinding(controller.email),
+    if (controller.formGroup.valid) {
+      var response = await showOverlay<OTPModel?>(
+        asyncFunction: controller.requestOtp,
       );
+      if (response != null) {
+        Get.to(
+          () {
+            return OTPView(onAuthentificated: controller.registerApiCall);
+          },
+          opaque: false,
+          binding: OTPBinding(
+            controller.formGroup.control("email").value,
+            validity: response.otpValidity!,
+          ),
+        );
+      }
     }
   }
 
@@ -44,103 +57,139 @@ class RegisterView extends GetView<RegisterController> {
             children: [
               const PresentationPageHeader(pageTitle: AppStrings.SIGN_UP_NOW),
               verticalSpaceRegular,
-              Form(
-                key: controller.formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.ss),
-                      child: CustomInputFormField(
-                        hintText: AppStrings.NAME,
-                        keyboardType: TextInputType.streetAddress,
-                        textInputAction: TextInputAction.next,
-                        onSaved: (value) {
-                          controller.name = value!;
-                        },
-                        validator: (p0) {
-                          if ((p0 ?? '').isEmpty) {
-                            return AppStrings.PLS_ENTER_NAME;
-                          }
-                          return null;
-                        },
-                      ),
-                    ),
-                    verticalSpaceRegular,
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.ss),
-                      child: CustomInputFormField(
-                        hintText: AppStrings.EMAIL,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.ss),
+                child: ReactiveForm(
+                  formGroup: controller.formGroup,
+                  child: Column(
+                    children: [
+                      ReactiveTextField(
+                        formControlName: 'name',
+
                         keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
-                        onSaved: (value) {
-                          controller.email = value!;
+                        decoration: textInputDecoration(
+                          hintText: AppStrings.NAME,
+                        ),
+                        onTapOutside: (event) {
+                          hideKeyboard();
                         },
-                        validator: isValidEmail,
+                        validationMessages: {
+                          ValidationMessage.required: (error) =>
+                              AppStrings.PLS_ENTER_NAME,
+                        },
                       ),
-                    ),
-                    verticalSpaceRegular,
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.ss),
-                      child: CustomInputFormField(
-                        hintText: AppStrings.PHONE_NUMBER,
-                        keyboardType: TextInputType.number,
-                        inputFormatters: [controller.phoneFormatter],
-                        counterText: "",
+                      verticalSpaceRegular,
+                      ReactiveTextField(
+                        formControlName: 'email',
+                        keyboardType: TextInputType.emailAddress,
                         textInputAction: TextInputAction.next,
-                        onSaved: (value) {
-                          controller.phone = controller.phoneFormatter
-                              .unmaskText(value!);
+                        decoration: textInputDecoration(
+                          hintText: AppStrings.EMAIL,
+                        ),
+                        onTapOutside: (event) {
+                          hideKeyboard();
                         },
-                        validator: (p0) {
-                          if ((p0 ?? '').isEmpty) {
-                            return AppStrings.PLS_ENTER_PHONE_NUMBER;
-                          } else if (!controller.phoneFormatter.isFill()) {
-                            return AppStrings.PLS_ENTER_VALID_PHONE_NUMBER;
-                          }
-                          return null;
+                        validationMessages: {
+                          ValidationMessage.required: (error) =>
+                              AppStrings.PLS_ENTER_EMAILID,
+                          ValidationMessage.email: (error) =>
+                              AppStrings.PLS_ENTER_VALID_EMAILID,
                         },
                       ),
-                    ),
-                    verticalSpaceRegular,
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.ss),
-                      child: ObxValue(
-                        (isHidden) => CustomInputFormField(
-                          keyboardType: TextInputType.visiblePassword,
-                          errorMaxLines: 5,
-                          hintText: AppStrings.PASSWORD,
+                      verticalSpaceRegular,
+                      ReactivePhoneFormField<String>(
+                        formControlName: 'phone',
+                        validationMessages: {
+                          ...PhoneValidationMessage.localizedValidationMessages(
+                            context,
+                          ),
+                        },
+                        valueAccessor: MyPhoneNumberValueAccessor(),
+                        countrySelectorNavigator:
+                            CountrySelectorNavigator.draggableBottomSheet(),
+                        decoration: textInputDecoration(
+                          hintText: AppStrings.PHONE_NUMBER,
+                          contentPadding: EdgeInsets.zero,
+                        ),
+                      ),
+                      verticalSpaceRegular,
+                      ObxValue(
+                        (isHidden) => ReactiveTextField(
+                          formControlName: 'password',
                           obscureText: isHidden.isTrue,
+                          onTapOutside: (event) {
+                            hideKeyboard();
+                          },
                           textInputAction: TextInputAction.done,
-                          onFieldSubmitted: submitRegistration,
-                          suffixIcon: IconButton(
-                            onPressed: isHidden.toggle,
-                            icon: Icon(
-                              isHidden.isTrue
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: AppColors.PRIMARY1,
+                          decoration: textInputDecoration(
+                            hintText: AppStrings.PASSWORD,
+                            suffixIconColor: AppColors.PRIMARY1,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                isHidden.isTrue
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+
+                              onPressed: () => isHidden.toggle(),
                             ),
                           ),
-                          onSaved: (value) {
-                            controller.password = value!;
+                          validationMessages: {
+                            ValidationMessage.required: (error) =>
+                                AppStrings.PLS_ENTER_EMAILID,
+                            ValidationMessage.pattern: (error) =>
+                                AppStrings.PASSWORD_INVALID,
                           },
-                          validator: validPassword,
                         ),
                         true.obs,
                       ),
-                    ),
-                    SizedBox(height: 40.vs),
-                    controller.isLoading.value
-                        ? customeAuthButtonLoading()
-                        : customeAuthButton(
-                            lableName: AppStrings.SIGN_UP,
-                            onTap: submitRegistration,
+                      verticalSpaceRegular,
+                      ObxValue(
+                        (isHidden) => ReactiveTextField(
+                          formControlName: 'confirmPassword',
+
+                          obscureText: isHidden.isTrue,
+
+                          onTapOutside: (event) {
+                            hideKeyboard();
+                          },
+                          textInputAction: TextInputAction.done,
+                          decoration: textInputDecoration(
+                            hintText: AppStrings.CONFIRM_NEW_PASSWORD,
+                            suffixIconColor: AppColors.PRIMARY1,
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                isHidden.isTrue
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                              ),
+
+                              onPressed: () => isHidden.toggle(),
+                            ),
                           ),
-                  ],
+                          validationMessages: {
+                            ValidationMessage.required: (error) =>
+                                AppStrings.PLS_ENTER_CONFIRM_PASSWORD,
+                            ValidationMessage.mustMatch: (error) =>
+                                AppStrings.PASSWORD_NOT_MATCH,
+                          },
+                        ),
+                        true.obs,
+                      ),
+                      // verticalSpaceTiny,
+                      SizedBox(height: 40.vs),
+                      controller.isLoading.value
+                          ? customeAuthButtonLoading()
+                          : customeAuthButton(
+                              lableName: AppStrings.SIGN_UP,
+                              onTap: submitRegistration,
+                            ),
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(height: 50.ss),
+              verticalSpaceSmall,
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
