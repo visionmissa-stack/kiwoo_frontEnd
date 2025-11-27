@@ -5,15 +5,15 @@ NumberFormat toEGTHCurrency([bool compact = false]) {
   if (compact) {
     return NumberFormat.compactCurrency(
       locale: "fr",
-      name: "EFCA",
-      symbol: "EFCA",
+      name: "exfa",
+      symbol: "exfa",
       decimalDigits: 2,
     );
   }
   return NumberFormat.currency(
     locale: "fr",
-    symbol: "EFCA",
-    name: "EFCA",
+    symbol: "exfa",
+    name: "exfa",
     decimalDigits: 2,
     customPattern: _CURRENCY_PATTERN,
   );

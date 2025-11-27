@@ -143,7 +143,7 @@ class MarketDetails extends GetWidget<LoansController> {
             ),
           ),
           SizedBox(height: 15.ss),
-          requestLoanDetailWidget(lbl: "Amount", val: "$amount EFCA "),
+          requestLoanDetailWidget(lbl: "Amount", val: "$amount exfa "),
           SizedBox(height: 10.ss),
           requestLoanDetailWidget(lbl: "Interest", val: "$interest%"),
           SizedBox(height: 10.ss),

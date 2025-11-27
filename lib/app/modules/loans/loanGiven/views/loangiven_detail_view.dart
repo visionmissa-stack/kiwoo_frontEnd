@@ -27,7 +27,7 @@ class LoangivenDetailView extends GetView {
             children: [
               lableWidget(lbl: "Name", val: loan?.user?.name),
               SizedBox(height: 8.ss),
-              lableWidget(lbl: "Amount", val: "${loan?.amount} EFCA"),
+              lableWidget(lbl: "Amount", val: "${loan?.amount} exfa"),
               SizedBox(height: 8.ss),
               lableWidget(
                 lbl: "Tenure",

@@ -193,7 +193,7 @@ Future<T?> loanDetailsBottomSHet<T>({
             verticalSpaceMedium,
             lableWidget(lbl: "Name", val: name),
             SizedBox(height: 8.ss),
-            lableWidget(lbl: "Amount", val: "$amount EFCA"),
+            lableWidget(lbl: "Amount", val: "$amount exfa"),
             SizedBox(height: 8.ss),
             lableWidget(lbl: "Tenure", val: "$offeredTenure Months"),
             SizedBox(height: 8.ss),

@@ -60,9 +60,9 @@ class LoanRequestSentDetailsView extends GetView {
                     val: data.createdAt!.format('dd, MMM yyyy'),
                   ),
                   SizedBox(height: 8.ss),
-                  lableWidget(lbl: "Amount", val: "${(data.amount ?? 0)} EFCA"),
+                  lableWidget(lbl: "Amount", val: "${(data.amount ?? 0)} exfa"),
                   //     val:
-                  //         "${(myLoanRequestDetailController.myLoanRequestDetail.amount ?? 0)} EFCA"),
+                  //         "${(myLoanRequestDetailController.myLoanRequestDetail.amount ?? 0)} exfa"),
                   SizedBox(height: 8.ss),
                   lableWidget(
                     lbl: "Interest Offered",
