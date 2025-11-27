@@ -161,7 +161,7 @@ class MarketView extends GetView<MarketController> {
                                             width: 100.ss,
                                             child: Text(
                                               textAlign: TextAlign.right,
-                                              "${item.amount.toString()} exfa",
+                                              "${item.amount.toString()} EXFA",
                                               style:
                                                   TextThemeHelper.EHTGTextStyle,
                                             ),

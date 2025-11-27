@@ -103,7 +103,7 @@ class LoanReceivedView extends GetView<LoanReceivedController> {
                             ),
                             verticalSpaceTiny,
                             Text(
-                              "${item.amount} exfa",
+                              "${item.amount} EXFA",
                               style: TextThemeHelper.subTitleGreyLR,
                             ),
                           ],

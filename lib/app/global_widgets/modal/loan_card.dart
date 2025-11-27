@@ -83,7 +83,7 @@ class LoanCard extends GetView {
                 ),
                 subtitle: Text.rich(
                   TextSpan(
-                    text: "💰${amount ?? 0} exfa",
+                    text: "💰${amount ?? 0} EXFA",
                     style: TextThemeHelper.subTitleGreyLR,
                     children: <InlineSpan>[
                       TextSpan(
